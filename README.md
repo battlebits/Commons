@@ -1,2 +1,2 @@
 # Commons
-Account Manager, APIs e Utilidades
+Um plugin para gerenciamento de contas, permissões e comandos
