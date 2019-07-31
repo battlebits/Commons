@@ -31,10 +31,8 @@ processResources {
     if (System.getenv('BUILD_NUMBER')) {
         fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
     }
-
-    with copySpec {
-        from 'src/main/resources'
-        filter(ReplaceTokens, tokens: ['$fullVersion': fullVersion])
+    filesMatching('plugin.yml') {
+        expand(["fullVersion":fullVersion])
     }
     
 }
@@ -44,5 +42,10 @@ shadowJar {
         include(project(':commons-core'))
     }
     archiveClassifier = null
+    def fullVersion = version
+    if (System.getenv('BUILD_NUMBER')) {
+        fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
+    }
+    archiveFileName = "commons-bukkit-" + fullVersion + ".jar"
     //${archiveBaseName}-${archiveAppendix}-${archiveVersion}-${archiveClassifier}.${archiveExtension}
 }
