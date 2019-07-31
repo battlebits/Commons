@@ -14,7 +14,7 @@ public class PunishmentHistory {
         kickHistory = new ArrayList<>();
     }
 
-    public Ban getActualBan() {
+    public Ban getCurrentBan() {
         for (Ban ban : banHistory) {
             if (ban.isUnbanned())
                 continue;
@@ -25,7 +25,7 @@ public class PunishmentHistory {
         return null;
     }
 
-    public Mute getActualMute() {
+    public Mute getCurrentMute() {
         for (Mute mute : muteHistory) {
             if (mute.isUnmuted())
                 continue;
