@@ -1,9 +1,9 @@
 package br.com.battlebits.commons.server.loadbalancer.server;
 
+import br.com.battlebits.commons.server.ServerType;
+
 import java.util.Set;
 import java.util.UUID;
-
-import br.com.battlebits.commons.server.ServerType;
 
 public class HungerGamesServer extends MinigameServer {
 

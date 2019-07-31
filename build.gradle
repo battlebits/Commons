@@ -1,44 +1,11 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+allprojects {
 
-plugins {
-    id 'com.github.johnrengelman.shadow' version '2.0.4'
-    id 'java'
-}
-
-group 'br.com.battlebits'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-    jcenter()
-    maven { url 'http://repo.dmulloy2.net/nexus/repository/public/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/groups/public/' }
-}
-
-dependencies {
-    compile group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '2.0.4'
-    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.14-R0.1-SNAPSHOT'
-    compile group: 'org.spigotmc', name: 'spigot', version: '1.14-R0.1-SNAPSHOT'
-    compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
-javadoc {
-    failOnError = false
-}
-
-processResources {
-    def fullVersion = version
-    if (System.getenv('BUILD_NUMBER')) {
-        fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
+    subprojects {
+        version = '1.0'
     }
 
-    with copySpec {
-        from 'src/main/resources'
-        filter(ReplaceTokens, tokens: ['$fullVersion': fullVersion])
+    repositories {
+        jcenter()
     }
+
 }
