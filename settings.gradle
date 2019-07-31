@@ -1,2 +1,5 @@
 rootProject.name = 'Commons'
+include 'commons-core'
+include 'commons-bukkit'
+
 
