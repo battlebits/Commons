@@ -13,9 +13,9 @@ public enum Tag {
     ADMIN("§c§lADMIN§c", Group.ADMIN, false), //
     DEV("§3§lDEV§3", Group.DEVELOPER, true), //
     BUILDER("§e§lBUILDER§e", Group.BUILDER, true), //
-    YOUTUBERPLUS("§3§lDONATOR+§3", Group.DONATORPLUS, true), //
-    ULTIMATE("§d§lDONATOR§d", Group.DONATOR, false), //
-    PREMIUM("§6§lINFLUENCER§6", Group.INFLUENCER, false), //
+    DONATORPLUS("§3§lDONATOR+§3", Group.DONATORPLUS, true), //
+    DONATOR("§d§lDONATOR§d", Group.DONATOR, false), //
+    INFLUENCER("§6§lINFLUENCER§6", Group.INFLUENCER, false), //
     NORMAL("§7", Group.DEFAULT, false);
 
     private String prefix;
