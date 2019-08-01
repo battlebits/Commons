@@ -1,9 +1,7 @@
 package br.com.battlebits.commons.account;
 
 import br.com.battlebits.commons.account.BattleAccount;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

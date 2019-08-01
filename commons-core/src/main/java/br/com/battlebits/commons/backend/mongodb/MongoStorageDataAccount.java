@@ -2,6 +2,7 @@ package br.com.battlebits.commons.backend.mongodb;
 
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 
@@ -9,21 +10,22 @@ import java.util.UUID;
 
 public class MongoStorageDataAccount implements DataAccount {
 
-    private MongoCollection<BattleAccount> collection;
+    private MongoCollection<ModelAccount> collection;
 
     public MongoStorageDataAccount(MongoDatabase storage) {
         com.mongodb.client.MongoDatabase database = storage.getDb();
-        collection = database.getCollection("account", BattleAccount.class);
+        collection = database.getCollection("account", ModelAccount.class);
     }
 
     @Override
     public BattleAccount getAccount(UUID uuid) {
-        BattleAccount account = collection.find(Filters.eq("uniqueId", uuid)).first();
-        return account;
+        ModelAccount account = collection.find(Filters.eq("uniqueId", uuid)).first();
+        return Conversor.convertModelToAccount(account);
     }
 
     @Override
     public void saveAccount(BattleAccount account) {
-        collection.insertOne(account);
+        ModelAccount model = Conversor.convertAccountToModel(account);
+        collection.insertOne(model);
     }
 }
