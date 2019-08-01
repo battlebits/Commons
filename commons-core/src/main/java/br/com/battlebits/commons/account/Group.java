@@ -1,5 +1,11 @@
 package br.com.battlebits.commons.account;
 
 public enum Group {
-     DEFAULT
+     DEFAULT,
+     INFLUENCER,
+     DONATOR,
+     DONATORPLUS,
+     BUILDER,
+     DEVELOPER,
+     ADMIN
 }

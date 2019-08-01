@@ -21,9 +21,7 @@ public class Backend {
         dataAccount.saveAccount(account);
 
         BattleAccount acc2 = dataAccount.getAccount(account.getUniqueId());
-        acc2.setFakeName("Teste");
-        account.setFakeName("Teste2");
-        System.out.println(acc2.getFakeName().equals(account.getFakeName()));
+
 
         db.disconnect();
     }
