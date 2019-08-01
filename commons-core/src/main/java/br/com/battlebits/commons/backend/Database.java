@@ -7,5 +7,4 @@ public interface Database {
     public void disconnect() throws Exception;
 
     public boolean isConnected() throws Exception;
-
 }
