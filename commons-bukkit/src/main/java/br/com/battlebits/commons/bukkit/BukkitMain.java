@@ -21,6 +21,7 @@ public class BukkitMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        instance = null;
         Commons.getLogger().info("Plugin has disabled sucessfully");
     }
 
