@@ -1,5 +1,5 @@
 name: Commons
-version: 1.0-SNAPSHOT
+version: ${fullVersion}
 description: Gerenciamento de contas, permissoes e comandos
 authors: [GustavoInacio]
 main: br.com.battlebits.commons.Commons

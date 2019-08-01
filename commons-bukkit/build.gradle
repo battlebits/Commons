@@ -31,10 +31,8 @@ processResources {
     if (System.getenv('BUILD_NUMBER')) {
         fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
     }
-
-    with copySpec {
-        from 'src/main/resources'
-        filter(ReplaceTokens, tokens: ['$fullVersion': fullVersion])
+    filesMatching('plugin.yml') {
+        expand(["fullVersion":fullVersion])
     }
     
 }
