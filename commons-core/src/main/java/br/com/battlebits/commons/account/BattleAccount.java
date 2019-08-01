@@ -16,8 +16,6 @@ import java.util.UUID;
 public final class BattleAccount {
 
     // INFORMACOES DA CONTA
-    private int id;
-
     private String name;
     private UUID uniqueId;
 

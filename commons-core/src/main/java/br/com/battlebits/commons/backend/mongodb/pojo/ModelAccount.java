@@ -12,7 +12,6 @@ import java.util.UUID;
 @Data
 public class ModelAccount {
     // INFORMACOES DA CONTA
-    private int id;
 
     private String name;
     private UUID uniqueId;
