@@ -1,6 +1,5 @@
 package br.com.battlebits.commons.bukkit.command;
 
-import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.translate.Language;
