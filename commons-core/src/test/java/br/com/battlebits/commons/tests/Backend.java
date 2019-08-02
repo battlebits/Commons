@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.tests;
 
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.Blocked;
 import br.com.battlebits.commons.backend.mongodb.MongoDatabase;
 import br.com.battlebits.commons.backend.mongodb.MongoStorageDataAccount;
 
@@ -16,10 +17,13 @@ public class Backend {
 
         BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio", null);
 
+        Blocked b = new Blocked(UUID.randomUUID());
+        account.getBlockedPlayers().put(b.getUniqueId(), b);
         dataAccount.saveAccount(account);
 
         BattleAccount acc2 = dataAccount.getAccount(account.getUniqueId());
 
+        System.out.println(account.getUniqueId());
 
         db.disconnect();
     }

@@ -19,7 +19,9 @@ public class MongoStorageDataAccount implements DataAccount {
 
     @Override
     public BattleAccount getAccount(UUID uuid) {
-        ModelAccount account = collection.find(Filters.eq("uniqueId", uuid)).first();
+        ModelAccount account = collection.find(Filters.eq("_id", uuid)).first();
+        if(account == null)
+            return null;
         return new BattleAccount(account);
     }
 

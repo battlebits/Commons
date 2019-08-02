@@ -75,7 +75,7 @@ public final class BattleAccount implements CommandSender {
 
     public BattleAccount(ModelAccount account) {
         this.name = account.getName();
-        this.uniqueId = account.getUniqueId();
+        this.uniqueId = account.getId();
         this.battleCoins = account.getBattleCoins();
         this.battleMoney = account.getBattleMoney();
         this.xp = account.getXp();

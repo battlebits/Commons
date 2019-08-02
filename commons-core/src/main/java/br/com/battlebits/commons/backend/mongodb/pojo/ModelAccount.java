@@ -19,7 +19,7 @@ public class ModelAccount {
     // INFORMACOES DA CONTA
 
     private String name;
-    private UUID uniqueId;
+    private UUID id;
 
     // DADOS DA CONTA
     private int battleCoins;
@@ -45,7 +45,7 @@ public class ModelAccount {
     private Group group;
 
     // BLOCKED
-    private Map<UUID, ModelBlocked> blockedPlayers;
+    private Map<String, ModelBlocked> blockedPlayers;
 
     // CONFIGURACOES
     private ModelAccountConfiguration configuration;
@@ -61,7 +61,7 @@ public class ModelAccount {
 
     public ModelAccount(BattleAccount account) {
         this.name = account.getName();
-        this.uniqueId = account.getUniqueId();
+        this.id = account.getUniqueId();
         this.battleCoins = account.getBattleCoins();
         this.battleMoney = account.getBattleMoney();
         this.xp = account.getXp();
@@ -74,9 +74,9 @@ public class ModelAccount {
         this.lastLoggedIn = account.getLastLoggedIn();
         this.firstTimePlaying = account.getFirstTimePlaying();
         this.group = account.getGroup();
-        Map<UUID, ModelBlocked> blockedPlayers = new HashMap<>();
+        Map<String, ModelBlocked> blockedPlayers = new HashMap<>();
         for (Blocked b : account.getBlockedPlayers().values())
-            blockedPlayers.put(b.getUniqueId(), new ModelBlocked(b));
+            blockedPlayers.put(b.getUniqueId().toString(), new ModelBlocked(b));
         this.blockedPlayers = blockedPlayers;
         this.configuration = new ModelAccountConfiguration(account.getConfiguration());
         this.language = account.getLanguage();
