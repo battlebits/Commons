@@ -16,6 +16,7 @@ dependencies {
     compile 'org.mongodb:mongodb-driver-sync:3.10.1'
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
     compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.google.guava:guava:28.0-jre'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
