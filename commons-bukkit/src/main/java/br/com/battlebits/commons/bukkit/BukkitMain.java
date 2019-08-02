@@ -1,8 +1,6 @@
 package br.com.battlebits.commons.bukkit;
 
 import br.com.battlebits.commons.Commons;
-import br.com.battlebits.commons.bukkit.services.account.AccountService;
-import br.com.battlebits.commons.bukkit.services.account.impl.AccountServiceImpl;
 import br.com.battlebits.commons.bukkit.services.Services;
 import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
 import br.com.battlebits.commons.bukkit.services.scoreboard.impl.ScoreboardServiceImpl;
