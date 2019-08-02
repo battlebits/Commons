@@ -1,6 +1,9 @@
 package br.com.battlebits.commons.bukkit;
 
 import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.bukkit.services.account.AccountService;
+import br.com.battlebits.commons.bukkit.services.account.impl.AccountServiceImpl;
+import br.com.battlebits.commons.bukkit.services.Services;
 import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +17,8 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+
+        Services.add(AccountService.class, new AccountServiceImpl());
     }
 
     @Override
