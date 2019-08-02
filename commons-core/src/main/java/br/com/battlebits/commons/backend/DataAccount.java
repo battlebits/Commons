@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface DataAccount {
 
-    public BattleAccount getAccount(UUID uuid);
+    BattleAccount getAccount(UUID uuid);
 
-    public void saveAccount(BattleAccount account);
+    void saveAccount(BattleAccount account);
 }
