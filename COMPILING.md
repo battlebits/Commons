@@ -1,4 +1,4 @@
-Compiling
+Compilando
 =========
 
 Para compilar o COmmons você deve ter o [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) com Java 8 ou mais novo.
