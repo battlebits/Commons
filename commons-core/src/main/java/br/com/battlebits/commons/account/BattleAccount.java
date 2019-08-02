@@ -2,11 +2,12 @@ package br.com.battlebits.commons.account;
 
 import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.punishment.PunishmentHistory;
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelBlocked;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -71,6 +72,44 @@ public final class BattleAccount implements CommandSender {
 
     @Getter(AccessLevel.NONE)
     private transient String lastServer = "";
+
+    public BattleAccount(ModelAccount account) {
+        this.name = account.getName();
+        this.uniqueId = account.getUniqueId();
+        this.battleCoins = account.getBattleCoins();
+        this.battleMoney = account.getBattleMoney();
+        this.xp = account.getXp();
+        this.xpMultiplier = account.getXpMultiplier();
+        this.lastActivatedMultiplier = account.getLastActivatedMultiplier();
+        this.lastVIPMultiplierReceived = account.getLastVIPMultiplierReceived();
+        this.tag = account.getTag();
+        this.lastIpAddress = account.getLastIpAddress();
+        this.onlineTime = account.getOnlineTime();
+        this.lastLoggedIn = account.getLastLoggedIn();
+        this.firstTimePlaying = account.getFirstTimePlaying();
+        this.group = account.getGroup();
+        Map<UUID, Blocked> blockedPlayers = new HashMap<>();
+        for (ModelBlocked b : account.getBlockedPlayers().values())
+            blockedPlayers.put(b.getUniqueId(), new Blocked(b));
+        this.blockedPlayers = blockedPlayers;
+        this.configuration = new AccountConfiguration(this, account.getConfiguration());
+        this.language = account.getLanguage();
+        this.punishmentHistory = new PunishmentHistory(account.getPunishmentHistory());
+        this.serverConnected = account.getServerConnected();
+        this.serverConnectedType = account.getServerConnectedType();
+    }
+
+    public BattleAccount(UUID uniqueId, String name, String ipAddress) {
+        this.name = name;
+        this.uniqueId = uniqueId;
+
+        this.ipAddress = ipAddress;
+        if (ipAddress != null)
+            this.lastIpAddress = ipAddress;
+
+        this.lastLoggedIn = System.currentTimeMillis();
+        this.firstTimePlaying = System.currentTimeMillis();
+    }
 
     @Override
     public void sendMessage(String str) {

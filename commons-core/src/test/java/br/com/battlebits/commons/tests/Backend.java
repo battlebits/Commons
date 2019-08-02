@@ -14,7 +14,7 @@ public class Backend {
 
         MongoStorageDataAccount dataAccount = new MongoStorageDataAccount(db);
 
-        BattleAccount account = new BattleAccount();
+        BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio", null);
 
         dataAccount.saveAccount(account);
 

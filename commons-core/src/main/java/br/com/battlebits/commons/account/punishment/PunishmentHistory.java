@@ -1,5 +1,7 @@
 package br.com.battlebits.commons.account.punishment;
 
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelPunishmentHistory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,12 @@ public class PunishmentHistory {
         banHistory = new ArrayList<>();
         muteHistory = new ArrayList<>();
         kickHistory = new ArrayList<>();
+    }
+
+    public PunishmentHistory(ModelPunishmentHistory model) {
+        this.banHistory = model.getBanHistory();
+        this.muteHistory = model.getMuteHistory();
+        this.kickHistory = model.getKickHistory();
     }
 
     public Ban getCurrentBan() {
