@@ -8,6 +8,7 @@ import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
 import br.com.battlebits.commons.backend.mongodb.pojo.ModelBlocked;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.server.ServerType;
+import br.com.battlebits.commons.team.Team;
 import br.com.battlebits.commons.translate.Language;
 import lombok.Getter;
 
@@ -64,6 +65,8 @@ public final class BattleAccount implements CommandSender {
      * groups
      */
     private Group group = Group.DEFAULT;
+
+    private UUID teamUniqueId = null;
 
     /**
      * blocked players
@@ -161,6 +164,12 @@ public final class BattleAccount implements CommandSender {
         return (System.currentTimeMillis() - joinTime) + onlineTime;
     }
 
+    public Team getTeam() {
+        if (teamUniqueId == null)
+            return null;
+        return Commons.getTeamCommon().getTeam(teamUniqueId);
+    }
+
     public String getHostname() {
         return ipAddress;
     }
@@ -254,6 +263,20 @@ public final class BattleAccount implements CommandSender {
         int setarxp = this.xp - xp;
         setXp(setarxp);
         return xp;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+        STORAGE.saveAccount(this, "language");
+    }
+
+    public void setTeamUniqueId(UUID teamUniqueId) {
+        this.teamUniqueId = teamUniqueId;
+        STORAGE.saveAccount(this, "teamUniqueId");
+    }
+    public void setGroup(Group group) {
+        this.group = group;
+        STORAGE.saveAccount(this, "group");
     }
 
     public void saveRanks() {
