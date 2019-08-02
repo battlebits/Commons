@@ -2,6 +2,7 @@ package br.com.battlebits.commons.account;
 
 import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.punishment.PunishmentHistory;
+import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
 import lombok.AccessLevel;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
-public final class BattleAccount {
+public final class BattleAccount implements CommandSender {
 
     // INFORMACOES DA CONTA
     private String name;
@@ -70,4 +71,14 @@ public final class BattleAccount {
 
     @Getter(AccessLevel.NONE)
     private transient String lastServer = "";
+
+    @Override
+    public void sendMessage(String str) {
+
+    }
+
+    @Override
+    public boolean hasGroupPermission(Group g) {
+        return false;
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.battlebits.commons.bukkit.command;
 
+import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.translate.Language;
 import lombok.AllArgsConstructor;
@@ -30,5 +32,11 @@ public class BukkitCommandSender implements CommandSender {
     @Override
     public Language getLanguage() {
         return null;
+    }
+
+    @Override
+    public boolean hasGroupPermission(Group g) {
+        // TODO Check for BattleAccount GroupPermission
+        return true; // Console
     }
 }
