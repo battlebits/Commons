@@ -4,6 +4,7 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.Database;
 import lombok.RequiredArgsConstructor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 
 @RequiredArgsConstructor
@@ -41,17 +42,17 @@ public class SqlDatabase implements Database {
     }
 
     private void recallConnection()
-            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchMethodException, InvocationTargetException {
         if (!isConnected()) {
             Commons.getLogger().info("Reconectando ao MySQL");
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
             connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username,
                     password);
         }
     }
 
     public void update(String sqlString)
-            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchMethodException, InvocationTargetException {
         if (!isConnected()) {
             recallConnection();
         }
@@ -62,7 +63,7 @@ public class SqlDatabase implements Database {
     }
 
     public PreparedStatement prepareStatment(String sql)
-            throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+            throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
         if (!isConnected()) {
             recallConnection();
         }
@@ -70,7 +71,7 @@ public class SqlDatabase implements Database {
     }
 
     private Connection getConnection()
-            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+            throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchMethodException, InvocationTargetException {
         if (!isConnected()) {
             recallConnection();
         }

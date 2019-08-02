@@ -1,72 +1,62 @@
 package br.com.battlebits.commons.account;
 
-import br.com.battlebits.commons.account.BattleAccount;
-import lombok.*;
+import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.backend.DataAccount;
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccountConfiguration;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class AccountConfiguration {
 
     private boolean ignoreAll = false;
     private boolean tellEnabled = true;
-    private boolean canPlaySound = true;
-    private boolean alertsEnabled = true;
     private boolean staffChatEnabled = false;
-    private boolean clanChatEnabled = false;
     private boolean partyInvites = true;
-    private boolean rankedEnabled = true;
 
-    protected transient BattleAccount account;
+    private BattleAccount account;
+
+    private static DataAccount STORAGE = Commons.getDataAccount();
+
+    public AccountConfiguration(BattleAccount account, ModelAccountConfiguration config) {
+        this.account = account;
+        this.ignoreAll = config.isIgnoreAll();
+        this.tellEnabled = config.isTellEnabled();
+        this.staffChatEnabled = config.isStaffChatEnabled();
+        this.partyInvites = config.isPartyInvites();
+    }
 
     public AccountConfiguration(BattleAccount account) {
         this.account = account;
     }
 
-    public void setCanPlaySound(boolean canPlaySound) {
-        if (this.canPlaySound != canPlaySound) {
-            this.canPlaySound = canPlaySound;
-        }
-    }
-
-    public void setClanChatEnabled(boolean clanChatEnabled) {
-        if (this.clanChatEnabled != clanChatEnabled) {
-            this.clanChatEnabled = clanChatEnabled;
-        }
-    }
-
     public void setIgnoreAll(boolean ignoreAll) {
         if (this.ignoreAll != ignoreAll) {
             this.ignoreAll = ignoreAll;
-        }
-    }
-
-    public void setAlertsEnabled(boolean showAlerts) {
-        if (this.alertsEnabled != showAlerts) {
-            this.alertsEnabled = showAlerts;
+            STORAGE.saveConfiguration(account, "ignoreAll");
         }
     }
 
     public void setStaffChatEnabled(boolean staffChatEnabled) {
         if (this.staffChatEnabled != staffChatEnabled) {
             this.staffChatEnabled = staffChatEnabled;
+            STORAGE.saveConfiguration(account, "staffChatEnabled");
         }
     }
 
     public void setTellEnabled(boolean tellEnabled) {
         if (this.tellEnabled != tellEnabled) {
             this.tellEnabled = tellEnabled;
+            STORAGE.saveConfiguration(account, "tellEnabled");
         }
     }
 
-    public void setPartyReceiveInvite(boolean tellEnabled) {
-        if (this.tellEnabled != tellEnabled) {
-            this.tellEnabled = tellEnabled;
+    public void setPartyReceiveInvite(boolean partyInvites) {
+        if (this.partyInvites != tellEnabled) {
+            this.partyInvites = tellEnabled;
+            STORAGE.saveConfiguration(account, "partyInvites");
         }
     }
 
-    public void setRankedEnabled(boolean rankedEnabled) {
-        if (this.rankedEnabled != rankedEnabled) {
-            this.rankedEnabled = rankedEnabled;
-        }
-    }
 }

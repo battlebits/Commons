@@ -52,4 +52,14 @@ public class RedisStorageDataAccount implements DataAccount {
         }
         jedis.hmset(PLAYER_KEY + account.getUniqueId().toString(), playerElements);
     }
+
+    @Override
+    public void saveAccount(BattleAccount account, String field) {
+        // TODO redisSave
+    }
+
+    @Override
+    public void saveConfiguration(BattleAccount account, String field) {
+        // TODO redisSaveConfig
+    }
 }

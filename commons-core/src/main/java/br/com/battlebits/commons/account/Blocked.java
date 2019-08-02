@@ -1,5 +1,6 @@
 package br.com.battlebits.commons.account;
 
+import br.com.battlebits.commons.backend.mongodb.pojo.ModelBlocked;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -13,6 +14,11 @@ public class Blocked {
     public Blocked(UUID blockedPlayer) {
         this.blockedTime = System.currentTimeMillis();
         this.uniqueId = blockedPlayer;
+    }
+
+    public Blocked(ModelBlocked model) {
+        this.uniqueId = model.getUniqueId();
+        this.blockedTime = model.getBlockedTime();
     }
 
 }
