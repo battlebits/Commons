@@ -20,7 +20,6 @@ public class BukkitMain extends JavaPlugin {
     public void onLoad() {
         instance = this;
 
-        Services.add(AccountService.class, new AccountServiceImpl());
         Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
 
