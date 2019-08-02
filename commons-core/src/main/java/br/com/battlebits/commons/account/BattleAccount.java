@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Data
+@Getter
 public final class BattleAccount implements CommandSender {
 
     // INFORMACOES DA CONTA
@@ -50,15 +50,15 @@ public final class BattleAccount implements CommandSender {
 
     // DADOS DE LOCALIZACAO
 
-    private String country = "";
-    private String region = "";
-    private String city = "";
+    //private String country = "";
+    //private String region = "";
+    //private String city = "";
 
     // CONFIGURACOES
     private AccountConfiguration configuration = new AccountConfiguration(this);
 
     // PAIS E LINGUA
-    private String countryCode = "";
+    //private String countryCode = "";
     private Language language = CommonsConst.DEFAULT_LANGUAGE;
 
     // HISTORIA

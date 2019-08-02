@@ -14,9 +14,9 @@ public enum Tag {
     DEV("§3§lDEV§3", Group.DEVELOPER, true), //
     BUILDER("§e§lBUILDER§e", Group.BUILDER, true), //
     DONATORPLUS("§3§lDONATOR+§3", Group.DONATORPLUS, true), //
-    DONATOR("§d§lDONATOR§d", Group.DONATOR, false), //
-    INFLUENCER("§6§lINFLUENCER§6", Group.INFLUENCER, false), //
-    NORMAL("§7", Group.DEFAULT, false);
+    DONATOR("§d§lDONATOR§d", Group.DONATOR, true), //
+    INFLUENCER("§6§lINFLUENCER§6", Group.INFLUENCER, true), //
+    DEFAULT("§7", Group.DEFAULT, false);
 
     private String prefix;
     private Group groupToUse;
@@ -40,37 +40,4 @@ public enum Tag {
         return isExclusive;
     }
 
-    public String getPrefix(Language language) {
-        String prefix = this.prefix;
-        Matcher matcher = null; // TODO T.getPattern().matcher(prefix);
-        while (matcher.find()) {
-            String replace = matcher.group(), id = matcher.group(2).toLowerCase();
-            // TODO prefix = prefix.replace(replace, Commons.getTranslate().get(language, id).toUpperCase());
-        }
-        return prefix;
-    }
-
-    private static final Map<String, Tag> TAG_MAP;
-
-    static {
-        Map<String, Tag> map = new ConcurrentHashMap<>();
-        for (Tag tag : Tag.values()) {
-            map.put(tag.name().toLowerCase(), tag);
-            for (Language lang : Language.values()) {
-                String prefix = "";// TODO ChatColor.stripColor(tag.getPrefix(lang));
-                map.put(prefix.toLowerCase(), tag);
-            }
-        }
-        TAG_MAP = Collections.unmodifiableMap(map);
-    }
-
-    /**
-     *
-     * @param name String
-     * @return Tag
-     */
-    public static Tag getByName(String name) {
-        Objects.requireNonNull(name, "Parameter 'name' is null.");
-        return TAG_MAP.get(name.toLowerCase());
-    }
 }

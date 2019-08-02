@@ -1,15 +1,20 @@
 package br.com.battlebits.commons.backend.mongodb.pojo;
 
+import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.Blocked;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.Tag;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
 public class ModelAccount {
     // INFORMACOES DA CONTA
 
@@ -29,12 +34,10 @@ public class ModelAccount {
     private Tag tag;
 
     // ADDRESSES E NETWORKING
-    private transient String ipAddress;
     private String lastIpAddress;
 
     // PLAYING
     private long onlineTime;
-    private long joinTime;
     private long lastLoggedIn;
     private long firstTimePlaying;
 
@@ -44,17 +47,10 @@ public class ModelAccount {
     // BLOCKED
     private Map<UUID, ModelBlocked> blockedPlayers;
 
-    // DADOS DE LOCALIZACAO
-
-    private String country;
-    private String region;
-    private String city;
-
     // CONFIGURACOES
     private ModelAccountConfiguration configuration;
 
     // PAIS E LINGUA
-    private String countryCode;
     private Language language;
 
     // HISTORIA
@@ -63,4 +59,29 @@ public class ModelAccount {
     private String serverConnected;
     private ServerType serverConnectedType;
 
+    public ModelAccount(BattleAccount account) {
+        this.name = account.getName();
+        this.uniqueId = account.getUniqueId();
+        this.battleCoins = account.getBattleCoins();
+        this.battleMoney = account.getBattleMoney();
+        this.xp = account.getXp();
+        this.xpMultiplier = account.getXpMultiplier();
+        this.lastActivatedMultiplier = account.getLastActivatedMultiplier();
+        this.lastVIPMultiplierReceived = account.getLastVIPMultiplierReceived();
+        this.tag = account.getTag();
+        this.lastIpAddress = account.getLastIpAddress();
+        this.onlineTime = account.getOnlineTime();
+        this.lastLoggedIn = account.getLastLoggedIn();
+        this.firstTimePlaying = account.getFirstTimePlaying();
+        this.group = account.getGroup();
+        Map<UUID, ModelBlocked> blockedPlayers = new HashMap<>();
+        for (Blocked b : account.getBlockedPlayers().values())
+            blockedPlayers.put(b.getUniqueId(), new ModelBlocked(b));
+        this.blockedPlayers = blockedPlayers;
+        this.configuration = new ModelAccountConfiguration(account.getConfiguration());
+        this.language = account.getLanguage();
+        this.punishmentHistory = new ModelPunishmentHistory(account.getPunishmentHistory());
+        this.serverConnected = account.getServerConnected();
+        this.serverConnectedType = account.getServerConnectedType();
+    }
 }
