@@ -1,10 +1,12 @@
 package br.com.battlebits.commons.account;
 
+import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccountConfiguration;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class AccountConfiguration {
 
@@ -13,7 +15,9 @@ public class AccountConfiguration {
     private boolean staffChatEnabled = false;
     private boolean partyInvites = true;
 
-    protected transient BattleAccount account;
+    private BattleAccount account;
+
+    private static DataAccount STORAGE = Commons.getDataAccount();
 
     public AccountConfiguration(BattleAccount account, ModelAccountConfiguration config) {
         this.account = account;
@@ -30,24 +34,28 @@ public class AccountConfiguration {
     public void setIgnoreAll(boolean ignoreAll) {
         if (this.ignoreAll != ignoreAll) {
             this.ignoreAll = ignoreAll;
+            STORAGE.saveConfiguration(account, "ignoreAll");
         }
     }
 
     public void setStaffChatEnabled(boolean staffChatEnabled) {
         if (this.staffChatEnabled != staffChatEnabled) {
             this.staffChatEnabled = staffChatEnabled;
+            STORAGE.saveConfiguration(account, "staffChatEnabled");
         }
     }
 
     public void setTellEnabled(boolean tellEnabled) {
         if (this.tellEnabled != tellEnabled) {
             this.tellEnabled = tellEnabled;
+            STORAGE.saveConfiguration(account, "tellEnabled");
         }
     }
 
-    public void setPartyReceiveInvite(boolean tellEnabled) {
-        if (this.tellEnabled != tellEnabled) {
-            this.tellEnabled = tellEnabled;
+    public void setPartyReceiveInvite(boolean partyInvites) {
+        if (this.partyInvites != tellEnabled) {
+            this.partyInvites = tellEnabled;
+            STORAGE.saveConfiguration(account, "partyInvites");
         }
     }
 

@@ -27,9 +27,8 @@ public class ModelAccount {
     private int xp;
 
     // XP MULTIPLIER
-    private int xpMultiplier;
+    private int doubleXpMultiplier;
     private long lastActivatedMultiplier;
-    private long lastVIPMultiplierReceived;
 
     private Tag tag;
 
@@ -65,9 +64,8 @@ public class ModelAccount {
         this.battleCoins = account.getBattleCoins();
         this.battleMoney = account.getBattleMoney();
         this.xp = account.getXp();
-        this.xpMultiplier = account.getXpMultiplier();
+        this.doubleXpMultiplier = account.getDoubleXpMultiplier();
         this.lastActivatedMultiplier = account.getLastActivatedMultiplier();
-        this.lastVIPMultiplierReceived = account.getLastVIPMultiplierReceived();
         this.tag = account.getTag();
         this.lastIpAddress = account.getLastIpAddress();
         this.onlineTime = account.getOnlineTime();

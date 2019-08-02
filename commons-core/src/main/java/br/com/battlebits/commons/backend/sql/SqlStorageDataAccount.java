@@ -20,4 +20,14 @@ public class SqlStorageDataAccount implements DataAccount {
     public void saveAccount(BattleAccount account) {
 
     }
+
+    @Override
+    public void saveAccount(BattleAccount account, String field) {
+
+    }
+
+    @Override
+    public void saveConfiguration(BattleAccount account, String field) {
+
+    }
 }

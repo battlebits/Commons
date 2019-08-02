@@ -3,10 +3,15 @@ package br.com.battlebits.commons.backend.mongodb;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
+import com.google.gson.JsonObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import org.bson.Document;
 
 import java.util.UUID;
+
+import static br.com.battlebits.commons.util.json.JsonUtils.elementToBson;
+import static br.com.battlebits.commons.util.json.JsonUtils.jsonTree;
 
 public class MongoStorageDataAccount implements DataAccount {
 
@@ -20,7 +25,7 @@ public class MongoStorageDataAccount implements DataAccount {
     @Override
     public BattleAccount getAccount(UUID uuid) {
         ModelAccount account = collection.find(Filters.eq("_id", uuid)).first();
-        if(account == null)
+        if (account == null)
             return null;
         return new BattleAccount(account);
     }
@@ -28,5 +33,33 @@ public class MongoStorageDataAccount implements DataAccount {
     @Override
     public void saveAccount(BattleAccount account) {
         collection.insertOne(new ModelAccount(account));
+    }
+
+    @Override
+    public void saveAccount(BattleAccount account, String fieldName) {
+        try {
+            JsonObject object = jsonTree(account);
+            if (object.has(fieldName)) {
+                Object value = elementToBson(object.get(fieldName));
+                collection.updateOne(Filters.eq("_id", account.getUniqueId()),
+                        new Document("$set", new Document(fieldName, value)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveConfiguration(BattleAccount account, String fieldName) {
+        try {
+            JsonObject object = jsonTree(account.getConfiguration());
+            if (object.has(fieldName)) {
+                Object value = elementToBson(object.get(fieldName));
+                collection.updateOne(Filters.eq("_id", account.getUniqueId()),
+                        new Document("$set", new Document("configuration." + fieldName, value)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,6 +2,8 @@ package br.com.battlebits.commons;
 
 import br.com.battlebits.commons.translate.Language;
 
+import java.time.LocalDate;
+
 public class CommonsConst {
 
     public static Language DEFAULT_LANGUAGE = Language.PORTUGUESE;
@@ -14,4 +16,10 @@ public class CommonsConst {
     public final static String STORE = "loja.battlebits.com.br";
     public final static String ADMIN_EMAIL = "admin@battlebits.com.br";
     public final static String TWITTER = "@BattlebitsMC";
+
+    public static boolean isChristmas() {
+        LocalDate now = LocalDate.now();
+        return now.getMonthValue() == 12 && now.getDayOfMonth() == 25;
+    }
+
 }
