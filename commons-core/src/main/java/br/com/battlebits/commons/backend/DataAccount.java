@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.backend;
 
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.backend.model.ModelAccount;
 
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public interface DataAccount {
      * @param uuid
      * @return new/current account
      */
-    BattleAccount getAccount(UUID uuid);
+    ModelAccount getAccount(UUID uuid);
 
     /**
      * Save a full account

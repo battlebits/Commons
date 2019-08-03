@@ -1,4 +1,4 @@
-package br.com.battlebits.commons.backend.mongodb.pojo;
+package br.com.battlebits.commons.backend.model;
 
 import br.com.battlebits.commons.account.punishment.Ban;
 import br.com.battlebits.commons.account.punishment.Kick;

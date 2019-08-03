@@ -2,6 +2,7 @@ package br.com.battlebits.commons.backend.redis;
 
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
+import br.com.battlebits.commons.backend.model.ModelAccount;
 import com.google.gson.*;
 import lombok.NonNull;
 import redis.clients.jedis.Jedis;
@@ -26,8 +27,8 @@ public class RedisStorageDataAccount implements DataAccount {
     }
 
     @Override
-    public BattleAccount getAccount(UUID uuid) {
-        BattleAccount player;
+    public ModelAccount getAccount(UUID uuid) {
+        ModelAccount player;
         if (!jedis.exists(PLAYER_KEY + uuid.toString())) {
             return null;
         }
@@ -39,7 +40,7 @@ public class RedisStorageDataAccount implements DataAccount {
         for (Map.Entry<String, String> entry : fields.entrySet()) {
             obj.add(entry.getKey(), this.jsonParser.parse(entry.getValue()));
         }
-        player = this.gson.fromJson(obj.toString(), BattleAccount.class);
+        player = this.gson.fromJson(obj.toString(), ModelAccount.class);
         return player;
     }
 

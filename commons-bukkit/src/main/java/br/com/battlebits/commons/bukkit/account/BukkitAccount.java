@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit.account;
 
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.backend.model.ModelAccount;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -15,6 +16,13 @@ public class BukkitAccount extends BattleAccount {
         super(player.getUniqueId(), player.getName(), ipAddress);
         this.player = player;
     }
+
+    public BukkitAccount(Player player, ModelAccount model) {
+        super(model);
+        this.player = player;
+    }
+
+
 
     @Override
     public void sendMessage(String tag, Object... objects) {

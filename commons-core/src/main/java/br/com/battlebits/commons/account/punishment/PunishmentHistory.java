@@ -1,6 +1,6 @@
 package br.com.battlebits.commons.account.punishment;
 
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelPunishmentHistory;
+import br.com.battlebits.commons.backend.model.ModelPunishmentHistory;
 
 import java.util.ArrayList;
 import java.util.List;

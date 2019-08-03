@@ -2,7 +2,7 @@ package br.com.battlebits.commons.backend.mongodb;
 
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
+import br.com.battlebits.commons.backend.model.ModelAccount;
 import com.google.gson.JsonObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -28,16 +28,9 @@ public class MongoStorageDataAccount implements DataAccount {
      * @return battlePlayer without sendMessage()
      */
     @Override
-    public BattleAccount getAccount(UUID uuid) {
+    public ModelAccount getAccount(UUID uuid) {
         ModelAccount account = collection.find(Filters.eq("_id", uuid)).first();
-        if (account == null)
-            return null;
-        return new BattleAccount(account) {
-            @Override
-            public void sendMessage(String tag, Object... objects) {
-
-            }
-        };
+        return account;
     }
 
     @Override

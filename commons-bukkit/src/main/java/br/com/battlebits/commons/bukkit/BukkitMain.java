@@ -23,6 +23,12 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+
+        Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
+    }
+
+    @Override
+    public void onEnable() {
         try {
 
             // TODO Check for config file and initialize Commons
@@ -34,11 +40,6 @@ public class BukkitMain extends JavaPlugin {
         translationCommon = new BukkitTranslationCommon(null); // TODO Add translation storage
         translationCommon.onEnable();
 
-        Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
-    }
-
-    @Override
-    public void onEnable() {
         registerListeners();
         Commons.getLogger().info("Plugin has enabled successfully");
     }

@@ -26,7 +26,12 @@ public class Backend {
         account.getBlockedPlayers().put(b.getUniqueId(), b);
         dataAccount.saveAccount(account);
 
-        BattleAccount acc2 = dataAccount.getAccount(account.getUniqueId());
+        BattleAccount acc2 = new BattleAccount(dataAccount.getAccount(account.getUniqueId())) {
+            @Override
+            public void sendMessage(String tag, Object... objects) {
+
+            }
+        };
 
         System.out.println(account.getUniqueId());
 
