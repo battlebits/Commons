@@ -22,8 +22,8 @@ O processo de build utiliza Gradle, que você não precisa baixar. Commons é um
 
 ## E então você vai encontrar...
 
-* A API principal do Commons em **worldedit-core/build/libs**
-* Commons para Bukkit em **worldedit-bukkit/build/libs**
+* A API principal do Commons em **commons-core/build/libs**
+* Commons para Bukkit em **commons-bukkit/build/libs**
 
 ## Outros comandos uteis
 
