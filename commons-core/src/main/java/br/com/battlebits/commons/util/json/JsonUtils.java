@@ -1,12 +1,12 @@
 package br.com.battlebits.commons.util.json;
 
+import com.google.gson.*;
+import org.bson.Document;
+
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.gson.*;
-import org.bson.Document;
 
 public class JsonUtils {
 

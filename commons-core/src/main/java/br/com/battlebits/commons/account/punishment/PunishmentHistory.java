@@ -64,7 +64,7 @@ public class PunishmentHistory {
     }
 
     public List<Kick> getKickHistory() {
-        if(kickHistory == null)
+        if (kickHistory == null)
             kickHistory = new ArrayList<>();
         return kickHistory;
     }

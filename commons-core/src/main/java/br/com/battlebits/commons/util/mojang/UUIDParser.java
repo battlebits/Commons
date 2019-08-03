@@ -4,12 +4,6 @@ import com.google.gson.JsonElement;
 
 import java.util.UUID;
 
-/**
- * Arquivo criado em 31/05/2017.
- * Desenvolvido por:
- *
- * @author Luãn Pereira.
- */
 public class UUIDParser {
 
     public static UUID parse(JsonElement element) {
