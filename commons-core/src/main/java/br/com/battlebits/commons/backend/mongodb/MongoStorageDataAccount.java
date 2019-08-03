@@ -22,12 +22,22 @@ public class MongoStorageDataAccount implements DataAccount {
         collection = database.getCollection("account", ModelAccount.class);
     }
 
+    /**
+     *  Used to receive account information
+     * @param uuid
+     * @return battlePlayer without sendMessage()
+     */
     @Override
     public BattleAccount getAccount(UUID uuid) {
         ModelAccount account = collection.find(Filters.eq("_id", uuid)).first();
         if (account == null)
             return null;
-        return new BattleAccount(account);
+        return new BattleAccount(account) {
+            @Override
+            public void sendMessage(String tag, Object... objects) {
+
+            }
+        };
     }
 
     @Override

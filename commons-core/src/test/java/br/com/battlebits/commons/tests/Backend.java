@@ -15,7 +15,12 @@ public class Backend {
 
         MongoStorageDataAccount dataAccount = new MongoStorageDataAccount(db);
 
-        BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio", null);
+        BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio", null) {
+            @Override
+            public void sendMessage(String tag, Object... objects) {
+
+            }
+        };
 
         Blocked b = new Blocked(UUID.randomUUID());
         account.getBlockedPlayers().put(b.getUniqueId(), b);

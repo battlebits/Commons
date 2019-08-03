@@ -4,15 +4,21 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.bukkit.services.Services;
 import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
 import br.com.battlebits.commons.bukkit.services.scoreboard.impl.ScoreboardServiceImpl;
+import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
+import br.com.battlebits.commons.translate.TranslationCommon;
 import lombok.Getter;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 @Getter
 public class BukkitMain extends JavaPlugin {
 
     @Getter
     private static BukkitMain instance;
+
+    private TranslationCommon translationCommon;
 
     @Override
     public void onLoad() {
@@ -24,6 +30,10 @@ public class BukkitMain extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // TODO Load Translations
+        translationCommon = new BukkitTranslationCommon(null); // TODO Add translation storage
+        translationCommon.onEnable();
+
         Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
 
@@ -36,6 +46,7 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
+        translationCommon.onDisable();
         Commons.getLogger().info("Plugin has disabled successfully");
     }
 
