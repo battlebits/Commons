@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit.party;
 
 import br.com.battlebits.commons.party.Party;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
@@ -27,7 +28,16 @@ public class BukkitParty extends Party {
 
     @Override
     public int getOnlineCount() {
-        return 0;
+        int count = 0;
+        if (Bukkit.getPlayer(getOwner()) != null) {
+            count++;
+        }
+        for (UUID uuid : getMembers()) {
+            if (Bukkit.getPlayer(uuid) != null) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
@@ -42,6 +52,6 @@ public class BukkitParty extends Party {
 
     @Override
     public void sendMessage(boolean prefix, boolean translate, String id, String[]... replacement) {
-
+        //TODO: sendMessage using new translation system
     }
 }
