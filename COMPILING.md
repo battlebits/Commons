@@ -1,7 +1,7 @@
 Compilando
 =========
 
-Para compilar o COmmons você deve ter o [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) com Java 8 ou mais novo.
+Para compilar o Commons você deve ter o [Java Development Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) com Java 8 ou mais novo.
 
 O processo de build utiliza Gradle, que você não precisa baixar. Commons é um projeto multi-modulos com dois modulos:
 
