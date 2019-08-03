@@ -30,13 +30,13 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onEnable() {
         registerListeners();
-        Commons.getLogger().info("Plugin has enabled sucessfully");
+        Commons.getLogger().info("Plugin has enabled successfully");
     }
 
     @Override
     public void onDisable() {
         instance = null;
-        Commons.getLogger().info("Plugin has disabled sucessfully");
+        Commons.getLogger().info("Plugin has disabled successfully");
     }
 
     public void registerListeners() {
