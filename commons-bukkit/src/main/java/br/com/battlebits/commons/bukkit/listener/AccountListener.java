@@ -1,4 +1,5 @@
 package br.com.battlebits.commons.bukkit.listener;
 
-public class AccountListener {
-}
+import org.bukkit.event.Listener;
+
+public class AccountListener implements Listener {}

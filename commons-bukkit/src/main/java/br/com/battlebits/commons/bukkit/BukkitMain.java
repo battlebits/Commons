@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit;
 
 import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.bukkit.listener.PlayerListener;
 import br.com.battlebits.commons.bukkit.services.Services;
 import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
 import br.com.battlebits.commons.bukkit.services.scoreboard.impl.ScoreboardServiceImpl;
@@ -53,5 +54,7 @@ public class BukkitMain extends JavaPlugin {
 
     public void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
+
+        pluginManager.registerEvents(new PlayerListener(), this);
     }
 }
