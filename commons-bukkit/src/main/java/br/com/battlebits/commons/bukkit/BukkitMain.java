@@ -17,7 +17,13 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+        try {
 
+            // TODO Check for config file and initialize Commons
+            //Commons.initialize(getLogger(), );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
 

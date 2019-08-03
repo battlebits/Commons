@@ -9,7 +9,6 @@ import br.com.battlebits.commons.party.PartyCommon;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.TeamCommon;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -26,33 +25,47 @@ public class Commons {
     private static PartyCommon partyCommon = new PartyCommon();
 
     @Getter
-    @Setter
     private static String serverId;
 
     @Getter
-    @Setter
     private static ServerType serverType;
 
     @Getter
-    @Setter
     private static DataAccount dataAccount;
 
     @Getter
-    @Setter
     private static DataTeam dataTeam;
 
     @Getter
-    @Setter
     private static DataServer dataServer;
 
-    @Setter
     @Getter
     private static CommonPlatform platform;
 
 
     @Getter
-    @Setter
     private static Logger logger;
+
+    private static boolean initialized = false;
+
+    public static void initialize(Logger _logger, //
+                                  String _serverId, //
+                                  ServerType _serverType, //
+                                  DataAccount _dataAccount, //
+                                  DataTeam _dataTeam,
+                                  DataServer _dataServer,
+                                  CommonPlatform commonPlatform) throws Exception {
+        if (initialized)
+            throw new Exception("Commons already have been initialized");
+        logger = _logger;
+        serverId = _serverId;
+        serverType = _serverType;
+        dataAccount = _dataAccount;
+        dataTeam = _dataTeam;
+        dataServer = _dataServer;
+        platform = commonPlatform;
+        initialized = true;
+    }
 
     public static BattleAccount getAccount(UUID uuid) {
         return accountCommon.getBattlePlayer(uuid);
