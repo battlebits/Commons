@@ -336,5 +336,4 @@ public abstract class BattleAccount implements CommandSender {
     public boolean isDoubleXPActivated() {
         return System.currentTimeMillis() < lastActivatedMultiplier;
     }
-
 }
