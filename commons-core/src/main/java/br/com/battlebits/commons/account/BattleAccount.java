@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public final class BattleAccount implements CommandSender {
+public abstract class BattleAccount implements CommandSender {
 
     // INFORMACOES DA CONTA
     /**
@@ -137,9 +137,7 @@ public final class BattleAccount implements CommandSender {
     }
 
     @Override
-    public void sendMessage(String str) {
-
-    }
+    public abstract void sendMessage(String tag, Object... objects);
 
     @Override
     public boolean hasGroupPermission(Group group) {
@@ -274,6 +272,7 @@ public final class BattleAccount implements CommandSender {
         this.teamUniqueId = teamUniqueId;
         STORAGE.saveAccount(this, "teamUniqueId");
     }
+
     public void setGroup(Group group) {
         this.group = group;
         STORAGE.saveAccount(this, "group");
@@ -321,7 +320,7 @@ public final class BattleAccount implements CommandSender {
     }
 
     public void setServerConnectedType(ServerType serverConnectedType) {
-        if (this.serverConnectedType == null ||serverConnectedType != this.serverConnectedType) {
+        if (this.serverConnectedType == null || serverConnectedType != this.serverConnectedType) {
             this.serverConnectedType = serverConnectedType;
             STORAGE.saveAccount(this, "serverConnectedType");
         }

@@ -9,7 +9,7 @@ public interface CommandSender {
 
     UUID getUniqueId();
 
-    void sendMessage(String str);
+    void sendMessage(String tag, Object... objects);
 
     Language getLanguage();
 
