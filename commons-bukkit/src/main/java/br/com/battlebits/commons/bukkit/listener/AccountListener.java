@@ -7,6 +7,8 @@ import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.model.ModelAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.bukkit.event.account.PlayerUpdateFieldEvent;
+import br.com.battlebits.commons.bukkit.event.account.PlayerUpdatedFieldEvent;
 import br.com.battlebits.commons.party.Party;
 import br.com.battlebits.commons.team.Team;
 import com.comphenix.protocol.ProtocolManager;
@@ -181,7 +183,21 @@ public class AccountListener implements Listener {
         }
     }
 
-    // TODO PlayerUpdateFieldEvent
+    @EventHandler
+    public void onUpdateField(PlayerUpdateFieldEvent event) {
+        BukkitAccount battlePlayer = event.getBukkitPlayer();
+        switch (event.getField()) {
+            default:
+                //TODO: add update field
+        }
+    }
 
-
+    @EventHandler
+    public void onUpdatedField(PlayerUpdatedFieldEvent event) {
+        BukkitAccount battlePlayer = event.getBukkitPlayer();
+        switch (event.getField()) {
+            default:
+                //TODO: add updated fields
+        }
+    }
 }
