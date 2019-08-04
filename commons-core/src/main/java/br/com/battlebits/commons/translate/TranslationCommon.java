@@ -11,19 +11,16 @@ public class TranslationCommon {
 
     private static TranslationCommon instance;
 
-    private String filesDirectory;
     private Map<Language, Map<String, MessageFormat>> languageTranslations;
     private DataTranslation storage;
 
-    public TranslationCommon(String filesDirectory, DataTranslation storage) {
-        this.filesDirectory = filesDirectory;
+    public TranslationCommon(DataTranslation storage) {
         this.storage = storage;
         reloadTranslations();
     }
 
     public void onEnable() {
         instance = this;
-        this.storage.setup(this.filesDirectory);
     }
 
     public void onDisable() {
@@ -32,7 +29,6 @@ public class TranslationCommon {
     }
 
     public void reloadTranslations() {
-        this.storage.setup(this.filesDirectory);
         this.languageTranslations = storage.loadTranslations();
     }
 
