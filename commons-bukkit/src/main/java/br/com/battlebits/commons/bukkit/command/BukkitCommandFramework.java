@@ -34,6 +34,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import static br.com.battlebits.commons.translate.TranslateTag.*;
+import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class BukkitCommandFramework implements CommandFramework {
 
@@ -74,7 +76,7 @@ public class BukkitCommandFramework implements CommandFramework {
                     Player player = (Player) sender;
                     BattleAccount battlePlayer = Commons.getAccount(player.getUniqueId());
                     if (!battlePlayer.hasGroupPermission(command.groupToUse())) {
-                        player.sendMessage(BukkitTranslationCommon.tl(battlePlayer.getLanguage(), TranslateTag.COMMAND_NO_PERMISSION));
+                        player.sendMessage(tl(battlePlayer.getLanguage(), COMMAND_NO_PERMISSION));
                         return true;
                     }
                     battlePlayer = null;
