@@ -124,13 +124,9 @@ public abstract class BattleAccount implements CommandSender {
         this.serverConnectedType = account.getServerConnectedType();
     }
 
-    public BattleAccount(UUID uniqueId, String name, String ipAddress) {
+    public BattleAccount(UUID uniqueId, String name) {
         this.name = name;
         this.uniqueId = uniqueId;
-
-        this.ipAddress = ipAddress;
-        if (ipAddress != null)
-            this.lastIpAddress = ipAddress;
 
         this.lastLoggedIn = System.currentTimeMillis();
         this.firstTimePlaying = System.currentTimeMillis();
@@ -297,9 +293,9 @@ public abstract class BattleAccount implements CommandSender {
         return true;
     }
 
-    public void setJoinData(String userName, String ipAdrress) {
+    public void setJoinData(String ipAdrress) {
         this.ipAddress = ipAdrress;
-
+        connect(Commons.getServerId(), Commons.getServerType());
         joinTime = System.currentTimeMillis();
         this.online = true;
         STORAGE.saveAccount(this, "joinTime");

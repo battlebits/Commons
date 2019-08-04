@@ -5,8 +5,10 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.DataTeam;
+import br.com.battlebits.commons.backend.logging.DataLog;
 import br.com.battlebits.commons.backend.mongodb.MongoDatabase;
 import br.com.battlebits.commons.backend.mongodb.MongoStorageDataAccount;
+import br.com.battlebits.commons.backend.nullable.VoidDataLog;
 import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
@@ -22,29 +24,36 @@ import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
 import br.com.battlebits.commons.translate.TranslateTag;
 import br.com.battlebits.commons.translate.TranslationCommon;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.lang.reflect.Field;
 
 @Getter
 public class BukkitMain extends JavaPlugin {
 
     @Getter
     private static BukkitMain instance;
+    @Getter
+    private ProtocolManager protocolManager;
+
 
     private TranslationCommon translationCommon;
 
     @Override
     public void onLoad() {
         instance = this;
+        protocolManager = ProtocolLibrary.getProtocolManager();
+
 
         Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
@@ -52,7 +61,8 @@ public class BukkitMain extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-
+            String serverId = "NONE"; // TODO getServerId
+            ServerType type = ServerType.DEFAULT; // TODO getServerType
             // TODO Check for config file and initialize Commons
             MongoDatabase database = new MongoDatabase("localhost", "test", "test", "test", 27017);
             database.connect();
@@ -60,15 +70,15 @@ public class BukkitMain extends JavaPlugin {
             DataServer dataServer = new VoidDataServer();
             DataAccount dataAccount = new MongoStorageDataAccount(database);
             DataTeam dataTeam = new VoidDataTeam();
-
+            DataLog dataLog = new VoidDataLog();
             CommonPlatform platform = new BukkitPlatform();
 
-            Commons.initialize(getLogger(), "NONE-1", ServerType.DEFAULT, dataAccount, dataTeam, dataServer, platform);
+            Commons.initialize(getLogger(), serverId, type, dataAccount, dataTeam, dataServer, dataLog, platform);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // TODO Load Translations
-        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile())); // TODO Add translation storage
+
+        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile()));
         translationCommon.onEnable();
 
         try {
@@ -112,7 +122,7 @@ public class BukkitMain extends JavaPlugin {
                     List<String> aliases = new ArrayList<>();
                     for (String key : knownCommands.keySet()) {
                         if (!key.contains(":")) continue;
-                        String substr = key.substring(key.indexOf(":")+1);
+                        String substr = key.substring(key.indexOf(":") + 1);
                         if (substr.equalsIgnoreCase(command)) {
                             aliases.add(key);
                         }

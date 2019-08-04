@@ -38,7 +38,7 @@ public class TranslationCommon {
         return messageFormat.format(format);
     }
 
-    public static String tl(String tag, Object[] format) {
+    public static String tl(String tag, Object... format) {
         return tl(CommonsConst.DEFAULT_LANGUAGE, tag, format);
     }
 

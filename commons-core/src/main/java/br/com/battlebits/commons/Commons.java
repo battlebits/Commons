@@ -5,6 +5,7 @@ import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.DataTeam;
+import br.com.battlebits.commons.backend.logging.DataLog;
 import br.com.battlebits.commons.party.PartyCommon;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.TeamCommon;
@@ -40,6 +41,9 @@ public class Commons {
     private static DataServer dataServer;
 
     @Getter
+    private static DataLog dataLog;
+
+    @Getter
     private static CommonPlatform platform;
 
 
@@ -52,8 +56,9 @@ public class Commons {
                                   String _serverId, //
                                   ServerType _serverType, //
                                   DataAccount _dataAccount, //
-                                  DataTeam _dataTeam,
-                                  DataServer _dataServer,
+                                  DataTeam _dataTeam, //
+                                  DataServer _dataServer, //
+                                  DataLog _dataLog,
                                   CommonPlatform commonPlatform) throws Exception {
         if (initialized)
             throw new Exception("Commons already have been initialized");
@@ -63,12 +68,13 @@ public class Commons {
         dataAccount = _dataAccount;
         dataTeam = _dataTeam;
         dataServer = _dataServer;
+        dataLog = _dataLog;
         platform = commonPlatform;
         initialized = true;
     }
 
     public static BattleAccount getAccount(UUID uuid) {
-        return accountCommon.getBattlePlayer(uuid);
+        return accountCommon.getBattleAccount(uuid);
     }
 
 }
