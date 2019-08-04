@@ -12,9 +12,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
 import br.com.battlebits.commons.command.CommandFramework;
 import br.com.battlebits.commons.command.CommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
+import br.com.battlebits.commons.translate.TranslateTag;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandException;
@@ -72,9 +74,7 @@ public class BukkitCommandFramework implements CommandFramework {
                     Player player = (Player) sender;
                     BattleAccount battlePlayer = Commons.getAccountCommon().getBattlePlayer(player.getUniqueId());
                     if (!battlePlayer.hasGroupPermission(command.groupToUse())) {
-                        player.sendMessage("");
-                        //TODO: add sendMessage using new translation
-                        //TODO: Format -> battlePlayer.getLanguage(), command.noPermMessageID())));
+                        player.sendMessage(BukkitTranslationCommon.tl(battlePlayer.getLanguage(), TranslateTag.COMMAND_NO_PERMISSION));
                         return true;
                     }
                     battlePlayer = null;
