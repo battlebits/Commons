@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface DataTranslation {
 
+    void setup(String dirLocation);
+
     Map<Language, Map<String, MessageFormat>> loadTranslations();
 
     Map<String, MessageFormat> loadTranslation(Language lang);

@@ -15,6 +15,11 @@ public class FileYAMLDataTranslation implements DataTranslation {
     }
 
     @Override
+    public void setup(String dirLocation) {
+
+    }
+
+    @Override
     public Map<Language, Map<String, MessageFormat>> loadTranslations() {
         return null;
     }
