@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 public class BukkitTranslationCommon extends TranslationCommon {
 
     public BukkitTranslationCommon(DataTranslation storage) {
-        super("", storage);
+        super(storage);
     }
 
     @Override

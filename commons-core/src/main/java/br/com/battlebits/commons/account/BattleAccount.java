@@ -92,7 +92,7 @@ public abstract class BattleAccount implements CommandSender {
     private boolean online;
 
     private String serverConnected = "";
-    private ServerType serverConnectedType = ServerType.NONE;
+    private ServerType serverConnectedType = ServerType.DEFAULT;
 
     private String lastServer = "";
 

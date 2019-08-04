@@ -2,6 +2,6 @@ name: Commons
 version: ${fullVersion}
 description: Gerenciamento de contas, permissoes e comandos
 authors: [GustavoInacio]
-main: br.com.battlebits.commons.Commons
+main: br.com.battlebits.commons.bukkit.BukkitMain
 load: STARTUP
 api-version: "1.14"
