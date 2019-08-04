@@ -108,6 +108,7 @@ public class BukkitMain extends JavaPlugin {
         pluginManager.registerEvents(new AccountListener(), this);
     }
 
+    @SuppressWarnings("unchecked")
     private void unregisterCommands(String... commands) {
         try {
             Field f1 = Bukkit.getServer().getClass().getDeclaredField("commandMap");
@@ -115,6 +116,7 @@ public class BukkitMain extends JavaPlugin {
             CommandMap commandMap = (CommandMap) f1.get(Bukkit.getServer());
             Field f2 = commandMap.getClass().getDeclaredField("knownCommands");
             f2.setAccessible(true);
+
             HashMap<String, Command> knownCommands = (HashMap<String, Command>) f2.get(commandMap);
             for (String command : commands) {
                 if (knownCommands.containsKey(command)) {

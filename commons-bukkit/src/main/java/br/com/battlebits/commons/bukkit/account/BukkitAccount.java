@@ -13,7 +13,6 @@ import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class BukkitAccount extends BattleAccount {
 
-    @Getter
     private Player player;
 
     public BukkitAccount(ModelAccount model) {
