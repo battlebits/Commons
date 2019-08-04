@@ -11,6 +11,7 @@ import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.bukkit.listener.AccountListener;
 import br.com.battlebits.commons.bukkit.listener.PlayerListener;
 import br.com.battlebits.commons.bukkit.services.Services;
 import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
@@ -94,6 +95,7 @@ public class BukkitMain extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
 
         pluginManager.registerEvents(new PlayerListener(), this);
+        pluginManager.registerEvents(new AccountListener(), this);
     }
 
     private void unregisterCommands(String... commands) {
