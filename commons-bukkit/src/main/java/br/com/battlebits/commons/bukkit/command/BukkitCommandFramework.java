@@ -72,7 +72,7 @@ public class BukkitCommandFramework implements CommandFramework {
                 Command command = entry.getKey().getAnnotation(Command.class);
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    BattleAccount battlePlayer = Commons.getAccountCommon().getBattlePlayer(player.getUniqueId());
+                    BattleAccount battlePlayer = Commons.getAccount(player.getUniqueId());
                     if (!battlePlayer.hasGroupPermission(command.groupToUse())) {
                         player.sendMessage(BukkitTranslationCommon.tl(battlePlayer.getLanguage(), TranslateTag.COMMAND_NO_PERMISSION));
                         return true;

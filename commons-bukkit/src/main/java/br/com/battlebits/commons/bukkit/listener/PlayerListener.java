@@ -44,7 +44,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
         if (event.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
-            BattleAccount battlePlayer = Commons.getAccountCommon().getBattlePlayer(event.getPlayer().getUniqueId());
+            BattleAccount battlePlayer = Commons.getAccount(event.getPlayer().getUniqueId());
             if (battlePlayer == null) {
                 event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Servidor está em whitelist!");
             } else if (battlePlayer.hasGroupPermission(Group.DONATORPLUS)){

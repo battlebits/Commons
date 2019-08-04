@@ -15,7 +15,7 @@ public class Backend {
 
         MongoStorageDataAccount dataAccount = new MongoStorageDataAccount(db);
 
-        BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio", null) {
+        BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio") {
             @Override
             public void sendMessage(String tag, Object... objects) {
 
