@@ -19,17 +19,17 @@ public class ServerManager {
         balancers = new HashMap<>();
 
         balancers.put(ServerType.LOBBY, new LeastConnection<>());
-        balancers.put(ServerType.PVP_FULLIRON, new MostConnection<>());
-        balancers.put(ServerType.PVP_SIMULATOR, new MostConnection<>());
-
-        balancers.put(ServerType.CUSTOMHG, new MostConnection<>());
-        balancers.put(ServerType.DOUBLEKITHG, new MostConnection<>());
-        balancers.put(ServerType.HUNGERGAMES, new MostConnection<>());
-
-        balancers.put(ServerType.SWNS, new MostConnection<>());
-        balancers.put(ServerType.SWNT, new MostConnection<>());
-        balancers.put(ServerType.SWIS, new MostConnection<>());
-        balancers.put(ServerType.SWIT, new MostConnection<>());
+//        balancers.put(ServerType.PVP_FULLIRON, new MostConnection<>());
+//        balancers.put(ServerType.PVP_SIMULATOR, new MostConnection<>());
+//
+//        balancers.put(ServerType.CUSTOMHG, new MostConnection<>());
+//        balancers.put(ServerType.DOUBLEKITHG, new MostConnection<>());
+//        balancers.put(ServerType.HUNGERGAMES, new MostConnection<>());
+//
+//        balancers.put(ServerType.SWNS, new MostConnection<>());
+//        balancers.put(ServerType.SWNT, new MostConnection<>());
+//        balancers.put(ServerType.SWIS, new MostConnection<>());
+//        balancers.put(ServerType.SWIT, new MostConnection<>());
 
         activeServers = new HashMap<>();
     }
@@ -54,13 +54,13 @@ public class ServerManager {
     public void updateActiveServer(String serverId, ServerType type, Set<UUID> onlinePlayers, int maxPlayers, boolean canJoin, int tempo, String map, MinigameState state) {
         BattleServer server = activeServers.get(serverId);
         if (server == null) {
-            if (type == ServerType.HUNGERGAMES || type == ServerType.DOUBLEKITHG || type == ServerType.FAIRPLAY || type == ServerType.CUSTOMHG) {
-                server = new HungerGamesServer(serverId, type, onlinePlayers, true);
-            } else if (type == ServerType.SWIS || type == ServerType.SWIT || type == ServerType.SWNS || type == ServerType.SWNT) {
-                server = new SkywarsServer(serverId, type, onlinePlayers, true);
-            } else {
+//            if (type == ServerType.HUNGERGAMES || type == ServerType.DOUBLEKITHG || type == ServerType.FAIRPLAY || type == ServerType.CUSTOMHG) {
+//                server = new HungerGamesServer(serverId, type, onlinePlayers, true);
+//            } else if (type == ServerType.SWIS || type == ServerType.SWIT || type == ServerType.SWNS || type == ServerType.SWNT) {
+//                server = new SkywarsServer(serverId, type, onlinePlayers, true);
+//            } else {
                 server = new BattleServer(serverId, type, onlinePlayers, maxPlayers, true);
-            }
+//            }
             activeServers.put(serverId.toLowerCase(), server);
         }
         server.setOnlinePlayers(onlinePlayers);
