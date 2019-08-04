@@ -1,11 +1,6 @@
 package br.com.battlebits.commons.account.punishment;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-/**
- * Created by gustavo on 28/05/17.
- */
 
 @Getter
 public class Kick {
@@ -22,8 +17,6 @@ public class Kick {
         this.reason = reason;
         this.kickTime = kickTime;
     }
-
-
 
 
 }

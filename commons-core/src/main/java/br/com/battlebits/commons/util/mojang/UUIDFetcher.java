@@ -20,12 +20,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Arquivo criado em 28/05/2017.
- * Desenvolvido por:
- *
- * @author Luãn Pereira.
- */
 public class UUIDFetcher {
 
     private static List<String> apis = new ArrayList<>();

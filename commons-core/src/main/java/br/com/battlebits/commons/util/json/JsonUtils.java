@@ -1,12 +1,12 @@
 package br.com.battlebits.commons.util.json;
 
+import com.google.gson.*;
+import org.bson.Document;
+
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.gson.*;
-import org.bson.Document;
 
 public class JsonUtils {
 
@@ -14,7 +14,7 @@ public class JsonUtils {
     protected static final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.PROTECTED).create();
 
     public static JsonObject jsonTree(Object src) {
-        return (JsonObject) new Gson().toJsonTree(src);
+        return gson.toJsonTree(src).getAsJsonObject();
     }
 
     public static Object elementToBson(JsonElement element) {

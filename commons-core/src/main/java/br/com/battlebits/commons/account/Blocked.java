@@ -1,6 +1,6 @@
 package br.com.battlebits.commons.account;
 
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelBlocked;
+import br.com.battlebits.commons.backend.model.ModelBlocked;
 import lombok.Getter;
 
 import java.util.UUID;

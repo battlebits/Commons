@@ -4,8 +4,8 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.punishment.PunishmentHistory;
 import br.com.battlebits.commons.backend.DataAccount;
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelBlocked;
+import br.com.battlebits.commons.backend.model.ModelAccount;
+import br.com.battlebits.commons.backend.model.ModelBlocked;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.Team;
@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public final class BattleAccount implements CommandSender {
+public abstract class BattleAccount implements CommandSender {
 
     // INFORMACOES DA CONTA
     /**
@@ -92,7 +92,7 @@ public final class BattleAccount implements CommandSender {
     private boolean online;
 
     private String serverConnected = "";
-    private ServerType serverConnectedType = ServerType.NONE;
+    private ServerType serverConnectedType = ServerType.DEFAULT;
 
     private String lastServer = "";
 
@@ -124,22 +124,16 @@ public final class BattleAccount implements CommandSender {
         this.serverConnectedType = account.getServerConnectedType();
     }
 
-    public BattleAccount(UUID uniqueId, String name, String ipAddress) {
+    public BattleAccount(UUID uniqueId, String name) {
         this.name = name;
         this.uniqueId = uniqueId;
-
-        this.ipAddress = ipAddress;
-        if (ipAddress != null)
-            this.lastIpAddress = ipAddress;
 
         this.lastLoggedIn = System.currentTimeMillis();
         this.firstTimePlaying = System.currentTimeMillis();
     }
 
     @Override
-    public void sendMessage(String str) {
-
-    }
+    public abstract void sendMessage(String tag, Object... objects);
 
     @Override
     public boolean hasGroupPermission(Group group) {
@@ -274,6 +268,7 @@ public final class BattleAccount implements CommandSender {
         this.teamUniqueId = teamUniqueId;
         STORAGE.saveAccount(this, "teamUniqueId");
     }
+
     public void setGroup(Group group) {
         this.group = group;
         STORAGE.saveAccount(this, "group");
@@ -298,9 +293,9 @@ public final class BattleAccount implements CommandSender {
         return true;
     }
 
-    public void setJoinData(String userName, String ipAdrress) {
+    public void setJoinData(String ipAdrress) {
         this.ipAddress = ipAdrress;
-
+        connect(Commons.getServerId(), Commons.getServerType());
         joinTime = System.currentTimeMillis();
         this.online = true;
         STORAGE.saveAccount(this, "joinTime");
@@ -321,7 +316,7 @@ public final class BattleAccount implements CommandSender {
     }
 
     public void setServerConnectedType(ServerType serverConnectedType) {
-        if (this.serverConnectedType == null ||serverConnectedType != this.serverConnectedType) {
+        if (this.serverConnectedType == null || serverConnectedType != this.serverConnectedType) {
             this.serverConnectedType = serverConnectedType;
             STORAGE.saveAccount(this, "serverConnectedType");
         }
@@ -337,5 +332,4 @@ public final class BattleAccount implements CommandSender {
     public boolean isDoubleXPActivated() {
         return System.currentTimeMillis() < lastActivatedMultiplier;
     }
-
 }

@@ -1,16 +1,8 @@
 package br.com.battlebits.commons.account;
 
-import br.com.battlebits.commons.translate.Language;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-
 public enum Tag {
 
-    ADMIN("§c§lADMIN§c", Group.ADMIN, false), //
+    ADMIN("§c§lADMIN§c", Group.ADMIN, true), //
     DEV("§3§lDEV§3", Group.DEVELOPER, true), //
     BUILDER("§e§lBUILDER§e", Group.BUILDER, true), //
     DONATORPLUS("§3§lDONATOR+§3", Group.DONATORPLUS, true), //

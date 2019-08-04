@@ -15,25 +15,25 @@ public class AccountCommon {
         accounts = new HashMap<>();
     }
 
-    public void loadBattlePlayer(UUID uuid, BattleAccount player) {
-        accounts.put(uuid, player);
+    public void loadBattleAccount(BattleAccount account) {
+        accounts.put(account.getUniqueId(), account);
     }
 
-    public BattleAccount getBattlePlayer(UUID uuid) {
+    public BattleAccount getBattleAccount(UUID uuid) {
         if (!accounts.containsKey(uuid)) {
             return null;
         }
         return accounts.get(uuid);
     }
 
-    public void unloadBattlePlayer(UUID uuid) {
+    public void unloadBattleAccount(UUID uuid) {
         if (accounts.containsKey(uuid))
             accounts.remove(uuid);
         else
-            Commons.getLogger().log(Level.SEVERE, "NAO FOI POSSIVEL ENCONTRAR PLAYER " + uuid.toString());
+            Commons.getLogger().log(Level.SEVERE, "Couldn't find account " + uuid.toString());
     }
 
-    public Collection<BattleAccount> getPlayers() {
+    public Collection<BattleAccount> getAccounts() {
         return accounts.values();
     }
 }

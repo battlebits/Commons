@@ -2,12 +2,7 @@ package br.com.battlebits.commons;
 
 import java.util.UUID;
 
-/**
- * Arquivo criado em 01/06/2017.
- * Desenvolvido por:
- *
- * @author Luãn Pereira.
- */
+
 public interface CommonPlatform {
 
     UUID getUUID(String name);

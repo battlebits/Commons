@@ -1,12 +1,12 @@
 package br.com.battlebits.commons.party;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor

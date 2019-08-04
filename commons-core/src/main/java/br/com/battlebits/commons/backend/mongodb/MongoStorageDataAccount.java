@@ -2,7 +2,7 @@ package br.com.battlebits.commons.backend.mongodb;
 
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccount;
+import br.com.battlebits.commons.backend.model.ModelAccount;
 import com.google.gson.JsonObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -22,12 +22,15 @@ public class MongoStorageDataAccount implements DataAccount {
         collection = database.getCollection("account", ModelAccount.class);
     }
 
+    /**
+     *  Used to receive account information
+     * @param uuid
+     * @return battlePlayer without sendMessage()
+     */
     @Override
-    public BattleAccount getAccount(UUID uuid) {
+    public ModelAccount getAccount(UUID uuid) {
         ModelAccount account = collection.find(Filters.eq("_id", uuid)).first();
-        if (account == null)
-            return null;
-        return new BattleAccount(account);
+        return account;
     }
 
     @Override
@@ -38,7 +41,8 @@ public class MongoStorageDataAccount implements DataAccount {
     @Override
     public void saveAccount(BattleAccount account, String fieldName) {
         try {
-            JsonObject object = jsonTree(account);
+            ModelAccount model = new ModelAccount(account);
+            JsonObject object = jsonTree(model);
             if (object.has(fieldName)) {
                 Object value = elementToBson(object.get(fieldName));
                 collection.updateOne(Filters.eq("_id", account.getUniqueId()),

@@ -37,7 +37,7 @@ public class Team {
         administrators.add(owner.getUniqueId());
     }
 
-    public String getPlayerName(UUID uuid) {
+    public String getParticipantName(UUID uuid) {
         return participants.get(uuid);
     }
 
@@ -53,32 +53,32 @@ public class Team {
         STORAGE.saveTeam(this, "abbreviation");
     }
 
-    public boolean isOwner(BattleAccount player) {
-        return isOwner(player.getUniqueId());
+    public boolean isOwner(BattleAccount account) {
+        return isOwner(account.getUniqueId());
     }
 
     public boolean isOwner(UUID uuid) {
         return owner.equals(uuid);
     }
 
-    public boolean isAdministrator(BattleAccount player) {
-        return isAdministrator(player.getUniqueId());
+    public boolean isAdministrator(BattleAccount account) {
+        return isAdministrator(account.getUniqueId());
     }
 
     public boolean isAdministrator(UUID uuid) {
         return administrators.contains(uuid);
     }
 
-    public boolean isParticipant(BattleAccount player) {
-        return isParticipant(player.getUniqueId());
+    public boolean isParticipant(BattleAccount account) {
+        return isParticipant(account.getUniqueId());
     }
 
     public boolean isParticipant(UUID uuid) {
         return participants.containsKey(uuid);
     }
 
-    public boolean isInvited(BattleAccount player) {
-        return isInvited(player.getUniqueId());
+    public boolean isInvited(BattleAccount account) {
+        return isInvited(account.getUniqueId());
     }
 
     public boolean isInvited(UUID uuid) {
@@ -112,13 +112,13 @@ public class Team {
         return true;
     }
 
-    public boolean updatePlayer(BattleAccount player) {
+    public boolean updateAccount(BattleAccount account) {
         if (getSlots() >= getParticipants().size())
             return false;
-        if (isOwner(player))
+        if (isOwner(account))
             return false;
-        UUID uuid = player.getUniqueId();
-        if (isAdministrator(player)) {
+        UUID uuid = account.getUniqueId();
+        if (isAdministrator(account)) {
             ArrayList<UUID> random = new ArrayList<>();
             for (UUID unique : getParticipants().keySet()) {
                 if (!isAdministrator(unique)) {
@@ -129,19 +129,19 @@ public class Team {
                 int i = random.size() - 1 > 0 ? new Random().nextInt(random.size() - 1) : 0;
                 uuid = random.get(i);
             }
-            if (uuid == player.getUniqueId())
+            if (uuid == account.getUniqueId())
                 demote(uuid);
         }
-        removeParticipant(player.getUniqueId());
+        removeParticipant(account.getUniqueId());
         return true;
     }
 
-    public void addParticipant(BattleAccount player) {
-        invites.remove(player.getUniqueId());
-        participants.put(player.getUniqueId(), player.getName());
+    public void addParticipant(BattleAccount account) {
+        invites.remove(account.getUniqueId());
+        participants.put(account.getUniqueId(), account.getName());
         STORAGE.saveTeam(this, "invites");
         STORAGE.saveTeam(this, "participants");
-        player.setTeamUniqueId(uniqueId);
+        account.setTeamUniqueId(uniqueId);
     }
 
     public boolean removeParticipant(UUID uuid) {
@@ -154,10 +154,10 @@ public class Team {
         return true;
     }
 
-    public void invite(BattleAccount player) {
-        if (invites.contains(player.getUniqueId()))
+    public void invite(BattleAccount account) {
+        if (invites.contains(account.getUniqueId()))
             return;
-        invites.add(player.getUniqueId());
+        invites.add(account.getUniqueId());
         STORAGE.saveTeam(this, "invites");
     }
 

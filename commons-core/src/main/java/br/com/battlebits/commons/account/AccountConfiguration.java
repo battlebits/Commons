@@ -2,7 +2,7 @@ package br.com.battlebits.commons.account;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.DataAccount;
-import br.com.battlebits.commons.backend.mongodb.pojo.ModelAccountConfiguration;
+import br.com.battlebits.commons.backend.model.ModelAccountConfiguration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

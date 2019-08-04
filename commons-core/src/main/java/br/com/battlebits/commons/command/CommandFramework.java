@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.command;
 
 import br.com.battlebits.commons.account.Group;
+import br.com.battlebits.commons.translate.TranslateTag;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,7 +24,7 @@ public interface CommandFramework {
 
         String permission() default "";
 
-        String noPermMessageId() default "command-no-access";
+        String noPermMessageId() default TranslateTag.COMMAND_NO_PERMISSION;
 
         String[] aliases() default {};
 

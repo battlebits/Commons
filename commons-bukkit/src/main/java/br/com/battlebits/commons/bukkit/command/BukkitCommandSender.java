@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+import static br.com.battlebits.commons.translate.TranslationCommon.tl;
+
 @AllArgsConstructor
 @Getter
 public class BukkitCommandSender implements CommandSender {
@@ -24,8 +26,8 @@ public class BukkitCommandSender implements CommandSender {
     }
 
     @Override
-    public void sendMessage(String str) {
-        commandSender.sendMessage(str);
+    public void sendMessage(String tag, Object... objects) {
+        commandSender.sendMessage(tl(getLanguage(), tag, objects));
     }
 
     @Override
