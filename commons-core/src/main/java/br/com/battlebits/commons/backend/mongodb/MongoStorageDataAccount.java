@@ -41,7 +41,8 @@ public class MongoStorageDataAccount implements DataAccount {
     @Override
     public void saveAccount(BattleAccount account, String fieldName) {
         try {
-            JsonObject object = jsonTree(account);
+            ModelAccount model = new ModelAccount(account);
+            JsonObject object = jsonTree(model);
             if (object.has(fieldName)) {
                 Object value = elementToBson(object.get(fieldName));
                 collection.updateOne(Filters.eq("_id", account.getUniqueId()),

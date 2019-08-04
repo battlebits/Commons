@@ -39,9 +39,10 @@ public class AccountListener implements Listener {
         try{
             ModelAccount model = Commons.getDataAccount().getAccount(event.getUniqueId());
             BukkitAccount account;
-            if (model == null)
+            if (model == null) {
                 account = new BukkitAccount(event.getUniqueId(), event.getName());
-            else
+                Commons.getDataAccount().saveAccount(account);
+            } else
                 account = new BukkitAccount(model);
             account.setJoinData(event.getAddress().getHostName());
             Commons.getAccountCommon().loadBattleAccount(account);
@@ -64,7 +65,8 @@ public class AccountListener implements Listener {
 
 
     private void loadTeam(BattleAccount account) {
-        Objects.requireNonNull(account.getTeamUniqueId(), "Team Uuid null!");
+        if (account.getTeamUniqueId() == null)
+            return;
         Team team = Commons.getDataTeam().getTeam(account.getTeamUniqueId());
         if (team == null) {
             account.setTeamUniqueId(null);
@@ -96,12 +98,12 @@ public class AccountListener implements Listener {
         /**
          * Need to use this because of protocol and just logging after making sure
          */
+        int protocolVersion = BukkitMain.getInstance().getProtocolManager().getProtocolVersion(event.getPlayer());
         new BukkitRunnable() {
 
             @Override
             public void run() {
                 Commons.getDataServer().joinPlayer(event.getPlayer().getUniqueId());
-                int protocolVersion = BukkitMain.getInstance().getProtocolManager().getProtocolVersion(event.getPlayer());
                 Commons.getDataLog().log(DataLogType.PLAYER_JOIN, event.getPlayer().getUniqueId(), protocolVersion);
             }
         }.runTaskAsynchronously(BukkitMain.getInstance());
@@ -125,7 +127,6 @@ public class AccountListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onLeave(PlayerQuitEvent event) {
-        removePlayer(event.getPlayer().getUniqueId());
         int protocolVersion = BukkitMain.getInstance().getProtocolManager().getProtocolVersion(event.getPlayer());
         Bukkit.getScheduler().runTaskAsynchronously(BukkitMain.getInstance(), () -> {
             removePlayer(event.getPlayer().getUniqueId());
@@ -136,8 +137,8 @@ public class AccountListener implements Listener {
 
     private void removePlayer(UUID uniqueId) {
         BukkitAccount account = BukkitAccount.getAccount(uniqueId);
-        Objects.requireNonNull(account, "Account is null.");
-
+        if (account == null)
+            return;
         handleTeamLeave(account);
         handlePartyLeave(uniqueId);
 

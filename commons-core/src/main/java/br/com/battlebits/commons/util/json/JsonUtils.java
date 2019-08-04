@@ -14,7 +14,7 @@ public class JsonUtils {
     protected static final Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.PROTECTED).create();
 
     public static JsonObject jsonTree(Object src) {
-        return (JsonObject) new Gson().toJsonTree(src);
+        return gson.toJsonTree(src).getAsJsonObject();
     }
 
     public static Object elementToBson(JsonElement element) {
