@@ -24,7 +24,7 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
         }
         if (event.getMessage().split(" ")[0].contains(":")) {
-            event.getPlayer().sendMessage(tl(CANT_TYPE_TWO_DOT_COMMAND));
+            event.getPlayer().sendMessage(tl(COMMAND_NO_PERMISSION));
             event.setCancelled(true);
         }
     }
@@ -48,7 +48,7 @@ public class PlayerListener implements Listener {
         if (event.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
             BattleAccount battlePlayer = Commons.getAccount(event.getPlayer().getUniqueId());
             if (battlePlayer == null) {
-                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, tl(SERVER_IS_ON_WHITELIST));
+                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, tl(SERVER_WHITELIST));
             } else if (battlePlayer.hasGroupPermission(Group.DONATORPLUS)){
                 event.allow();
             }

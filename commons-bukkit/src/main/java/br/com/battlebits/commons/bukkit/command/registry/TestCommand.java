@@ -1,4 +1,4 @@
-package br.com.battlebits.commons.bukkit.command.register;
+package br.com.battlebits.commons.bukkit.command.registry;
 
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.command.CommandArgs;

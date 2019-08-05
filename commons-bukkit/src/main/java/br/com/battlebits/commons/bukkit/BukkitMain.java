@@ -82,7 +82,7 @@ public class BukkitMain extends JavaPlugin {
         translationCommon.onEnable();
 
         try {
-            new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage(getFile(), "br.com.battlebits.commons.bukkit.command.register");
+            new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage(getFile(), "br.com.battlebits.commons.bukkit.command.registry");
         } catch (Exception e) {
             getLogger().severe("An internal error happened when trying to register commands!");
             e.printStackTrace();
@@ -91,7 +91,6 @@ public class BukkitMain extends JavaPlugin {
         registerListeners();
         // getServer().getScheduler().runTaskLater(this, () -> unregisterCommands("pl", "plugins", "icanhasbukkit", "ver", "version", "?", "help", "me"), 2L);
         Commons.getLogger().info("Plugin has enabled successfully");
-        System.out.println(TranslationCommon.tl(Language.PORTUGUESE, TranslateTag.COMMAND_NO_PERMISSION));
     }
 
     @Override
