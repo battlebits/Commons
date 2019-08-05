@@ -158,6 +158,7 @@ public class BukkitCommandFramework implements CommandFramework {
     private void registerCommand(Command command, String label, Method m, Object obj) {
         Entry<Method, Object> entry = new AbstractMap.SimpleEntry<Method, Object>(m, obj);
         commandMap.put(label.toLowerCase(), entry);
+        Commons.getLogger().info("Command '" + label.toLowerCase() + "' successfully registered");
         String cmdLabel = label.replace(".", ",").split(",")[0].toLowerCase();
         if (map.getCommand(cmdLabel) == null) {
             org.bukkit.command.Command cmd = new BukkitCommand(cmdLabel, plugin);
