@@ -9,6 +9,7 @@ import br.com.battlebits.commons.backend.logging.DataLog;
 import br.com.battlebits.commons.party.PartyCommon;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.TeamCommon;
+import br.com.battlebits.commons.translate.Language;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -75,6 +76,10 @@ public class Commons {
 
     public static BattleAccount getAccount(UUID uuid) {
         return accountCommon.getBattleAccount(uuid);
+    }
+
+    public static Language getLanguage(UUID uuid) {
+        return getAccount(uuid).getLanguage();
     }
 
 }
