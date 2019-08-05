@@ -35,6 +35,7 @@ public abstract class BattleAccount implements CommandSender {
     private int battleCoins = 0;
     private int battleMoney = 0;
     private int xp = 0;
+    private int level = 1;
 
     /**
      * XP Multiplier
@@ -105,6 +106,7 @@ public abstract class BattleAccount implements CommandSender {
         this.battleCoins = account.getBattleCoins();
         this.battleMoney = account.getBattleMoney();
         this.xp = account.getXp();
+        this.level = account.getLevel();
         this.doubleXpMultiplier = account.getDoubleXpMultiplier();
         this.lastActivatedMultiplier = account.getLastActivatedMultiplier();
         this.tag = account.getTag();
@@ -236,7 +238,7 @@ public abstract class BattleAccount implements CommandSender {
         STORAGE.saveAccount(this, "battleMoney");
     }
 
-    private void setXp(int xp) {
+    protected void setXp(int xp) {
         this.xp = xp;
         STORAGE.saveAccount(this, "xp");
     }
@@ -259,6 +261,16 @@ public abstract class BattleAccount implements CommandSender {
         return xp;
     }
 
+    protected void setLevel(int level) {
+        this.level = level;
+        STORAGE.saveAccount(this, "level");
+    }
+
+    public int levelUp() {
+        setLevel(this.level + 1);
+        return xp;
+    }
+
     public void setLanguage(Language language) {
         this.language = language;
         STORAGE.saveAccount(this, "language");
@@ -272,6 +284,13 @@ public abstract class BattleAccount implements CommandSender {
     public void setGroup(Group group) {
         this.group = group;
         STORAGE.saveAccount(this, "group");
+    }
+
+    private void setName(String name) {
+        if(this.name == name)
+            return;
+        this.name = name;
+        STORAGE.saveAccount(this, "name");
     }
 
     public void saveRanks() {
@@ -293,7 +312,8 @@ public abstract class BattleAccount implements CommandSender {
         return true;
     }
 
-    public void setJoinData(String ipAdrress) {
+    public void setJoinData(String username, String ipAdrress) {
+        setName(username);
         this.ipAddress = ipAdrress;
         connect(Commons.getServerId(), Commons.getServerType());
         joinTime = System.currentTimeMillis();

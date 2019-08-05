@@ -25,6 +25,7 @@ public class ModelAccount {
     private int battleCoins;
     private int battleMoney;
     private int xp;
+    private int level;
 
     // XP MULTIPLIER
     private int doubleXpMultiplier;
@@ -64,6 +65,7 @@ public class ModelAccount {
         this.battleCoins = account.getBattleCoins();
         this.battleMoney = account.getBattleMoney();
         this.xp = account.getXp();
+        this.level = account.getLevel();
         this.doubleXpMultiplier = account.getDoubleXpMultiplier();
         this.lastActivatedMultiplier = account.getLastActivatedMultiplier();
         this.tag = account.getTag();
