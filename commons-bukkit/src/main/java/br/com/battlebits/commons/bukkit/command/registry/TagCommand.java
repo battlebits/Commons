@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit.command.registry;
 
 import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.Tag;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
@@ -71,7 +72,7 @@ public class TagCommand implements CommandClass {
             args = null;
             p = null;
         } else {
-            cmdArgs.getSender().sendMessage(tl(Language.PORTUGUESE, SERVER_COMMAND_ONLY_FOR_PLAYER));
+            cmdArgs.getSender().sendMessage(tl(CommonsConst.DEFAULT_LANGUAGE, SERVER_COMMAND_ONLY_FOR_PLAYER));
         }
     }
 }

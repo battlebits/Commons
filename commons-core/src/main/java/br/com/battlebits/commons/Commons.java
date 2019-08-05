@@ -78,11 +78,12 @@ public class Commons {
         return accountCommon.getBattleAccount(uuid);
     }
 
+    public static BattleAccount getAccount(String name) { return accountCommon.getBattleAccount(name); }
+
     public static Language getLanguage(UUID uuid) {
         BattleAccount account = getAccount(uuid);
         if (account != null)
             return account.getLanguage();
         return CommonsConst.DEFAULT_LANGUAGE;
     }
-
 }
