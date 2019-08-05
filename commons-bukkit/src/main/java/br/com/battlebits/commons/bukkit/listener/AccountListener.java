@@ -43,7 +43,7 @@ public class AccountListener implements Listener {
                 Commons.getDataAccount().saveAccount(account);
             } else
                 account = new BukkitAccount(model);
-            account.setJoinData(event.getAddress().getHostAddress());
+            account.setJoinData(event.getName(), event.getAddress().getHostAddress());
             Commons.getAccountCommon().loadBattleAccount(account);
             Commons.getDataServer().joinPlayer(account.getUniqueId());
             loadTeam(account);

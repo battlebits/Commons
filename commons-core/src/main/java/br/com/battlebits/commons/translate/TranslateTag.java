@@ -10,6 +10,12 @@ public class TranslateTag {
     public final static String ACCOUNT_LOAD_FAILED = "account.load-failed";
 
     /**
+     * Party
+     */
+    public final static String PARTY_PREFIX = "party.prefix";
+
+
+    /**
      * Command
      */
     public final static String COMMAND_NOT_FOUND = "command.not-found";

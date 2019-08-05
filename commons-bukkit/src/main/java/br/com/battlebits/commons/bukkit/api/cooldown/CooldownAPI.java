@@ -77,7 +77,7 @@ public class CooldownAPI implements Listener {
                     Cooldown cooldown = it.next();
                     if (!cooldown.expired()) {
                         if (cooldown instanceof ItemCooldown) {
-                            ItemStack hand = player.getItemInHand();
+                            ItemStack hand = player.getEquipment().getItemInMainHand();
                             if (hand != null && hand.getType() != Material.AIR) {
                                 ItemCooldown item = (ItemCooldown) cooldown;
                                 if (hand.equals(item.getItem())) {

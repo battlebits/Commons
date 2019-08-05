@@ -14,6 +14,9 @@ import br.com.battlebits.commons.backend.nullable.VoidDataLog;
 import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
+import br.com.battlebits.commons.bukkit.api.cooldown.CooldownAPI;
+import br.com.battlebits.commons.bukkit.api.item.ActionItemListener;
+import br.com.battlebits.commons.bukkit.api.menu.MenuListener;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
 import br.com.battlebits.commons.bukkit.listener.AccountListener;
@@ -126,6 +129,12 @@ public class BukkitMain extends JavaPlugin {
             pluginManager.registerEvents(new AntiAfkListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new AccountListener(), this);
+
+        // APIs
+        pluginManager.registerEvents(new ActionItemListener(), this);
+        pluginManager.registerEvents(new CooldownAPI(), this);
+        pluginManager.registerEvents(new MenuListener(), this);
+
     }
 
     @SuppressWarnings("unchecked")

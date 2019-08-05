@@ -40,6 +40,8 @@ public class BukkitAccount extends BattleAccount {
         if (!tags.contains(tag) && !forcetag) {
             tag = getDefaultTag();
         }
+        if(!Bukkit.isPrimaryThread())
+            return true;
         PlayerChangeTagEvent event = new PlayerChangeTagEvent(getPlayer(), getTag(), tag, forcetag);
         BukkitMain.getInstance().getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {

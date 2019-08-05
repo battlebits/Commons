@@ -12,8 +12,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public abstract class Party {
 
-    public static final String PREFIX = "§6§lPARTY §r";
-
     @NonNull
     private UUID owner;
 
@@ -48,8 +46,8 @@ public abstract class Party {
         sendMessage(false, false, message);
     }
 
-    public void sendMessage(String id, String[]... replacement) {
-        sendMessage(true, true, id, replacement);
+    public void sendMessage(String tag, Object... objects) {
+        sendMessage(true, true, tag, objects);
     }
 
     public abstract void init();
@@ -64,5 +62,5 @@ public abstract class Party {
 
     public abstract void onMemberLeave(UUID member);
 
-    public abstract void sendMessage(boolean prefix, boolean translate, String id, String[]... replacement);
+    public abstract void sendMessage(boolean prefix, boolean translate, String tag, Object... objects);
 }
