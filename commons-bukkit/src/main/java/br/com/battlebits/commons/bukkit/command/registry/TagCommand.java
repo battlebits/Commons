@@ -36,10 +36,10 @@ public class TagCommand implements CommandClass {
                 int i = max - 1;
                 for (Tag t : player.getTags()) {
                     if (i < max - 1) {
-                        message[i] = new TextComponent("§f, ");
+                        message[i] = new TextComponent("&f, ");
                         i -= 1;
                     }
-                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? "§7§lNORMAL" : t.getPrefix());
+                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? "&7&lNORMAL" : t.getPrefix());
                     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(tl(player.getLanguage(), COMMAND_TAG_SELECT))}));
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tag " + t.name()));
                     message[i] = component;
