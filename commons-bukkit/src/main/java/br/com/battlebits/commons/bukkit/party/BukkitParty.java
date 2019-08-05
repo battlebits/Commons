@@ -2,6 +2,7 @@ package br.com.battlebits.commons.bukkit.party;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.party.Party;
+import br.com.battlebits.commons.translate.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -9,7 +10,6 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static br.com.battlebits.commons.translate.TranslateTag.PARTY_PREFIX;
-import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class BukkitParty extends Party {
 
@@ -60,8 +60,9 @@ public class BukkitParty extends Party {
     public void sendMessage(boolean prefix, boolean translate, String tag, Object... objects) {
         for (UUID uuid : Stream.concat(Stream.of(getOwner()), getMembers().stream()).toArray((UUID[]::new))) {
             Player player = Bukkit.getPlayer(uuid);
+            Language l = Commons.getLanguage(uuid);
             if (player != null) {
-                player.sendMessage((prefix ? PARTY_PREFIX : "") + (translate ? tl(Commons.getLanguage(uuid), tag, objects) : tag));
+                player.sendMessage((prefix ? l.tl(PARTY_PREFIX) : "") + (translate ? l.tl(tag, objects) : tag));
             }
         }
     }

@@ -79,7 +79,10 @@ public class Commons {
     }
 
     public static Language getLanguage(UUID uuid) {
-        return getAccount(uuid).getLanguage();
+        BattleAccount account = getAccount(uuid);
+        if (account != null)
+            return account.getLanguage();
+        return CommonsConst.DEFAULT_LANGUAGE;
     }
 
 }

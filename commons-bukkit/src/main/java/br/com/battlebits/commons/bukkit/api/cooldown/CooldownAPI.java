@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CooldownAPI implements Listener {
 
-    private static final char CHAR = '▌';
+    private static final char CHAR = '\u258C';
     private static final Map<UUID, List<Cooldown>> map = new ConcurrentHashMap<>();
 
     public static void addCooldown(Player player, Cooldown cooldown) {
