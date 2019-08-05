@@ -33,7 +33,7 @@ public class BukkitCommandSender implements CommandSender {
 
     @Override
     public Language getLanguage() {
-        return null;
+        return Language.PORTUGUESE;
     }
 
     @Override

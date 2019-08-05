@@ -1,26 +1,24 @@
 package br.com.battlebits.commons.bukkit.command.registry;
 
-        import br.com.battlebits.commons.Commons;
-        import br.com.battlebits.commons.account.BattleAccount;
-        import br.com.battlebits.commons.account.Group;
-        import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-        import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
-        import br.com.battlebits.commons.command.CommandArgs;
-        import br.com.battlebits.commons.command.CommandClass;
-        import br.com.battlebits.commons.command.CommandFramework;
-        import br.com.battlebits.commons.command.CommandSender;
-        import br.com.battlebits.commons.server.ServerType;
-        import br.com.battlebits.commons.translate.Language;
-        import br.com.battlebits.commons.translate.TranslateTag;
-        import org.bukkit.Bukkit;
-        import org.bukkit.Server;
-        import org.bukkit.entity.Player;
-
-        import java.util.List;
-        import java.util.UUID;
-
-        import static br.com.battlebits.commons.translate.TranslateTag.*;
-        import static br.com.battlebits.commons.translate.TranslationCommon.tl;
+import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.Group;
+import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
+import br.com.battlebits.commons.command.CommandArgs;
+import br.com.battlebits.commons.command.CommandClass;
+import br.com.battlebits.commons.command.CommandFramework;
+import br.com.battlebits.commons.command.CommandSender;
+import br.com.battlebits.commons.server.ServerType;
+import br.com.battlebits.commons.translate.Language;
+import br.com.battlebits.commons.translate.TranslateTag;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import java.util.List;
+import java.util.UUID;
+import static br.com.battlebits.commons.translate.TranslateTag.*;
+import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class GroupCommand implements CommandClass {
 
@@ -29,7 +27,7 @@ public class GroupCommand implements CommandClass {
         final CommandSender sender = cmdArgs.getSender();
         final String[] args = cmdArgs.getArgs();
         Language lang = Language.PORTUGUESE;
-        final String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX) + " ";
+        final String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX);
         if (cmdArgs.isPlayer()) {
             lang = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
         }
@@ -84,8 +82,6 @@ public class GroupCommand implements CommandClass {
                 sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_CHANGE_GROUP));
                 return;
             }
-        } else {
-            //TODO: command for cmd
         }
     }
 }

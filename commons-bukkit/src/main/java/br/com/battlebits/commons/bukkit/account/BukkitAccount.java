@@ -72,6 +72,10 @@ public class BukkitAccount extends BattleAccount {
         }
     }
 
+    public ArrayList<Tag> getTags() {
+        return tags;
+    }
+
     @Override
     public void setJoinData(String userName, String ipAdrress) {
         super.setJoinData(userName, ipAdrress);

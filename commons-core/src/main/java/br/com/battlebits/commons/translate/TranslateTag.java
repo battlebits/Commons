@@ -37,12 +37,21 @@ public class TranslateTag {
     public final static String COMMAND_GROUPSET_ALREADY_IN_GROUP ="command.groupset-already-in-group";
     public final static String COMMAND_GROUPSET_CHANGE_GROUP = "command.groupset-change-group";
 
+    public final static String COMMAND_TAG_PREFIX = "command.tag-prefix";
+    public final static String COMMAND_TAG_AVAILABLE = "command.tag-available";
+    public final static String COMMAND_TAG_SELECT = "command.tag-select";
+    public final static String COMMAND_TAG_SELECTED = "command.tag-selected";
+    public final static String COMMAND_TAG_CURRENT = "command.tag-current";
+    public final static String COMMAND_TAG_NO_ACCESS = "command.tag-no-access";
+    public final static String COMMAND_TAG_NOT_FOUND = "command.tag-not-found";
+    public final static String COMMAND_TAG_NOT_ENABLED = "command.tag-not-enabled";
 
     /**
      * Server
      */
     public final static String SERVER_WHITELIST = "server.whitelist";
     public final static String SERVER_CANT_REQUEST_OFFLINE = "server.cant-request-offline";
+    public final static String SERVER_COMMAND_ONLY_FOR_PLAYER = "server.command-only-for-player";
 
     /**
      *Player
