@@ -25,7 +25,11 @@ public class GroupCommand implements CommandClass {
     public void groupset(BukkitCommandArgs cmdArgs) {
         final CommandSender sender = cmdArgs.getSender();
         final String[] args = cmdArgs.getArgs();
-        Language language = BukkitAccount.getAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
+        Language language = Language.PORTUGUESE;
+        if (cmdArgs.isPlayer()) {
+            language = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
+        }
+        final Language language1 = language;
         final String groupSetPrefix = tl(language, COMMAND_GROUPSET_PREFIX) + " ";
         if (args.length != 2) {
             sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_USAGE));
