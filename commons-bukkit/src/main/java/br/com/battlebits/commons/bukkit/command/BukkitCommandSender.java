@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit.command;
 
 import br.com.battlebits.commons.account.Group;
+import br.com.battlebits.commons.bukkit.account.BukkitAccount;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.translate.Language;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,9 @@ public class BukkitCommandSender implements CommandSender {
 
     @Override
     public boolean hasGroupPermission(Group g) {
-        // TODO Check for BattleAccount GroupPermission
+        BukkitAccount account = BukkitAccount.getAccount(this.getUniqueId());
+        if(account != null)
+            return account.hasGroupPermission(g);
         return true; // Console
     }
 }

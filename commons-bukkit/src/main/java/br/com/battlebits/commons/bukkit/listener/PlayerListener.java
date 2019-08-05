@@ -12,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import static br.com.battlebits.commons.translate.TranslateTag.*;
+import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class PlayerListener implements Listener {
 
@@ -22,7 +24,7 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
         }
         if (event.getMessage().split(" ")[0].contains(":")) {
-            event.getPlayer().sendMessage(ChatColor.RED + "Você não pode digitar comando com dois pontos (:)");
+            event.getPlayer().sendMessage(tl(COMMAND_NO_PERMISSION));
             event.setCancelled(true);
         }
     }
@@ -46,7 +48,7 @@ public class PlayerListener implements Listener {
         if (event.getResult() == PlayerLoginEvent.Result.KICK_WHITELIST) {
             BattleAccount battlePlayer = Commons.getAccount(event.getPlayer().getUniqueId());
             if (battlePlayer == null) {
-                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Servidor está em whitelist!");
+                event.disallow(PlayerLoginEvent.Result.KICK_OTHER, tl(SERVER_WHITELIST));
             } else if (battlePlayer.hasGroupPermission(Group.DONATORPLUS)){
                 event.allow();
             }

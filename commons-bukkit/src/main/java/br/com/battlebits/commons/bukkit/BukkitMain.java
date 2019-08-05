@@ -5,31 +5,39 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.DataTeam;
+import br.com.battlebits.commons.backend.Database;
 import br.com.battlebits.commons.backend.logging.DataLog;
+import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.mongodb.MongoDatabase;
 import br.com.battlebits.commons.backend.mongodb.MongoStorageDataAccount;
 import br.com.battlebits.commons.backend.nullable.VoidDataLog;
 import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
+import br.com.battlebits.commons.bukkit.api.cooldown.CooldownAPI;
+import br.com.battlebits.commons.bukkit.api.item.ActionItemListener;
+import br.com.battlebits.commons.bukkit.api.menu.MenuListener;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
 import br.com.battlebits.commons.bukkit.listener.AccountListener;
+import br.com.battlebits.commons.bukkit.listener.AntiAfkListener;
 import br.com.battlebits.commons.bukkit.listener.PlayerListener;
-import br.com.battlebits.commons.bukkit.services.Services;
-import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
-import br.com.battlebits.commons.bukkit.services.scoreboard.impl.ScoreboardServiceImpl;
+import br.com.battlebits.commons.bukkit.listener.ScoreboardListener;
+import br.com.battlebits.commons.bukkit.scheduler.UpdateScheduler;
+import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagListener;
+import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagManager;
 import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
 import br.com.battlebits.commons.command.CommandLoader;
 import br.com.battlebits.commons.server.ServerType;
-import br.com.battlebits.commons.translate.Language;
-import br.com.battlebits.commons.translate.TranslateTag;
 import br.com.battlebits.commons.translate.TranslationCommon;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,15 +55,21 @@ public class BukkitMain extends JavaPlugin {
     private ProtocolManager protocolManager;
 
 
+    @Setter
+    private boolean antiAfkEnabled = true;
+    @Setter
+    private boolean tagControlEnabled = true;
+    private Database database;
+
     private TranslationCommon translationCommon;
+
+    private TagManager tagManager;
 
     @Override
     public void onLoad() {
         instance = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-
-        Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
 
     @Override
@@ -64,11 +78,11 @@ public class BukkitMain extends JavaPlugin {
             String serverId = "NONE"; // TODO getServerId
             ServerType type = ServerType.DEFAULT; // TODO getServerType
             // TODO Check for config file and initialize Commons
-            MongoDatabase database = new MongoDatabase("localhost", "test", "test", "test", 27017);
+            database = new MongoDatabase("localhost", "test", "test", "test", 27017);
             database.connect();
 
             DataServer dataServer = new VoidDataServer();
-            DataAccount dataAccount = new MongoStorageDataAccount(database);
+            DataAccount dataAccount = new MongoStorageDataAccount((MongoDatabase) database);
             DataTeam dataTeam = new VoidDataTeam();
             DataLog dataLog = new VoidDataLog();
             CommonPlatform platform = new BukkitPlatform();
@@ -80,32 +94,56 @@ public class BukkitMain extends JavaPlugin {
 
         translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile()));
         translationCommon.onEnable();
+        tagManager = new TagManager(this);
+        tagManager.onEnable();
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         try {
-            new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage(getFile(), "br.com.battlebits.commons.bukkit.command.register");
+            new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage(getFile(), "br.com.battlebits.commons.bukkit.command.registry");
         } catch (Exception e) {
             getLogger().severe("An internal error happened when trying to register commands!");
             e.printStackTrace();
         }
 
         registerListeners();
+        getServer().getScheduler().runTaskTimer(this, new UpdateScheduler(), 1, 1);
         // getServer().getScheduler().runTaskLater(this, () -> unregisterCommands("pl", "plugins", "icanhasbukkit", "ver", "version", "?", "help", "me"), 2L);
+        Commons.getDataServer().startServer(Bukkit.getMaxPlayers());
+        Commons.getDataLog().log(DataLogType.SERVER_START);
         Commons.getLogger().info("Plugin has enabled successfully");
-        System.out.println(TranslationCommon.tl(Language.PORTUGUESE, TranslateTag.COMMAND_NO_PERMISSION));
     }
 
     @Override
     public void onDisable() {
         instance = null;
+        try {
+            database.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Commons.getDataServer().stopServer();
+        Commons.getDataLog().log(DataLogType.SERVER_STOP);
         translationCommon.onDisable();
+        tagManager.onDisable();
         Commons.getLogger().info("Plugin has disabled successfully");
     }
 
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
 
+        if (isAntiAfkEnabled())
+            pluginManager.registerEvents(new AntiAfkListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new AccountListener(), this);
+        pluginManager.registerEvents(new ScoreboardListener(), this);
+        pluginManager.registerEvents(new TagListener(tagManager), this);
+
+        // APIs
+        pluginManager.registerEvents(new ActionItemListener(), this);
+        pluginManager.registerEvents(new CooldownAPI(), this);
+        pluginManager.registerEvents(new MenuListener(), this);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -138,4 +176,10 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return new VoidGenerator();
+    }
+
 }

@@ -25,7 +25,7 @@ public class Backend {
         Commons.getDataAccount().saveAccount(account);
 
 
-        account.setJoinData("teste");
+        account.setJoinData("teste", "127.0.0.1");
 
         System.out.println(account.getUniqueId());
 

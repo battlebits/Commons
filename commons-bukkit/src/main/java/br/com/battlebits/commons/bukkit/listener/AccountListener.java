@@ -2,14 +2,14 @@ package br.com.battlebits.commons.bukkit.listener;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
-import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.model.ModelAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.bukkit.event.account.PlayerUpdateFieldEvent;
+import br.com.battlebits.commons.bukkit.event.account.PlayerUpdatedFieldEvent;
 import br.com.battlebits.commons.party.Party;
 import br.com.battlebits.commons.team.Team;
-import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,6 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import static br.com.battlebits.commons.translate.TranslateTag.*;
@@ -36,7 +35,7 @@ public class AccountListener implements Listener {
             event.setKickMessage(tl(ACCOUNT_ALREADY_ONLINE));
             return;
         }
-        try{
+        try {
             ModelAccount model = Commons.getDataAccount().getAccount(event.getUniqueId());
             BukkitAccount account;
             if (model == null) {
@@ -44,7 +43,7 @@ public class AccountListener implements Listener {
                 Commons.getDataAccount().saveAccount(account);
             } else
                 account = new BukkitAccount(model);
-            account.setJoinData(event.getAddress().getHostName());
+            account.setJoinData(event.getName(), event.getAddress().getHostAddress());
             Commons.getAccountCommon().loadBattleAccount(account);
             Commons.getDataServer().joinPlayer(account.getUniqueId());
             loadTeam(account);
@@ -139,6 +138,7 @@ public class AccountListener implements Listener {
         BukkitAccount account = BukkitAccount.getAccount(uniqueId);
         if (account == null)
             return;
+        account.setLeaveData();
         handleTeamLeave(account);
         handlePartyLeave(uniqueId);
 
@@ -181,7 +181,21 @@ public class AccountListener implements Listener {
         }
     }
 
-    // TODO PlayerUpdateFieldEvent
+    @EventHandler
+    public void onUpdateField(PlayerUpdateFieldEvent event) {
+        BukkitAccount battlePlayer = event.getBukkitPlayer();
+        switch (event.getField()) {
+            default:
+                //TODO: add update field
+        }
+    }
 
-
+    @EventHandler
+    public void onUpdatedField(PlayerUpdatedFieldEvent event) {
+        BukkitAccount battlePlayer = event.getBukkitPlayer();
+        switch (event.getField()) {
+            default:
+                //TODO: add updated fields
+        }
+    }
 }

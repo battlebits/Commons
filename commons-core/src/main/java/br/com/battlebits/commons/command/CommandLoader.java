@@ -34,10 +34,11 @@ public class CommandLoader {
     }
 
     private boolean registerCommands(Class<?> commandClass) {
-        if (commandClass.isAssignableFrom(CommandClass.class)) {
+        if (CommandClass.class.isAssignableFrom(commandClass)) {
             try {
                 CommandClass commands = (CommandClass) commandClass.getDeclaredConstructor().newInstance();
                 framework.registerCommands(commands);
+                Commons.getLogger().info("Class " + commandClass.getSimpleName() + ".class registered");
             } catch (Exception e) {
                 e.printStackTrace();
                 Commons.getLogger()
