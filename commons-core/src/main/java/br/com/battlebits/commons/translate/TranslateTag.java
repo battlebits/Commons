@@ -29,8 +29,24 @@ public class TranslateTag {
     public final static String COMMAND_VANISH_INVISIBLE_GROUP = "command.vanish.invisible.group";
     public final static String COMMAND_VANISH_VISIBLE_ALL = "command.vanish.visible.all";
 
+    public final static String COMMAND_GROUPSET_PREFIX = "command.groupset-prefix";
+    public final static String COMMAND_GROUPSET_USAGE = "command.groupset-usage";
+    public final static String COMMAND_GROUPSET_GROUP_NOT_EXIST = "command.groupset-group-not-exist";
+    public final static String COMMAND_GROUPSET_GROUP_TEMPORARY = "command.groupset-group-temporary";
+    public final static String COMMAND_GROUPSET_NOT_ADMIN = "command.groupset-not-admin";
+    public final static String COMMAND_GROUPSET_ALREADY_IN_GROUP ="command.groupset-already-in-group";
+    public final static String COMMAND_GROUPSET_CHANGE_GROUP = "command.groupset-change-group";
+
+
     /**
      * Server
      */
     public final static String SERVER_WHITELIST = "server.whitelist";
+    public final static String SERVER_CANT_REQUEST_OFFLINE = "server.cant-request-offline";
+
+    /**
+     *Player
+     */
+    public final static String PLAYER_NOT_EXIST = "player.not-exist";
+    public final static String PLAYER_NEVER_JOINED = "player.never-joined";
 }
