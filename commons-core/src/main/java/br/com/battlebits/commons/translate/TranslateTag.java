@@ -32,7 +32,6 @@ public class TranslateTag {
     public final static String COMMAND_GROUPSET_PREFIX = "command.groupset-prefix";
     public final static String COMMAND_GROUPSET_USAGE = "command.groupset-usage";
     public final static String COMMAND_GROUPSET_GROUP_NOT_EXIST = "command.groupset-group-not-exist";
-    public final static String COMMAND_GROUPSET_GROUP_TEMPORARY = "command.groupset-group-temporary";
     public final static String COMMAND_GROUPSET_NOT_ADMIN = "command.groupset-not-admin";
     public final static String COMMAND_GROUPSET_ALREADY_IN_GROUP ="command.groupset-already-in-group";
     public final static String COMMAND_GROUPSET_CHANGE_GROUP = "command.groupset-change-group";
