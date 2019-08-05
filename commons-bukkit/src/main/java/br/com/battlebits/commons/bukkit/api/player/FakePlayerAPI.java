@@ -119,8 +119,8 @@ public class FakePlayerAPI {
 			if (online.equals(player) || !online.canSee(player)) {
 				continue;
 			}
-			online.hidePlayer(player);
-			online.showPlayer(player);
+			online.hidePlayer(BukkitMain.getInstance(), player);
+			online.showPlayer(BukkitMain.getInstance(), player);
 		}
 	}
 

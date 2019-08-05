@@ -22,10 +22,10 @@ import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
 import br.com.battlebits.commons.bukkit.listener.AccountListener;
 import br.com.battlebits.commons.bukkit.listener.AntiAfkListener;
 import br.com.battlebits.commons.bukkit.listener.PlayerListener;
+import br.com.battlebits.commons.bukkit.listener.ScoreboardListener;
 import br.com.battlebits.commons.bukkit.scheduler.UpdateScheduler;
-import br.com.battlebits.commons.bukkit.services.Services;
-import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
-import br.com.battlebits.commons.bukkit.services.scoreboard.impl.ScoreboardServiceImpl;
+import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagListener;
+import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagManager;
 import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
 import br.com.battlebits.commons.command.CommandLoader;
 import br.com.battlebits.commons.server.ServerType;
@@ -57,17 +57,19 @@ public class BukkitMain extends JavaPlugin {
 
     @Setter
     private boolean antiAfkEnabled = true;
+    @Setter
+    private boolean tagControlEnabled = true;
     private Database database;
 
     private TranslationCommon translationCommon;
+
+    private TagManager tagManager;
 
     @Override
     public void onLoad() {
         instance = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-
-        Services.add(ScoreboardService.class, new ScoreboardServiceImpl());
     }
 
     @Override
@@ -92,6 +94,10 @@ public class BukkitMain extends JavaPlugin {
 
         translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile()));
         translationCommon.onEnable();
+        tagManager = new TagManager(this);
+        tagManager.onEnable();
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         try {
             new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage(getFile(), "br.com.battlebits.commons.bukkit.command.registry");
@@ -119,6 +125,7 @@ public class BukkitMain extends JavaPlugin {
         Commons.getDataServer().stopServer();
         Commons.getDataLog().log(DataLogType.SERVER_STOP);
         translationCommon.onDisable();
+        tagManager.onDisable();
         Commons.getLogger().info("Plugin has disabled successfully");
     }
 
@@ -129,6 +136,8 @@ public class BukkitMain extends JavaPlugin {
             pluginManager.registerEvents(new AntiAfkListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new AccountListener(), this);
+        pluginManager.registerEvents(new ScoreboardListener(), this);
+        pluginManager.registerEvents(new TagListener(tagManager), this);
 
         // APIs
         pluginManager.registerEvents(new ActionItemListener(), this);
