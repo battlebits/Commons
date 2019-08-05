@@ -1,23 +1,26 @@
 package br.com.battlebits.commons.bukkit.command.registry;
 
-import br.com.battlebits.commons.Commons;
-import br.com.battlebits.commons.account.BattleAccount;
-import br.com.battlebits.commons.account.Group;
-import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
-import br.com.battlebits.commons.command.CommandArgs;
-import br.com.battlebits.commons.command.CommandClass;
-import br.com.battlebits.commons.command.CommandFramework;
-import br.com.battlebits.commons.command.CommandSender;
-import br.com.battlebits.commons.server.ServerType;
-import br.com.battlebits.commons.translate.Language;
-import br.com.battlebits.commons.translate.TranslateTag;
+        import br.com.battlebits.commons.Commons;
+        import br.com.battlebits.commons.account.BattleAccount;
+        import br.com.battlebits.commons.account.Group;
+        import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+        import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
+        import br.com.battlebits.commons.command.CommandArgs;
+        import br.com.battlebits.commons.command.CommandClass;
+        import br.com.battlebits.commons.command.CommandFramework;
+        import br.com.battlebits.commons.command.CommandSender;
+        import br.com.battlebits.commons.server.ServerType;
+        import br.com.battlebits.commons.translate.Language;
+        import br.com.battlebits.commons.translate.TranslateTag;
+        import org.bukkit.Bukkit;
+        import org.bukkit.Server;
+        import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.UUID;
+        import java.util.List;
+        import java.util.UUID;
 
-import static br.com.battlebits.commons.translate.TranslateTag.*;
-import static br.com.battlebits.commons.translate.TranslationCommon.tl;
+        import static br.com.battlebits.commons.translate.TranslateTag.*;
+        import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class GroupCommand implements CommandClass {
 
@@ -25,39 +28,31 @@ public class GroupCommand implements CommandClass {
     public void groupset(BukkitCommandArgs cmdArgs) {
         final CommandSender sender = cmdArgs.getSender();
         final String[] args = cmdArgs.getArgs();
-        Language language = Language.PORTUGUESE;
+        Language lang = Language.PORTUGUESE;
+        final String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX) + " ";
         if (cmdArgs.isPlayer()) {
-            language = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
+            lang = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
         }
-        final Language language1 = language;
-        final String groupSetPrefix = tl(language, COMMAND_GROUPSET_PREFIX) + " ";
+        final Language language = lang;
         if (args.length != 2) {
             sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_USAGE));
             return;
         }
-        Group group = null;
+        Group grupo;
         try {
-            group = Group.valueOf(args[1].toUpperCase());
+            grupo = Group.valueOf(args[1].toUpperCase());
         } catch (Exception e) {
             sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_GROUP_NOT_EXIST));
             return;
         }
-        final Group group1 = group;
-        boolean admin = false;
+        final Group group = grupo;
         ServerType serverType = ServerType.DEFAULT;
+        boolean admin;
         if (cmdArgs.isPlayer()) {
             BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId());
-            if (battleAccount.getServerGroup() == Group.ADMIN) {
-                admin = true;
-            } else {
-                admin = true;
-            }
-            if (group1.ordinal() <= Group.INFLUENCER.ordinal() && group1 != Group.DEFAULT) {
-                sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_GROUP_TEMPORARY));
-                return;
-            }
+            admin = battleAccount.getServerGroup() == Group.ADMIN;
             if (!admin) {
-                if (group1.ordinal() > Group.DONATORPLUS.ordinal()) {
+                if (group.ordinal() > Group.DONATORPLUS.ordinal()) {
                     sender.sendMessage(tl(language, COMMAND_GROUPSET_NOT_ADMIN));
                     return;
                 }
@@ -69,7 +64,7 @@ public class GroupCommand implements CommandClass {
                 BattleAccount battleAccount1 = Commons.getAccountCommon().getBattleAccount(uuid);
                 if (battleAccount1 == null) {
                     try {
-                        Commons.getAccount(uuid);
+                        battleAccount1 = Commons.getAccount(uuid);
                     } catch (Exception e) {
                         e.printStackTrace();
                         sender.sendMessage(groupSetPrefix + tl(language, SERVER_CANT_REQUEST_OFFLINE));
@@ -81,16 +76,16 @@ public class GroupCommand implements CommandClass {
                     }
                 }
                 Group actualGroup = battleAccount1.getGroup();
-                if (actualGroup == group1) {
+                if (actualGroup == group) {
                     sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_ALREADY_IN_GROUP));
                     return;
                 }
-                battleAccount1.setGroup(group1);
-                String message = groupSetPrefix + tl(language, COMMAND_GROUPSET_CHANGE_GROUP);
-                message = message.replace("%player%", battleAccount1.getName() + "(" + battleAccount1.getUniqueId().toString().replace("-", "") + ")");
-                message = message.replace("%group%", group1.name());
-                sender.sendMessage(message);
+                battleAccount1.setGroup(group);
+                sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_CHANGE_GROUP));
+                return;
             }
+        } else {
+            //TODO: command for cmd
         }
     }
 }
