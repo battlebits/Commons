@@ -26,7 +26,6 @@ public class CommandLoader {
     public int loadCommandsFromPackage(File jarFile, String packageName) {
         int i = 0;
         for (Class<?> commandClass : ClassGetter.getClassesForPackageByFile(jarFile, packageName)) {
-            System.out.println("teste");
             if (registerCommands(commandClass)) {
                 i++;
             }

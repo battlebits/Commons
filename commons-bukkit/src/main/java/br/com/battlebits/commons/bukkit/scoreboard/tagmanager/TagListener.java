@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.Team;
 
 public class TagListener implements Listener {
     private TagManager manager;
@@ -50,8 +51,12 @@ public class TagListener implements Listener {
                     continue;
                 String id = getTeamName(bp.getTag());
                 String tag = bp.getTag().getPrefix();
-                ScoreboardAPI.joinTeam(ScoreboardAPI.createTeamIfNotExistsToPlayer(p, id,
-                        tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), ""), o);
+                Team t = ScoreboardAPI.createTeamIfNotExistsToPlayer(p, id,
+                        tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), "");
+                t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
+                t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+
+                ScoreboardAPI.joinTeam(t, o);
             }
         }
     }
@@ -76,9 +81,14 @@ public class TagListener implements Listener {
                     continue;
                 String tag = e.getNewTag().getPrefix();
                 ScoreboardAPI.leaveTeamToPlayer(o, oldId, p);
-                ScoreboardAPI.joinTeam(ScoreboardAPI.createTeamIfNotExistsToPlayer(o, id,
-                        tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), ""), p);
+                Team t = ScoreboardAPI.createTeamIfNotExistsToPlayer(o, id,
+                        tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), "");
+                ChatColor color = ChatColor.getByChar(bp.getTag().getColor());
+                t.setColor(color);
+                t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER); // TODO Test visibility
+                ScoreboardAPI.joinTeam(t, p);
             } catch (Exception e2) {
+                e2.printStackTrace();
             }
         }
     }
