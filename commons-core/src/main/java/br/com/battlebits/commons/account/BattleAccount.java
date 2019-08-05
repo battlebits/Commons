@@ -154,7 +154,7 @@ public abstract class BattleAccount implements CommandSender {
         return false;
     }
 
-    public long getOnlineTime() {
+    public long calculateOnlineTime() {
         return (System.currentTimeMillis() - joinTime) + onlineTime;
     }
 
@@ -305,7 +305,7 @@ public abstract class BattleAccount implements CommandSender {
     public void setLeaveData() {
         this.online = false;
         lastLoggedIn = System.currentTimeMillis();
-        onlineTime = getOnlineTime();
+        onlineTime = calculateOnlineTime();
         if (ipAddress != null)
             lastIpAddress = ipAddress;
         ipAddress = null;

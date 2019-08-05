@@ -13,7 +13,9 @@ import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
 import br.com.battlebits.commons.bukkit.listener.AccountListener;
+import br.com.battlebits.commons.bukkit.listener.AntiAfkListener;
 import br.com.battlebits.commons.bukkit.listener.PlayerListener;
 import br.com.battlebits.commons.bukkit.services.Services;
 import br.com.battlebits.commons.bukkit.services.scoreboard.ScoreboardService;
@@ -27,9 +29,11 @@ import br.com.battlebits.commons.translate.TranslationCommon;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,6 +49,10 @@ public class BukkitMain extends JavaPlugin {
     private static BukkitMain instance;
     @Getter
     private ProtocolManager protocolManager;
+
+
+    @Setter
+    private boolean antiAfkEnabled = true;
 
 
     private TranslationCommon translationCommon;
@@ -103,6 +111,8 @@ public class BukkitMain extends JavaPlugin {
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
 
+        if(isAntiAfkEnabled())
+            pluginManager.registerEvents(new AntiAfkListener(), this);
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new AccountListener(), this);
     }
@@ -137,4 +147,10 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return new VoidGenerator();
+    }
+
 }
