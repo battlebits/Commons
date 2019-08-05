@@ -1,4 +1,4 @@
-package br.com.battlebits.commons.bukkit.builder;
+package br.com.battlebits.commons.bukkit.api.item;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
