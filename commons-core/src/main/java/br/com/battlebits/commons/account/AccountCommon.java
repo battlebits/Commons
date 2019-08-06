@@ -26,10 +26,6 @@ public class AccountCommon {
         return accounts.get(uuid);
     }
 
-    public BattleAccount getBattleAccount(String name) {
-        return accounts.values().stream().filter(account -> account.getName().equals(name)).findFirst().orElse(null);
-    }
-
     public void unloadBattleAccount(UUID uuid) {
         if (accounts.containsKey(uuid))
             accounts.remove(uuid);

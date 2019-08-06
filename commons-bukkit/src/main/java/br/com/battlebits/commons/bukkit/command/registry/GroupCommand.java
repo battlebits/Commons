@@ -1,67 +1,96 @@
 package br.com.battlebits.commons.bukkit.command.registry;
 
 import br.com.battlebits.commons.Commons;
-import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
-import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.account.VoidBattleAccount;
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
+import br.com.battlebits.commons.command.CommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
-import br.com.battlebits.commons.command.CommandFramework;
+import br.com.battlebits.commons.command.CommandFramework.Command;
+import br.com.battlebits.commons.command.CommandFramework.Completer;
 import br.com.battlebits.commons.command.CommandSender;
-import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
-import br.com.battlebits.commons.translate.TranslateTag;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import static br.com.battlebits.commons.translate.TranslateTag.*;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class GroupCommand implements CommandClass {
 
-    @CommandFramework.Command(name = "groupset", usage = "/<command> <player> <group>", groupToUse = Group.DEVELOPER, aliases = {"setgroup", "addgroup"}, noPermMessageId = TranslateTag.COMMAND_NO_PERMISSION, runAsync = true)
-    public void groupset(BukkitCommandArgs cmdArgs) {
-        final CommandSender sender = cmdArgs.getSender();
-        final String[] args = cmdArgs.getArgs();
-        Language lang = CommonsConst.DEFAULT_LANGUAGE;
-        final String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX);
-        if (cmdArgs.isPlayer()) {
-            lang = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
-        }
-        final Language language = lang;
+    @Command(name = "group", usage = "/<command> <player> <group>", groupToUse = Group.ADMIN, runAsync = true)
+    public void group(BukkitCommandArgs cmdArgs) {
+        CommandSender sender = cmdArgs.getSender();
+        String[] args = cmdArgs.getArgs();
+        Language lang = cmdArgs.getSender().getLanguage();
+        String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX);
         if (args.length != 2) {
-            sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_USAGE));
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_USAGE));
             return;
         }
         String groupName = args[1].toUpperCase();
         try {
             Group.valueOf(groupName);
         } catch (Exception e) {
-            sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_GROUP_NOT_EXIST));
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_GROUP_NOT_EXIST));
             return;
         }
-        final Group group = Group.valueOf(groupName);
-        ServerType serverType = ServerType.DEFAULT;
+        Group group = Group.valueOf(groupName);
         String targetPlayer = cmdArgs.getArgs()[0];
-        boolean admin;
-        if(cmdArgs.isPlayer()) {
+        if (cmdArgs.isPlayer()) {
             BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId());
-            if(battleAccount.getGroup().ordinal() < Group.DEVELOPER.ordinal()) {
-                sender.sendMessage(tl(language, COMMAND_GROUPSET_NOT_ADMIN));
+            if (battleAccount.getGroup().ordinal() < Group.ADMIN.ordinal()) {
+                sender.sendMessage(tl(lang, COMMAND_GROUPSET_NOT_ADMIN));
                 return;
             }
         }
-        BattleAccount account = Commons.getAccount(targetPlayer);
-        if(account == null) {
-            sender.sendMessage(groupSetPrefix + tl(language, PLAYER_NOT_EXIST));
-            return;
+        UUID uuid = Commons.getUuidOf(targetPlayer);
+        if (uuid == null) {
+            sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
+        }
+        BattleAccount account = Commons.getAccount(uuid);
+        if (account == null) {
+            account = new VoidBattleAccount(Commons.getDataAccount().getAccount(uuid));
+            if (account == null) {
+                sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
+                return;
+            }
         }
         Group targetGroup = account.getGroup();
-        if(targetGroup == group) {
-            sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_ALREADY_IN_GROUP));
+        if (targetGroup == group) {
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_ALREADY_IN_GROUP));
             return;
         }
         account.setGroup(group);
-        BukkitAccount bukkitAccount = (BukkitAccount) account;
-        bukkitAccount.loadTags();
-        sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_CHANGE_GROUP));
+        sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_CHANGE_GROUP));
+    }
+
+    @Completer(name = "group")
+    public List<String> groupCompleter(CommandArgs args) {
+        if (args.isPlayer()) {
+            if (args.getArgs().length == 1) {
+                ArrayList<String> players = new ArrayList<>();
+                for (Player p : BukkitMain.getInstance().getServer().getOnlinePlayers()) {
+                    if (p.getName().toLowerCase().startsWith(args.getArgs()[0].toLowerCase())) {
+                        players.add(p.getName());
+                    }
+                }
+                return players;
+            } else if (args.getArgs().length == 2) {
+                ArrayList<String> grupos = new ArrayList<>();
+                for (Group group : Group.values()) {
+                    if (group.toString().toLowerCase().startsWith(args.getArgs()[1].toLowerCase())) {
+                        grupos.add(group.toString());
+                    }
+                }
+                return grupos;
+            }
+        }
+        return new ArrayList<>();
     }
 }

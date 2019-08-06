@@ -10,8 +10,10 @@ import br.com.battlebits.commons.party.PartyCommon;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.TeamCommon;
 import br.com.battlebits.commons.translate.Language;
+import br.com.battlebits.commons.util.mojang.UUIDFetcher;
 import lombok.Getter;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -74,11 +76,18 @@ public class Commons {
         initialized = true;
     }
 
+    public static UUID getUuidOf(String playerName) {
+        Objects.requireNonNull(platform);
+        UUID uuid = platform.getUUID(playerName);
+        if(uuid == null) {
+            uuid = UUIDFetcher.getUUID(playerName);
+        }
+        return uuid;
+    }
+
     public static BattleAccount getAccount(UUID uuid) {
         return accountCommon.getBattleAccount(uuid);
     }
-
-    public static BattleAccount getAccount(String name) { return accountCommon.getBattleAccount(name); }
 
     public static Language getLanguage(UUID uuid) {
         BattleAccount account = getAccount(uuid);
