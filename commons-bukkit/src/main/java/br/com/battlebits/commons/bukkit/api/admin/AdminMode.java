@@ -38,7 +38,7 @@ public class AdminMode {
         Group group = VanishAPI.getInstance().hidePlayer(p);
         Language l = Commons.getLanguage(p.getUniqueId());
         p.sendMessage(l.tl(COMMAND_ADMIN_PREFIX) + l.tl(COMMAND_ADMIN_ENABLED));
-        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + l.tl(COMMAND_VANISH_INVISIBLE_GROUP, group.toString()));
+        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + l.tl(COMMAND_VANISH_INVISIBLE, group.toString()));
     }
 
     public void setPlayer(Player p) {

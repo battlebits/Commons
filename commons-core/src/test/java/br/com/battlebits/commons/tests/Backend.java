@@ -2,6 +2,7 @@ package br.com.battlebits.commons.tests;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.VoidBattleAccount;
 import br.com.battlebits.commons.backend.mongodb.MongoDatabase;
 import br.com.battlebits.commons.backend.mongodb.MongoStorageDataAccount;
 
@@ -22,6 +23,7 @@ public class Backend {
 
             }
         };
+        System.out.println(account.getUniqueId());
         Commons.getDataAccount().saveAccount(account);
 
 
@@ -29,6 +31,7 @@ public class Backend {
 
         System.out.println(account.getUniqueId());
 
+        BattleAccount other = new VoidBattleAccount(Commons.getDataAccount().getAccount(account.getUniqueId()));
         db.disconnect();
     }
 }

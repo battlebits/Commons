@@ -14,6 +14,8 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import static br.com.battlebits.commons.translate.TranslateTag.*;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
@@ -37,10 +39,10 @@ public class TagCommand implements CommandClass {
                 int i = max - 1;
                 for (Tag t : player.getTags()) {
                     if (i < max - 1) {
-                        message[i] = new TextComponent("&f, ");
+                        message[i] = new TextComponent(ChatColor.WHITE + ", ");
                         i -= 1;
                     }
-                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? (ChatColor.BOLD + "" + ChatColor.GRAY + "NORMAL") : t.getPrefix());
+                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? (ChatColor.GRAY + "" + ChatColor.BOLD + "NORMAL") : ChatColor.getByChar(t.getColor()) + "" + ChatColor.BOLD + t.getPrefix());
                     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(tl(player.getLanguage(), COMMAND_TAG_SELECT))}));
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tag " + t.name()));
                     message[i] = component;
@@ -52,9 +54,16 @@ public class TagCommand implements CommandClass {
                 if (tag != null) {
                     if (player.getTags().contains(tag)) {
                         if (player.getTag() != tag) {
-                            if (player.setTag(tag)) {
-                                p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_SELECTED));
-                            }
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (player.setTag(tag)) {
+                                        p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_SELECTED));
+                                    } else {
+                                        p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_CHANGE_FAIL));
+                                    }
+                                }
+                            }.runTask(BukkitMain.getInstance());
                         } else {
                             p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_CURRENT));
                         }
