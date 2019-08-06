@@ -12,6 +12,7 @@ import br.com.battlebits.commons.translate.Language;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import static br.com.battlebits.commons.translate.TranslateTag.*;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
@@ -39,15 +40,13 @@ public class TagCommand implements CommandClass {
                         message[i] = new TextComponent("&f, ");
                         i -= 1;
                     }
-                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? "&7&lNORMAL" : t.getPrefix());
+                    TextComponent component = new TextComponent((t == Tag.DEFAULT) ? (ChatColor.BOLD + "" + ChatColor.GRAY + "NORMAL") : t.getPrefix());
                     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{new TextComponent(tl(player.getLanguage(), COMMAND_TAG_SELECT))}));
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tag " + t.name()));
                     message[i] = component;
                     i -= 1;
-                    component = null;
                 }
                 p.spigot().sendMessage(message);
-                message = null;
             } else {
                 Tag tag = Tag.valueOf(args[0].toUpperCase());
                 if (tag != null) {
@@ -62,15 +61,10 @@ public class TagCommand implements CommandClass {
                     } else {
                         p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_NO_ACCESS));
                     }
-                    tag = null;
                 } else {
                     p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_NOT_FOUND));
                 }
             }
-            tagPrefix = null;
-            player = null;
-            args = null;
-            p = null;
         } else {
             cmdArgs.getSender().sendMessage(tl(CommonsConst.DEFAULT_LANGUAGE, SERVER_COMMAND_ONLY_FOR_PLAYER));
         }
