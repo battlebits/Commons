@@ -8,13 +8,11 @@ import br.com.battlebits.commons.bukkit.account.BukkitAccount;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
 import br.com.battlebits.commons.command.CommandFramework;
-import br.com.battlebits.commons.translate.Language;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import static br.com.battlebits.commons.translate.TranslateTag.*;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
@@ -54,16 +52,11 @@ public class TagCommand implements CommandClass {
                 if (tag != null) {
                     if (player.getTags().contains(tag)) {
                         if (player.getTag() != tag) {
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (player.setTag(tag)) {
-                                        p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_SELECTED));
-                                    } else {
-                                        p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_CHANGE_FAIL));
-                                    }
-                                }
-                            }.runTask(BukkitMain.getInstance());
+                            if (player.setTag(tag)) {
+                                p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_SELECTED));
+                            } else {
+                                p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_CHANGE_FAIL));
+                            }
                         } else {
                             p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_CURRENT));
                         }
