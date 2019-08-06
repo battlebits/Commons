@@ -60,6 +60,7 @@ public class TranslateTag {
     public final static String COMMAND_CHAT_ALREADY_DISABLED = "command.chat.already.disabled";
     public final static String COMMAND_CHAT_USAGE = "command.chat.usage";
     public final static String COMMAND_CHAT_SUCCESS = "command.chat.success";
+    public final static String COMMAND_CHAT_CANT_TALK = "command.chat.cant.talk";
 
     /**
      * Server
