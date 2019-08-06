@@ -19,10 +19,7 @@ import br.com.battlebits.commons.bukkit.api.item.ActionItemListener;
 import br.com.battlebits.commons.bukkit.api.menu.MenuListener;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
-import br.com.battlebits.commons.bukkit.listener.AccountListener;
-import br.com.battlebits.commons.bukkit.listener.AntiAfkListener;
-import br.com.battlebits.commons.bukkit.listener.PlayerListener;
-import br.com.battlebits.commons.bukkit.listener.ScoreboardListener;
+import br.com.battlebits.commons.bukkit.listener.*;
 import br.com.battlebits.commons.bukkit.scheduler.UpdateScheduler;
 import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagListener;
 import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagManager;
@@ -137,6 +134,7 @@ public class BukkitMain extends JavaPlugin {
         pluginManager.registerEvents(new PlayerListener(), this);
         pluginManager.registerEvents(new AccountListener(), this);
         pluginManager.registerEvents(new ScoreboardListener(), this);
+        pluginManager.registerEvents(new ChatListener(), this);
         pluginManager.registerEvents(new TagListener(tagManager), this);
 
         // APIs
