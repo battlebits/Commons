@@ -100,6 +100,10 @@ public class StaffCommand implements CommandClass {
         BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());
         Language l = battlePlayer.getLanguage();
         if (cmdArgs.isPlayer()) {
+            if (cmdArgs.getArgs().length == 0 ) {
+                p.sendMessage(tl(COMMAND_CHAT_PREFIX) + tl(COMMAND_CHAT_USAGE));
+                return;
+            }
             if (cmdArgs.getArgs().length == 1) {
                 if (cmdArgs.getArgs()[0].equalsIgnoreCase("on")) {
                     if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.ENABLED) {
