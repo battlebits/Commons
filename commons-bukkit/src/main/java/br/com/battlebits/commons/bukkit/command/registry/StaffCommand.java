@@ -4,6 +4,7 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.bukkit.api.admin.AdminMode;
+import br.com.battlebits.commons.bukkit.api.chat.ChatAPI;
 import br.com.battlebits.commons.bukkit.api.vanish.VanishAPI;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
@@ -89,6 +90,49 @@ public class StaffCommand implements CommandClass {
                 } else {
                     p.sendMessage(l.tl(COMMAND_INVENTORYSEE_NOT_FOUND));
                 }
+            }
+        }
+    }
+
+    @CommandFramework.Command(name = "chat", groupToUse = Group.ADMIN)
+    public void chat(BukkitCommandArgs cmdArgs) {
+        Player p = cmdArgs.getPlayer();
+        BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());
+        Language l = battlePlayer.getLanguage();
+        if (cmdArgs.isPlayer()) {
+            if (cmdArgs.getArgs().length == 1) {
+                if (cmdArgs.getArgs()[0].equalsIgnoreCase("on")) {
+                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.ENABLED) {
+                        p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ALREADY_ENABLED));
+                        return;
+                    }
+                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.ENABLED);
+                    p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ENABLED));
+                } else if (cmdArgs.getArgs()[0].equalsIgnoreCase("off")) {
+                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.INFLUENCER) {
+                        p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ALREADY_DISABLED));
+                        return;
+                    }
+                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.INFLUENCER);
+                    p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_DISABLED));
+                } else {
+                    p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_USAGE));
+                }
+            }
+        }
+    }
+
+    @CommandFramework.Command(name = "clearchat", aliases = {"limparchat", "cc"}, groupToUse = Group.ADMIN)
+    public void cleachat(BukkitCommandArgs cmdArgs) {
+        Player p = cmdArgs.getPlayer();
+        BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());
+        Language l = battlePlayer.getLanguage();
+        if (cmdArgs.isPlayer()) {
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                for (int i = 0; i < 100; i++) {
+                    p.sendMessage("");
+                }
+                p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_SUCCESS));
             }
         }
     }

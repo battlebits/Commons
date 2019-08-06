@@ -53,6 +53,14 @@ public class TranslateTag {
     public final static String COMMAND_INVENTORYSEE_SUCCESS = "command.inventorysee.success";
     public final static String COMMAND_INVENTORYSEE_NOT_FOUND = "command.inventorysee.not-found";
 
+    public final static String COMMAND_CHAT_PREFIX = "command.chat.prefix";
+    public final static String COMMAND_CHAT_ALREADY_ENABLED = "command.chat.already.enabled";
+    public final static String COMMAND_CHAT_ENABLED = "command.chat.enabled";
+    public final static String COMMAND_CHAT_DISABLED = "command.chat.disabled";
+    public final static String COMMAND_CHAT_ALREADY_DISABLED = "command.chat.already.disabled";
+    public final static String COMMAND_CHAT_USAGE = "command.chat.usage";
+    public final static String COMMAND_CHAT_SUCCESS = "command.chat.success";
+
     /**
      * Server
      */
