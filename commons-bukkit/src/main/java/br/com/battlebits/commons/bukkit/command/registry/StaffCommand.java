@@ -78,15 +78,16 @@ public class StaffCommand implements CommandClass {
         if (cmdArgs.isPlayer()) {
             Player p = cmdArgs.getPlayer();
             BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());
+            Language l = battlePlayer.getLanguage();
             if (cmdArgs.getArgs().length == 0) {
-                p.sendMessage(COMMAND_INVENTORYSEE_PREFIX + COMMAND_INVENTORYSEE_USAGE);
+                p.sendMessage(l.tl(COMMAND_INVENTORYSEE_PREFIX) + l.tl(COMMAND_INVENTORYSEE_USAGE));
             } else {
                 Player player = Bukkit.getPlayer(cmdArgs.getArgs()[0]);
                 if (player != null) {
-                    p.sendMessage(COMMAND_INVENTORYSEE_PREFIX + COMMAND_INVENTORYSEE_SUCCESS);
+                    p.sendMessage(l.tl(COMMAND_INVENTORYSEE_PREFIX) + l.tl(COMMAND_INVENTORYSEE_SUCCESS));
                     p.openInventory(player.getInventory());
                 } else {
-                    p.sendMessage(COMMAND_INVENTORYSEE_NOT_FOUND);
+                    p.sendMessage(l.tl(COMMAND_INVENTORYSEE_NOT_FOUND));
                 }
             }
         }
