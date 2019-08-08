@@ -1,6 +1,9 @@
 package br.com.battlebits.commons.bukkit.listener;
 
+import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.bukkit.account.BukkitAccount;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,7 +34,9 @@ public class ScoreboardListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoinListener(PlayerJoinEvent e) {
-        e.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        final Player player = e.getPlayer();
+        BukkitAccount account = (BukkitAccount) Commons.getAccount(player.getUniqueId());
+        player.setScoreboard(account.getBattleScoreboard().getScoreboard());
     }
 
 }

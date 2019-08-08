@@ -10,6 +10,7 @@ import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeGroupEven
 import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeTagEvent;
 import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangedGroupEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerLanguageEvent;
+import br.com.battlebits.commons.bukkit.scoreboard.BattleScoreboard;
 import br.com.battlebits.commons.translate.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,14 +24,17 @@ public class BukkitAccount extends BattleAccount {
 
     private Player player;
     private UUID lastTellUUID;
+    private BattleScoreboard scoreboard;
     private ArrayList<Tag> tags = new ArrayList<>();
 
     public BukkitAccount(ModelAccount model) {
         super(model);
+        scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
     }
 
     public BukkitAccount(UUID uniqueId, String name) {
         super(uniqueId, name);
+        scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
     }
 
     @Override
@@ -110,6 +114,10 @@ public class BukkitAccount extends BattleAccount {
 
     public boolean hasLastTell() {
         return this.lastTellUUID != null;
+    }
+
+    public BattleScoreboard getBattleScoreboard() {
+        return scoreboard;
     }
 
     public Player getPlayer() {

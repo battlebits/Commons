@@ -2,8 +2,9 @@ package br.com.battlebits.commons.bukkit.scoreboard.tagmanager;
 
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-import br.com.battlebits.commons.bukkit.scoreboard.ScoreboardAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 public class TagManager {
     private BukkitMain main;
@@ -22,7 +23,15 @@ public class TagManager {
     }
 
     public void removePlayerTag(Player p) {
-        ScoreboardAPI.leaveCurrentTeamForOnlinePlayers(p);
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            final Team entryTeam = players.getScoreboard().getEntryTeam(p.getName());
+            if(entryTeam != null && entryTeam.getEntries().contains(p.getName())) {
+                entryTeam.removeEntry(p.getName());
+                if(entryTeam.getEntries().isEmpty()) {
+                    entryTeam.unregister();
+                }
+            }
+        }
     }
 
     public void onDisable() {
