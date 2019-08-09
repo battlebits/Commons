@@ -17,10 +17,10 @@ import java.util.function.Consumer;
 
 public class BattleScoreboard {
 
-    private static int MAX_LINES = 16;
-    private static int MAX_PREFIX_LENGTH = 16;
-    private static int MAX_NAME_LENGTH = 16;
-    private static int MAX_SUFFIX_LENGTH = 16;
+    private static final int MAX_LINES = 16;
+    private static final int MAX_PREFIX_LENGTH = 16;
+    private static final int MAX_NAME_LENGTH = 16;
+    private static final int MAX_SUFFIX_LENGTH = 16;
 
     private Player player;
     private List<Line> lines;

@@ -59,7 +59,7 @@ public class TagListener implements Listener {
             t.setSuffix("");
             t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
             t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-            if (t.getEntries().contains(p.getName())) {
+            if (!t.getEntries().contains(p.getName())) {
                 t.addEntry(p.getName());
             }
         }
@@ -110,7 +110,7 @@ public class TagListener implements Listener {
                         t.setSuffix("");
                         t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
                         t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-                        if (t.getEntries().contains(p.getName())) {
+                        if (!t.getEntries().contains(p.getName())) {
                             t.addEntry(p.getName());
                         }
                     } catch (Exception e2) {
