@@ -97,8 +97,9 @@ public class ChatListener implements Listener {
                         text += 1;
                     }
                     TextComponent[] textTo = new TextComponent[text + event.getMessage().split(" ").length];
-                    String tag = account.getTag().getPrefix();
-                    TextComponent cmdAccount = new TextComponent(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : "") + event.getPlayer().getName());
+                    ChatColor color = ChatColor.getByChar(account.getTag().getColor());
+                    String tag = color + "" + ChatColor.BOLD + account.getTag().getPrefix();
+                    TextComponent cmdAccount = new TextComponent(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : "") + color + event.getPlayer().getName());
                     cmdAccount.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/account " + account.getName()));
                     cmdAccount.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(receiver.getLanguage().tl(ACCOUNT_HOVER_INFO))));
                     int i = 0;
