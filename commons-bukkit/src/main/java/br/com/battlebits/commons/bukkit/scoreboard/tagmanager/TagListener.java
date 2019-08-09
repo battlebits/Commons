@@ -5,10 +5,8 @@ import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Tag;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeGroupEvent;
 import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeTagEvent;
 import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangedGroupEvent;
-import br.com.battlebits.commons.bukkit.scoreboard.ScoreboardAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
 public class TagListener implements Listener {
+
     private TagManager manager;
 
     public TagListener(TagManager manager) {
@@ -52,12 +51,17 @@ public class TagListener implements Listener {
                 continue;
             String id = getTeamName(bp.getTag());
             String tag = ChatColor.getByChar(bp.getTag().getColor()) + "" + ChatColor.BOLD + bp.getTag().getPrefix();
-            Team t = ScoreboardAPI.createTeamIfNotExistsToPlayer(p, id,
-                    tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), "");
+            Team t = o.getScoreboard().getTeam(id);
+            if (t == null) {
+                t = o.getScoreboard().registerNewTeam(id);
+            }
+            t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
+            t.setSuffix("");
             t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
             t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-
-            ScoreboardAPI.joinTeam(t, o);
+            if (!t.getEntries().contains(p.getName())) {
+                t.addEntry(p.getName());
+            }
         }
     }
 
@@ -91,12 +95,24 @@ public class TagListener implements Listener {
                         BukkitAccount bp = BukkitAccount.getAccount(o.getUniqueId());
                         if (bp == null)
                             continue;
-                        ScoreboardAPI.leaveTeamToPlayer(o, oldId, p);
-                        Team t = ScoreboardAPI.createTeamIfNotExistsToPlayer(o, id,
-                                tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""), "");
-                        t.setColor(color);
-                        t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER); // TODO Test visibility
-                        ScoreboardAPI.joinTeam(t, p);
+                        Team oldTeam = o.getScoreboard().getTeam(oldId);
+                        if (oldTeam != null) {
+                            oldTeam.getEntries().remove(p.getName());
+                            if (oldTeam.getEntries().isEmpty()) {
+                                oldTeam.unregister();
+                            }
+                        }
+                        Team t = o.getScoreboard().getTeam(id);
+                        if (t == null) {
+                            t = o.getScoreboard().registerNewTeam(id);
+                        }
+                        t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
+                        t.setSuffix("");
+                        t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
+                        t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                        if (!t.getEntries().contains(p.getName())) {
+                            t.addEntry(p.getName());
+                        }
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
