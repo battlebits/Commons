@@ -71,9 +71,9 @@ public class PlayerListener implements Listener {
             Bukkit.getPluginManager().callEvent(eventCall);
             if (eventCall.isCancelled()) {
                 if (online.canSee(player)) {
-                    online.hidePlayer(player);
+                    online.hidePlayer(BukkitMain.getInstance(), player);
                 } else if (!online.canSee(player)) {
-                    online.showPlayer(player);
+                    online.showPlayer(BukkitMain.getInstance(), player);
                 }
             }
         }
