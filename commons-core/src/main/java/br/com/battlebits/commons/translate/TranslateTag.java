@@ -8,7 +8,13 @@ public class TranslateTag {
     public final static String ACCOUNT_NOT_LOADED = "account.not-loaded";
     public final static String ACCOUNT_ALREADY_ONLINE = "account.already-online";
     public final static String ACCOUNT_LOAD_FAILED = "account.load-failed";
+    public final static String ACCOUNT_HOVER_INFO = "account.hover.info";
 
+
+    /**
+     * Team
+     */
+    public final static String TEAM_HOVER_INFO = "team.hover.info";
     /**
      * Party
      */
