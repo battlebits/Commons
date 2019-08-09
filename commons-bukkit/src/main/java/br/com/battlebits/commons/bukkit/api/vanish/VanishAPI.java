@@ -31,10 +31,10 @@ public class VanishAPI {
                 continue;
             BattleAccount onlineP = Commons.getAccount(online.getUniqueId());
             if (group != null && onlineP.getServerGroup().ordinal() <= group.ordinal()) {
-                callHideToPlayerEvent(player, online);
+                callHideToPlayerEvent(online, player);
                 continue;
             }
-            callShowToPlayerEvent(player, online);
+            callShowToPlayerEvent(online, player);
         }
     }
 
@@ -46,32 +46,32 @@ public class VanishAPI {
             Group group = vanishedToGroup.get(online.getUniqueId());
             if (group != null) {
                 if (bP.getServerGroup().ordinal() <= group.ordinal()) {
-                    callHideToPlayerEvent(player, online);
+                    callHideToPlayerEvent(online, player);
                     continue;
                 }
             }
-            callShowToPlayerEvent(player, online);
+            callShowToPlayerEvent(online, player);
         }
     }
 
-    private void callShowToPlayerEvent(Player player, Player online) {
-        PlayerShowToPlayerEvent event = new PlayerShowToPlayerEvent(online, player);
+    private void callShowToPlayerEvent(Player player, Player toShow) {
+        PlayerShowToPlayerEvent event = new PlayerShowToPlayerEvent(player, toShow);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
-            if (player.canSee(online))
-                player.hidePlayer(BukkitMain.getInstance(), online);
-        } else if (!player.canSee(online))
-            player.showPlayer(BukkitMain.getInstance(), online);
+            if (player.canSee(toShow))
+                player.hidePlayer(BukkitMain.getInstance(), toShow);
+        } else if (!player.canSee(toShow))
+            player.showPlayer(BukkitMain.getInstance(), toShow);
     }
 
-    private void callHideToPlayerEvent(Player player, Player online) {
-        PlayerHideToPlayerEvent event = new PlayerHideToPlayerEvent(online, player);
+    private void callHideToPlayerEvent(Player player, Player toHide) {
+        PlayerHideToPlayerEvent event = new PlayerHideToPlayerEvent(player, toHide);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
-            if (!player.canSee(online))
-                player.showPlayer(BukkitMain.getInstance(), online);
-        } else if (player.canSee(online))
-            player.hidePlayer(BukkitMain.getInstance(), online);
+            if (!player.canSee(toHide))
+                player.showPlayer(BukkitMain.getInstance(), toHide);
+        } else if (player.canSee(toHide))
+            player.hidePlayer(BukkitMain.getInstance(), toHide);
     }
 
     public Group hidePlayer(Player player) {
