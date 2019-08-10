@@ -29,12 +29,10 @@ public class BukkitAccount extends BattleAccount {
 
     public BukkitAccount(ModelAccount model) {
         super(model);
-        scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
     }
 
     public BukkitAccount(UUID uniqueId, String name) {
         super(uniqueId, name);
-        scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
     }
 
     @Override
@@ -116,7 +114,9 @@ public class BukkitAccount extends BattleAccount {
         return this.lastTellUUID != null;
     }
 
-    public BattleScoreboard getBattleScoreboard() {
+    public BattleScoreboard getBattleboard() {
+        if (scoreboard == null)
+            scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
         return scoreboard;
     }
 

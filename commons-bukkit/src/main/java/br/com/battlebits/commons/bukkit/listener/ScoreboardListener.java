@@ -21,13 +21,10 @@ public class ScoreboardListener implements Listener {
         if (board != null) {
             for (Team t : board.getTeams()) {
                 t.unregister();
-                t = null;
             }
             for (Objective ob : board.getObjectives()) {
                 ob.unregister();
-                ob = null;
             }
-            board = null;
         }
         e.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
     }
@@ -36,7 +33,7 @@ public class ScoreboardListener implements Listener {
     public void onPlayerJoinListener(PlayerJoinEvent e) {
         final Player player = e.getPlayer();
         BukkitAccount account = (BukkitAccount) Commons.getAccount(player.getUniqueId());
-        player.setScoreboard(account.getBattleScoreboard().getScoreboard());
+        player.setScoreboard(account.getBattleboard().getScoreboard());
     }
 
 }
