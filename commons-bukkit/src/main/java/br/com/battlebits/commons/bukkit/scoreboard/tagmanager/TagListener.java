@@ -81,7 +81,8 @@ public class TagListener implements Listener {
                             continue;
                         // Evita flicks brancos
                         joinTeam(o.getScoreboard(), e.getNewTag(), p.getName());
-                        leaveTeam(o.getScoreboard(), e.getOldTag(), p.getName());
+                        if(e.getOldTag() != e.getNewTag())
+                            leaveTeam(o.getScoreboard(), e.getOldTag(), p.getName());
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
