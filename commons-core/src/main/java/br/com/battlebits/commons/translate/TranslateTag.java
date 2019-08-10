@@ -68,6 +68,13 @@ public class TranslateTag {
     public final static String COMMAND_CHAT_SUCCESS = "command.chat.success";
     public final static String COMMAND_CHAT_CANT_TALK = "command.chat.cant.talk";
 
+    public final static String COMMAND_BAN_PREFIX = "command.ban.prefix";
+    public final static String COMMAND_BAN_USAGE = "command.ban.usage";
+    public final static String COMMAND_BAN_SUCCESS = "command.ban.success";
+    public final static String COMMAND_BAN_CANT_YOURSELF = "command.ban.cant.yourself";
+    public final static String COMMAND_BAN_ALREADY_BANNED = "command.ban.already.banned";
+
+
     /**
      * Server
      */
