@@ -56,7 +56,6 @@ public class TagListener implements Listener {
     }
 
 
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerChangedGroupEvent(AsyncPlayerChangedGroupEvent event) {
         BukkitAccount bA = event.getBukkitAccount();
@@ -80,8 +79,9 @@ public class TagListener implements Listener {
                         BukkitAccount bp = BukkitAccount.getAccount(o.getUniqueId());
                         if (bp == null)
                             continue;
-                        leaveTeam(o.getScoreboard(), e.getOldTag(), p.getName());
+                        // Evita flicks brancos
                         joinTeam(o.getScoreboard(), e.getNewTag(), p.getName());
+                        leaveTeam(o.getScoreboard(), e.getOldTag(), p.getName());
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
