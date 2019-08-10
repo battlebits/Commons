@@ -3,16 +3,18 @@ package br.com.battlebits.commons.bukkit.command.registry;
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
-import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.account.VoidBattleAccount;
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.command.CommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
-import br.com.battlebits.commons.command.CommandFramework;
+import br.com.battlebits.commons.command.CommandFramework.Command;
+import br.com.battlebits.commons.command.CommandFramework.Completer;
 import br.com.battlebits.commons.command.CommandSender;
-import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
-import br.com.battlebits.commons.translate.TranslateTag;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,76 +23,74 @@ import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class GroupCommand implements CommandClass {
 
-    @CommandFramework.Command(name = "groupset", usage = "/<command> <player> <group>", groupToUse = Group.DEVELOPER, aliases = {"setgroup", "addgroup"}, noPermMessageId = TranslateTag.COMMAND_NO_PERMISSION, runAsync = true)
-    public void groupset(BukkitCommandArgs cmdArgs) {
-        final CommandSender sender = cmdArgs.getSender();
-        final String[] args = cmdArgs.getArgs();
-        Language language = Language.PORTUGUESE;
-        if (cmdArgs.isPlayer()) {
-            language = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId()).getLanguage();
-        }
-        final Language language1 = language;
-        final String groupSetPrefix = tl(language, COMMAND_GROUPSET_PREFIX) + " ";
+    @Command(name = "group", usage = "/<command> <player> <group>", groupToUse = Group.ADMIN, runAsync = true)
+    public void group(BukkitCommandArgs cmdArgs) {
+        CommandSender sender = cmdArgs.getSender();
+        String[] args = cmdArgs.getArgs();
+        Language lang = cmdArgs.getSender().getLanguage();
+        String groupSetPrefix = tl(lang, COMMAND_GROUPSET_PREFIX);
         if (args.length != 2) {
-            sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_USAGE));
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_USAGE));
             return;
         }
-        Group group = null;
+        String groupName = args[1].toUpperCase();
         try {
-            group = Group.valueOf(args[1].toUpperCase());
+            Group.valueOf(groupName);
         } catch (Exception e) {
-            sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_GROUP_NOT_EXIST));
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_GROUP_NOT_EXIST));
             return;
         }
-        final Group group1 = group;
-        boolean admin = false;
-        ServerType serverType = ServerType.DEFAULT;
+        Group group = Group.valueOf(groupName);
+        String targetPlayer = cmdArgs.getArgs()[0];
         if (cmdArgs.isPlayer()) {
             BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(cmdArgs.getPlayer().getUniqueId());
-            if (battleAccount.getServerGroup() == Group.ADMIN) {
-                admin = true;
-            } else {
-                admin = true;
-            }
-            if (group1.ordinal() <= Group.INFLUENCER.ordinal() && group1 != Group.DEFAULT) {
-                sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_GROUP_TEMPORARY));
+            if (battleAccount.getGroup().ordinal() < Group.ADMIN.ordinal()) {
+                sender.sendMessage(tl(lang, COMMAND_GROUPSET_NOT_ADMIN));
                 return;
             }
-            if (!admin) {
-                if (group1.ordinal() > Group.DONATORPLUS.ordinal()) {
-                    sender.sendMessage(tl(language, COMMAND_GROUPSET_NOT_ADMIN));
-                    return;
-                }
-                UUID uuid = cmdArgs.getPlayer().getUniqueId();
-                if (uuid == null) {
-                    sender.sendMessage(tl(language, PLAYER_NOT_EXIST));
-                    return;
-                }
-                BattleAccount battleAccount1 = Commons.getAccountCommon().getBattleAccount(uuid);
-                if (battleAccount1 == null) {
-                    try {
-                        Commons.getAccount(uuid);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        sender.sendMessage(groupSetPrefix + tl(language, SERVER_CANT_REQUEST_OFFLINE));
-                        return;
-                    }
-                    if (battleAccount1 == null) {
-                        sender.sendMessage(groupSetPrefix + tl(language, PLAYER_NEVER_JOINED));
-                        return;
-                    }
-                }
-                Group actualGroup = battleAccount1.getGroup();
-                if (actualGroup == group1) {
-                    sender.sendMessage(groupSetPrefix + tl(language, COMMAND_GROUPSET_ALREADY_IN_GROUP));
-                    return;
-                }
-                battleAccount1.setGroup(group1);
-                String message = groupSetPrefix + tl(language, COMMAND_GROUPSET_CHANGE_GROUP);
-                message = message.replace("%player%", battleAccount1.getName() + "(" + battleAccount1.getUniqueId().toString().replace("-", "") + ")");
-                message = message.replace("%group%", group1.name());
-                sender.sendMessage(message);
+        }
+        UUID uuid = Commons.getUuidOf(targetPlayer);
+        if (uuid == null) {
+            sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
+        }
+        BattleAccount account = Commons.getAccount(uuid);
+        if (account == null) {
+            account = new VoidBattleAccount(Commons.getDataAccount().getAccount(uuid));
+            if (account == null) {
+                sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
+                return;
             }
         }
+        Group targetGroup = account.getGroup();
+        if (targetGroup == group) {
+            sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_ALREADY_IN_GROUP));
+            return;
+        }
+        account.setGroup(group);
+        sender.sendMessage(groupSetPrefix + tl(lang, COMMAND_GROUPSET_CHANGE_GROUP));
+    }
+
+    @Completer(name = "group")
+    public List<String> groupCompleter(CommandArgs args) {
+        if (args.isPlayer()) {
+            if (args.getArgs().length == 1) {
+                ArrayList<String> players = new ArrayList<>();
+                for (Player p : BukkitMain.getInstance().getServer().getOnlinePlayers()) {
+                    if (p.getName().toLowerCase().startsWith(args.getArgs()[0].toLowerCase())) {
+                        players.add(p.getName());
+                    }
+                }
+                return players;
+            } else if (args.getArgs().length == 2) {
+                ArrayList<String> grupos = new ArrayList<>();
+                for (Group group : Group.values()) {
+                    if (group.toString().toLowerCase().startsWith(args.getArgs()[1].toLowerCase())) {
+                        grupos.add(group.toString());
+                    }
+                }
+                return grupos;
+            }
+        }
+        return new ArrayList<>();
     }
 }

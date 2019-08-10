@@ -37,8 +37,8 @@ public class AdminMode {
         p.setGameMode(event.getGameMode());
         Group group = VanishAPI.getInstance().hidePlayer(p);
         Language l = Commons.getLanguage(p.getUniqueId());
-        p.sendMessage(l.tl(COMMAND_ADMIN_PREFIX) + " " + l.tl(COMMAND_ADMIN_ENABLED));
-        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + " " + l.tl(COMMAND_VANISH_INVISIBLE_GROUP, group.toString()));
+        p.sendMessage(l.tl(COMMAND_ADMIN_PREFIX) + l.tl(COMMAND_ADMIN_ENABLED));
+        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + l.tl(COMMAND_VANISH_INVISIBLE, group.toString()));
     }
 
     public void setPlayer(Player p) {
@@ -48,10 +48,10 @@ public class AdminMode {
             return;
         Language l = Commons.getLanguage(p.getUniqueId());
         if (admin.contains(p.getUniqueId())) {
-            p.sendMessage(l.tl(COMMAND_ADMIN_PREFIX) + " " + l.tl(COMMAND_ADMIN_DISABLED));
+            p.sendMessage(l.tl(COMMAND_ADMIN_PREFIX) + l.tl(COMMAND_ADMIN_DISABLED));
             admin.remove(p.getUniqueId());
         }
-        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + " " + l.tl(COMMAND_VANISH_VISIBLE_ALL));
+        p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + l.tl(COMMAND_VANISH_VISIBLE_ALL));
         p.setGameMode(event.getGameMode());
         VanishAPI.getInstance().showPlayer(p);
     }

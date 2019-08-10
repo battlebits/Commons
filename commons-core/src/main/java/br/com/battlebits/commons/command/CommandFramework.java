@@ -22,8 +22,6 @@ public interface CommandFramework {
 
         Group groupToUse() default Group.DEFAULT;
 
-        String permission() default "";
-
         String noPermMessageId() default TranslateTag.COMMAND_NO_PERMISSION;
 
         String[] aliases() default {};

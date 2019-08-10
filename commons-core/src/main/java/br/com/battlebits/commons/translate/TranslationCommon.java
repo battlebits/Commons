@@ -34,7 +34,7 @@ public class TranslationCommon {
 
     public String translate(Language language, final String tag, final Object... format) {
         Map<String, MessageFormat> map = languageTranslations.computeIfAbsent(language, v -> new HashMap<>());
-        MessageFormat messageFormat = map.computeIfAbsent(tag, v -> new MessageFormat(""));
+        MessageFormat messageFormat = map.computeIfAbsent(tag, v -> new MessageFormat(tag));
         return messageFormat.format(format);
     }
 
@@ -44,7 +44,7 @@ public class TranslationCommon {
 
     public static String tl(Language language, String tag, final Object... format) {
         if (instance == null) {
-            return "";
+            return "INSTANCE NOT ENABLED";
         }
         return instance.translate(language, tag, format);
     }

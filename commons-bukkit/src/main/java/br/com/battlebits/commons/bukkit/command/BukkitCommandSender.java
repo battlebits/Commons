@@ -1,5 +1,6 @@
 package br.com.battlebits.commons.bukkit.command;
 
+import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
 import br.com.battlebits.commons.command.CommandSender;
@@ -33,7 +34,7 @@ public class BukkitCommandSender implements CommandSender {
 
     @Override
     public Language getLanguage() {
-        return null;
+        return CommonsConst.DEFAULT_LANGUAGE;
     }
 
     @Override

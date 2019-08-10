@@ -6,6 +6,7 @@ import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.model.ModelAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
+import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeGroupEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerUpdateFieldEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerUpdatedFieldEvent;
 import br.com.battlebits.commons.party.Party;
@@ -194,8 +195,12 @@ public class AccountListener implements Listener {
     public void onUpdatedField(PlayerUpdatedFieldEvent event) {
         BukkitAccount battlePlayer = event.getBukkitPlayer();
         switch (event.getField()) {
+            case "group":
+                battlePlayer.setGroup(battlePlayer.getServerGroup());
+                break;
             default:
-                //TODO: add updated fields
+                break;
+
         }
     }
 }

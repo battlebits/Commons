@@ -1,30 +1,13 @@
 package br.com.battlebits.commons.bukkit.command;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
-import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
-import br.com.battlebits.commons.command.CommandFramework;
 import br.com.battlebits.commons.command.CommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
-import br.com.battlebits.commons.translate.TranslateTag;
+import br.com.battlebits.commons.command.CommandFramework;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandException;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.help.GenericCommandHelpTopic;
 import org.bukkit.help.HelpTopic;
@@ -34,7 +17,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import static br.com.battlebits.commons.translate.TranslateTag.*;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.Map.Entry;
+
+import static br.com.battlebits.commons.translate.TranslateTag.COMMAND_NO_PERMISSION;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class BukkitCommandFramework implements CommandFramework {
@@ -76,11 +66,9 @@ public class BukkitCommandFramework implements CommandFramework {
                     Player player = (Player) sender;
                     BattleAccount battlePlayer = Commons.getAccount(player.getUniqueId());
                     if (!battlePlayer.hasGroupPermission(command.groupToUse())) {
-                        player.sendMessage(tl(battlePlayer.getLanguage(), COMMAND_NO_PERMISSION));
+                        player.sendMessage(tl(battlePlayer.getLanguage(), command.noPermMessageId()));
                         return true;
                     }
-                    battlePlayer = null;
-                    player = null;
                 }
                 if (command.runAsync() && Bukkit.isPrimaryThread()) {
                     new BukkitRunnable() {

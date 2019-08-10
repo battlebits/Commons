@@ -1,17 +1,25 @@
 package br.com.battlebits.commons.bukkit.event;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 
-public class PlayerCancellableEvent extends PlayerEvent implements Cancellable {
+public class PlayerCancellableEvent extends Event implements Cancellable {
 
+    @Getter
+    protected Player player;
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
 
-    public PlayerCancellableEvent(Player player) {
-        super(player);
+    public PlayerCancellableEvent(Player who) {
+        this(who, false);
+    }
+
+    public PlayerCancellableEvent(Player who, boolean async) {
+        super(async);
+        player = who;
     }
 
     @Override

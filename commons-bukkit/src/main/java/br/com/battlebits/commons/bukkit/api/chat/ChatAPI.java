@@ -12,6 +12,6 @@ public class ChatAPI {
 	private static final ChatAPI instance = new ChatAPI();
 
 	public enum ChatState {
-		ENABLED, STAFF, YOUTUBER, DISABLED;
+		ENABLED, STAFF, INFLUENCER, DISABLED;
 	}
 }

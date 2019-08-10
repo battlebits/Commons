@@ -6,8 +6,11 @@ import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.Tag;
 import br.com.battlebits.commons.backend.model.ModelAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
-import br.com.battlebits.commons.bukkit.event.account.PlayerChangeTagEvent;
+import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeGroupEvent;
+import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeTagEvent;
+import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangedGroupEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerLanguageEvent;
+import br.com.battlebits.commons.bukkit.scoreboard.BattleScoreboard;
 import br.com.battlebits.commons.translate.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,6 +24,7 @@ public class BukkitAccount extends BattleAccount {
 
     private Player player;
     private UUID lastTellUUID;
+    private BattleScoreboard scoreboard;
     private ArrayList<Tag> tags = new ArrayList<>();
 
     public BukkitAccount(ModelAccount model) {
@@ -40,9 +44,7 @@ public class BukkitAccount extends BattleAccount {
         if (!tags.contains(tag) && !forcetag) {
             tag = getDefaultTag();
         }
-        if(!Bukkit.isPrimaryThread())
-            return false;
-        PlayerChangeTagEvent event = new PlayerChangeTagEvent(getPlayer(), getTag(), tag, forcetag);
+        AsyncPlayerChangeTagEvent event = new AsyncPlayerChangeTagEvent(getPlayer(), getTag(), tag, forcetag);
         BukkitMain.getInstance().getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
             if (!forcetag)
@@ -61,6 +63,17 @@ public class BukkitAccount extends BattleAccount {
         // TODO Level Up
     }
 
+    @Override
+    public void setGroup(Group group) {
+        AsyncPlayerChangeGroupEvent event = new AsyncPlayerChangeGroupEvent(getPlayer(), this, group);
+        BukkitMain.getInstance().getServer().getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            super.setGroup(group);
+            AsyncPlayerChangedGroupEvent event2 = new AsyncPlayerChangedGroupEvent(this);
+            BukkitMain.getInstance().getServer().getPluginManager().callEvent(event2);
+        }
+    }
+
     public void loadTags() {
         tags.clear();
         for (Tag t : Tag.values()) {
@@ -70,6 +83,10 @@ public class BukkitAccount extends BattleAccount {
                 tags.add(t);
             }
         }
+    }
+
+    public ArrayList<Tag> getTags() {
+        return tags;
     }
 
     @Override
@@ -95,6 +112,12 @@ public class BukkitAccount extends BattleAccount {
 
     public boolean hasLastTell() {
         return this.lastTellUUID != null;
+    }
+
+    public BattleScoreboard getBattleboard() {
+        if (scoreboard == null)
+            scoreboard = new BattleScoreboard(getPlayer(), "scoreboardName");
+        return scoreboard;
     }
 
     public Player getPlayer() {
