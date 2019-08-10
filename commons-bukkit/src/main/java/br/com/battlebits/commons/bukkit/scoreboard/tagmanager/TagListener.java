@@ -51,16 +51,15 @@ public class TagListener implements Listener {
                 continue;
             String id = getTeamName(bp.getTag());
             String tag = ChatColor.getByChar(bp.getTag().getColor()) + "" + ChatColor.BOLD + bp.getTag().getPrefix();
-            Team t = o.getScoreboard().getTeam(id);
+            Team t = p.getScoreboard().getTeam(id);
             if (t == null) {
-                t = o.getScoreboard().registerNewTeam(id);
+                t = p.getScoreboard().registerNewTeam(id);
             }
             t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
             t.setSuffix("");
             t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
-            t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-            if (!t.getEntries().contains(p.getName())) {
-                t.addEntry(p.getName());
+            if (!t.getEntries().contains(o.getName())) {
+                t.addEntry(o.getName());
             }
         }
     }
@@ -108,8 +107,7 @@ public class TagListener implements Listener {
                         }
                         t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
                         t.setSuffix("");
-                        t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
-                        t.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+                        t.setColor(color);
                         if (!t.getEntries().contains(p.getName())) {
                             t.addEntry(p.getName());
                         }
