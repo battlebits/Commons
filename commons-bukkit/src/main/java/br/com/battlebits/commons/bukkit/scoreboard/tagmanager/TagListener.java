@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 public class TagListener implements Listener {
@@ -49,20 +50,12 @@ public class TagListener implements Listener {
             BukkitAccount bp = BukkitAccount.getAccount(o.getUniqueId());
             if (bp == null)
                 continue;
-            String id = getTeamName(bp.getTag());
-            String tag = ChatColor.getByChar(bp.getTag().getColor()) + "" + ChatColor.BOLD + bp.getTag().getPrefix();
-            Team t = p.getScoreboard().getTeam(id);
-            if (t == null) {
-                t = p.getScoreboard().registerNewTeam(id);
-            }
-            t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
-            t.setSuffix("");
-            t.setColor(ChatColor.getByChar(bp.getTag().getColor()));
-            if (!t.getEntries().contains(o.getName())) {
-                t.addEntry(o.getName());
-            }
+            joinTeam(p.getScoreboard(), bp.getTag(), o.getName());
+            joinTeam(o.getScoreboard(), account.getTag(), p.getName());
         }
     }
+
+
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerChangedGroupEvent(AsyncPlayerChangedGroupEvent event) {
@@ -79,13 +72,6 @@ public class TagListener implements Listener {
         if (p == null) {
             return;
         }
-        BukkitAccount account = BukkitAccount.getAccount(p.getUniqueId());
-        if (account == null)
-            return;
-        String id = getTeamName(e.getNewTag());
-        String oldId = getTeamName(e.getOldTag());
-        ChatColor color = ChatColor.getByChar(e.getNewTag().getColor());
-        String tag = color + "" + ChatColor.BOLD + e.getNewTag().getPrefix();
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -94,23 +80,8 @@ public class TagListener implements Listener {
                         BukkitAccount bp = BukkitAccount.getAccount(o.getUniqueId());
                         if (bp == null)
                             continue;
-                        Team oldTeam = o.getScoreboard().getTeam(oldId);
-                        if (oldTeam != null) {
-                            oldTeam.getEntries().remove(p.getName());
-                            if (oldTeam.getEntries().isEmpty()) {
-                                oldTeam.unregister();
-                            }
-                        }
-                        Team t = o.getScoreboard().getTeam(id);
-                        if (t == null) {
-                            t = o.getScoreboard().registerNewTeam(id);
-                        }
-                        t.setPrefix(tag + (ChatColor.stripColor(tag).trim().length() > 0 ? " " : ""));
-                        t.setSuffix("");
-                        t.setColor(color);
-                        if (!t.getEntries().contains(p.getName())) {
-                            t.addEntry(p.getName());
-                        }
+                        leaveTeam(o.getScoreboard(), e.getOldTag(), p.getName());
+                        joinTeam(o.getScoreboard(), e.getNewTag(), p.getName());
                     } catch (Exception e2) {
                         e2.printStackTrace();
                     }
@@ -123,7 +94,35 @@ public class TagListener implements Listener {
     private static char[] chars = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    public static String getTeamName(Tag tag) {
+    private void joinTeam(Scoreboard board, Tag tag, String name) {
+        String id = getTeamName(tag);
+        ChatColor color = ChatColor.getByChar(tag.getColor());
+        String prefix = color + "" + ChatColor.BOLD + tag.getPrefix();
+
+        Team team = board.getTeam(id);
+        if (team == null) {
+            team = board.registerNewTeam(id);
+        }
+        team.setPrefix(prefix + (ChatColor.stripColor(prefix).trim().length() > 0 ? " " : ""));
+        team.setSuffix("");
+        team.setColor(color);
+        if (!team.hasEntry(name)) {
+            team.addEntry(name);
+        }
+    }
+
+    private void leaveTeam(Scoreboard board, Tag tag, String name) {
+        String id = getTeamName(tag);
+        Team oldTeam = board.getTeam(id);
+        if (oldTeam != null) {
+            oldTeam.removeEntry(name);
+            if (oldTeam.getEntries().isEmpty()) {
+                oldTeam.unregister();
+            }
+        }
+    }
+
+    private String getTeamName(Tag tag) {
         return chars[tag.ordinal()] + "";
     }
 

@@ -30,7 +30,7 @@ public class VanishAPI {
             if (online.getUniqueId().equals(player.getUniqueId()))
                 continue;
             BattleAccount onlineP = Commons.getAccount(online.getUniqueId());
-            if (group != null && onlineP.getServerGroup().ordinal() <= group.ordinal()) {
+            if (group != null && onlineP.getServerGroup().ordinal() < group.ordinal()) {
                 callHideToPlayerEvent(online, player);
                 continue;
             }
@@ -45,7 +45,7 @@ public class VanishAPI {
                 continue;
             Group group = vanishedToGroup.get(online.getUniqueId());
             if (group != null) {
-                if (bP.getServerGroup().ordinal() <= group.ordinal()) {
+                if (bP.getServerGroup().ordinal() < group.ordinal()) {
                     callHideToPlayerEvent(online, player);
                     continue;
                 }
