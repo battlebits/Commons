@@ -74,6 +74,10 @@ public class TranslateTag {
     public final static String COMMAND_BAN_CANT_YOURSELF = "command.ban.cant.yourself";
     public final static String COMMAND_BAN_ALREADY_BANNED = "command.ban.already.banned";
 
+    public final static String COMMAND_UNBAN_PREFIX = "command.unban.prefix";
+    public final static String COMMAND_UNBAN_USAGE = "command.unban.usage";
+    public final static String COMMAND_UNBAN_NOT_BANNED = "command.unban.not.banned";
+    public final static String COMMAND_UNBAN_SUCCESS = "command.unban.success";
 
     /**
      * Server
