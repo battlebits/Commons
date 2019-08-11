@@ -30,6 +30,7 @@ public class PunishManager {
         });
     }
 
+
     public void ban(BattleAccount player, Ban ban) {
         player.getPunishmentHistory().getBanHistory().add(ban);
         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -46,5 +47,21 @@ public class PunishManager {
             Commons.getDataAccount().saveAccount(player, "punishmentHistoric");
             Bukkit.getPlayer(player.getUniqueId()).kickPlayer("Voce foi banido!"); //remove this later
         }
+    }
+
+    public void unban(BattleAccount bannedByPlayer, BattleAccount player, Ban currentBan) {
+        if (bannedByPlayer != null) {
+            currentBan.unban(bannedByPlayer);
+        } else {
+            currentBan.unban();
+        }
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(online.getUniqueId());
+            if (battleAccount.hasGroupPermission(Group.ADMIN)) {
+                String unbanSuccess = tl(COMMAND_UNBAN_PREFIX) + tl(COMMAND_UNBAN_SUCCESS, player.getUniqueId().toString().replace("-", ""), currentBan.getUnbannedBy());
+                online.sendMessage(unbanSuccess);
+            }
+        }
+        Commons.getDataAccount().saveAccount(player, "punishmentHistoric");
     }
 }
