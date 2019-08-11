@@ -20,6 +20,7 @@ import br.com.battlebits.commons.bukkit.api.menu.MenuListener;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
 import br.com.battlebits.commons.bukkit.listener.*;
+import br.com.battlebits.commons.bukkit.manager.PunishManager;
 import br.com.battlebits.commons.bukkit.scheduler.UpdateScheduler;
 import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagListener;
 import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagManager;
@@ -61,6 +62,7 @@ public class BukkitMain extends JavaPlugin {
     private TranslationCommon translationCommon;
 
     private TagManager tagManager;
+    private PunishManager punishManager;
 
     @Override
     public void onLoad() {
