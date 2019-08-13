@@ -15,7 +15,7 @@ public class Backend {
         db.connect();
         MongoStorageDataAccount dataAccount = new MongoStorageDataAccount(db);
 
-        Commons.initialize(null, null, null, dataAccount, null, null, null, null);
+        Commons.initialize(null, null, null, dataAccount, null, null, null, null, null);
 
         BattleAccount account = new BattleAccount(UUID.randomUUID(), "GustavoInacio") {
             @Override
