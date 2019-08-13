@@ -1,24 +1,26 @@
 package br.com.battlebits.commons.backend.nullable;
 
+import br.com.battlebits.commons.backend.DataClan;
 import br.com.battlebits.commons.backend.DataTeam;
+import br.com.battlebits.commons.clan.Clan;
 import br.com.battlebits.commons.team.Team;
 
 import java.util.UUID;
 
-public class VoidDataTeam implements DataTeam {
+public class VoidDataClan implements DataClan {
 
     @Override
-    public Team getTeam(UUID uniqueId) {
+    public Clan getClan(UUID uniqueId) {
         return null;
     }
 
     @Override
-    public void saveTeam(Team team) {
+    public void saveClan(Clan clan) {
 
     }
 
     @Override
-    public void saveTeam(Team team, String fieldName) {
+    public void saveClan(Clan team, String fieldName) {
 
     }
 }

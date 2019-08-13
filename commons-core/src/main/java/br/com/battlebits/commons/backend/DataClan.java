@@ -1,39 +1,15 @@
 package br.com.battlebits.commons.backend;
 
-import br.com.battlebits.commons.account.BattleAccount;
-import br.com.battlebits.commons.backend.model.ModelAccount;
+import br.com.battlebits.commons.clan.Clan;
+import br.com.battlebits.commons.team.Team;
 
 import java.util.UUID;
 
-/**
- * Handle the save/load of accounts
- */
-public interface DataAccount {
+public interface DataClan {
 
-    /**
-     * Handle the account creation and store
-     * @param uuid
-     * @return new/current account
-     */
-    ModelAccount getAccount(UUID uuid);
+    Clan getClan(UUID uniqueId);
 
-    /**
-     * Save a full account
-     * @param account
-     */
-    void saveAccount(BattleAccount account);
+    void saveClan(Clan clan);
 
-    /**
-     * Save a field account
-     * @param account
-     * @param field
-     */
-    void saveAccount(BattleAccount account, String field);
-
-    /**
-     * Save a field from account configuration
-     * @param account
-     * @param field
-     */
-    void saveConfiguration(BattleAccount account, String field);
+    void saveClan(Clan team, String fieldName);
 }

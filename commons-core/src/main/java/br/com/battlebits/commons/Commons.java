@@ -3,9 +3,11 @@ package br.com.battlebits.commons;
 import br.com.battlebits.commons.account.AccountCommon;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
+import br.com.battlebits.commons.backend.DataClan;
 import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.DataTeam;
 import br.com.battlebits.commons.backend.logging.DataLog;
+import br.com.battlebits.commons.clan.ClanCommon;
 import br.com.battlebits.commons.party.PartyCommon;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.team.TeamCommon;
@@ -29,6 +31,9 @@ public class Commons {
     private static PartyCommon partyCommon = new PartyCommon();
 
     @Getter
+    private static ClanCommon clanCommon = new ClanCommon();
+
+    @Getter
     private static String serverId;
 
     @Getter
@@ -44,11 +49,13 @@ public class Commons {
     private static DataServer dataServer;
 
     @Getter
+    private static DataClan dataClan;
+
+    @Getter
     private static DataLog dataLog;
 
     @Getter
     private static CommonPlatform platform;
-
 
     @Getter
     private static Logger logger;
@@ -61,6 +68,7 @@ public class Commons {
                                   DataAccount _dataAccount, //
                                   DataTeam _dataTeam, //
                                   DataServer _dataServer, //
+                                  DataClan _dataClan, //
                                   DataLog _dataLog,
                                   CommonPlatform commonPlatform) throws Exception {
         if (initialized)
@@ -71,6 +79,7 @@ public class Commons {
         dataAccount = _dataAccount;
         dataTeam = _dataTeam;
         dataServer = _dataServer;
+        dataClan = _dataClan;
         dataLog = _dataLog;
         platform = commonPlatform;
         initialized = true;
@@ -79,7 +88,7 @@ public class Commons {
     public static UUID getUuidOf(String playerName) {
         Objects.requireNonNull(platform);
         UUID uuid = platform.getUUID(playerName);
-        if(uuid == null) {
+        if (uuid == null) {
             uuid = UUIDFetcher.getUUID(playerName);
         }
         return uuid;

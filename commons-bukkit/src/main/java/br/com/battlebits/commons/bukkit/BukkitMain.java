@@ -2,14 +2,12 @@ package br.com.battlebits.commons.bukkit;
 
 import br.com.battlebits.commons.CommonPlatform;
 import br.com.battlebits.commons.Commons;
-import br.com.battlebits.commons.backend.DataAccount;
-import br.com.battlebits.commons.backend.DataServer;
-import br.com.battlebits.commons.backend.DataTeam;
-import br.com.battlebits.commons.backend.Database;
+import br.com.battlebits.commons.backend.*;
 import br.com.battlebits.commons.backend.logging.DataLog;
 import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.mongodb.MongoDatabase;
 import br.com.battlebits.commons.backend.mongodb.MongoStorageDataAccount;
+import br.com.battlebits.commons.backend.nullable.VoidDataClan;
 import br.com.battlebits.commons.backend.nullable.VoidDataLog;
 import br.com.battlebits.commons.backend.nullable.VoidDataServer;
 import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
@@ -83,10 +81,11 @@ public class BukkitMain extends JavaPlugin {
             DataServer dataServer = new VoidDataServer();
             DataAccount dataAccount = new MongoStorageDataAccount((MongoDatabase) database);
             DataTeam dataTeam = new VoidDataTeam();
+            DataClan dataClan = new VoidDataClan();
             DataLog dataLog = new VoidDataLog();
             CommonPlatform platform = new BukkitPlatform();
 
-            Commons.initialize(getLogger(), serverId, type, dataAccount, dataTeam, dataServer, dataLog, platform);
+            Commons.initialize(getLogger(), serverId, type, dataAccount, dataTeam, dataServer, dataClan, dataLog, platform);
         } catch (Exception e) {
             e.printStackTrace();
         }
