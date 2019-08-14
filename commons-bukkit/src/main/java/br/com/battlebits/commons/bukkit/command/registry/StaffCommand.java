@@ -126,7 +126,7 @@ public class StaffCommand implements CommandClass {
         }
     }
 
-    @CommandFramework.Command(name = "clearchat", aliases = {"limparchat", "cc"}, groupToUse = Group.ADMIN)
+    @CommandFramework.Command(name = "clearchat", groupToUse = Group.ADMIN)
     public void cleachat(BukkitCommandArgs cmdArgs) {
         Player p = cmdArgs.getPlayer();
         BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());

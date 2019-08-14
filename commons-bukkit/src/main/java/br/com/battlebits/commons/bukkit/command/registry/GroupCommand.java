@@ -3,7 +3,6 @@ package br.com.battlebits.commons.bukkit.command.registry;
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
-import br.com.battlebits.commons.account.VoidBattleAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.command.CommandArgs;
@@ -53,13 +52,10 @@ public class GroupCommand implements CommandClass {
         if (uuid == null) {
             sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
         }
-        BattleAccount account = Commons.getAccount(uuid);
+        BattleAccount account = Commons.getOfflineAccount(uuid);
         if (account == null) {
-            account = new VoidBattleAccount(Commons.getDataAccount().getAccount(uuid));
-            if (account == null) {
-                sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
-                return;
-            }
+            sender.sendMessage(groupSetPrefix + tl(lang, PLAYER_NOT_EXIST));
+            return;
         }
         Group targetGroup = account.getGroup();
         if (targetGroup == group) {

@@ -2,6 +2,7 @@ package br.com.battlebits.commons;
 
 import br.com.battlebits.commons.account.AccountCommon;
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.account.VoidBattleAccount;
 import br.com.battlebits.commons.backend.DataAccount;
 import br.com.battlebits.commons.backend.DataServer;
 import br.com.battlebits.commons.backend.DataTeam;
@@ -16,6 +17,9 @@ import lombok.Getter;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import static br.com.battlebits.commons.translate.TranslateTag.PLAYER_NOT_EXIST;
+import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class Commons {
 
@@ -87,6 +91,14 @@ public class Commons {
 
     public static BattleAccount getAccount(UUID uuid) {
         return accountCommon.getBattleAccount(uuid);
+    }
+
+    public static BattleAccount getOfflineAccount(UUID uuid) {
+        BattleAccount account = Commons.getAccount(uuid);
+        if (account == null) {
+            account = new VoidBattleAccount(Commons.getDataAccount().getAccount(uuid));
+        }
+        return account;
     }
 
     public static Language getLanguage(UUID uuid) {
