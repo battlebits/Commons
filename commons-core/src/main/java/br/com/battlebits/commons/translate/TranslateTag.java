@@ -22,10 +22,31 @@ public class TranslateTag {
 
 
     /**
+     * Menu
+     */
+    public final static String MENU_ACCOUNT_TITLE = "menu.account.title";
+    public final static String MENU_ACCOUNT_DONT_HAVE_TEAM = "menu.account.dont-have-team";
+    public final static String MENU_ACCOUNT_TEAM_NAME = "menu.account.team-name";
+    public final static String MENU_ACCOUNT_TIME_INFO = "menu.account.time-info";
+    public final static String MENU_ACCOUNT_FIRST_LOGIN = "menu.account.first-login";
+    public final static String MENU_ACCOUNT_LAST_LOGIN = "menu.account.last-login";
+    public final static String MENU_ACCOUNT_CURRENT_ONLINE = "menu.account.current-online";
+    public final static String MENU_ACCOUNT_TOTAL_ONLINE = "menu.account.total-online";
+    public final static String MENU_ACCOUNT_ACTUAL_GROUP = "menu.account.actual-group";
+    public final static String MENU_ACCOUNT_BANS = "menu.account.bans";
+    public final static String MENU_ACCOUNT_BANS_LORE = "menu.account.bans-lore";
+    public final static String MENU_ACCOUNT_MUTES = "menu.account.mutes";
+    public final static String MENU_ACCOUNT_MUTES_LORE = "menu.account.mutes-lore";
+    public final static String MENU_ACCOUNT_SETTINGS = "menu.account.settings";
+    public final static String MENU_ACCOUNT_SETTINGS_LORE = "menu.account.settings-lore";
+    /**
      * Command
      */
     public final static String COMMAND_NOT_FOUND = "command.not-found";
     public final static String COMMAND_NO_PERMISSION = "command.no-permission";
+
+    public final static String COMMAND_ACCOUNT_PREFIX = "command.account.prefix";
+
 
     public final static String COMMAND_ADMIN_PREFIX = "command.admin.prefix";
     public final static String COMMAND_ADMIN_ENABLED = "command.admin.enabled";

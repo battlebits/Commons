@@ -44,7 +44,7 @@ public class PunishManager {
                 }
                 online.sendMessage(banSuccess);
             }
-            Commons.getDataAccount().saveAccount(player, "punishmentHistoric");
+            Commons.getDataAccount().saveAccount(player, "punishmentHistory");
             Bukkit.getPlayer(player.getUniqueId()).kickPlayer("Voce foi banido!"); //remove this later
         }
     }
@@ -62,6 +62,6 @@ public class PunishManager {
                 online.sendMessage(unbanSuccess);
             }
         }
-        Commons.getDataAccount().saveAccount(player, "punishmentHistoric");
+        Commons.getDataAccount().saveAccount(player, "punishmentHistory");
     }
 }
