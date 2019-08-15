@@ -33,14 +33,14 @@ public class MenuAccount extends MenuInventory {
         super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6);
         accountUuid = account.getUniqueId();
         this.l = l;
-        ItemBuilder builder = ItemBuilder.create(Material.SKELETON_SKULL).durability(3).name(account.getName());
+        ItemBuilder builder = ItemBuilder.create(Material.PLAYER_HEAD).name(account.getName());
         ItemStack stack = builder.build();
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(account.getUniqueId()));
         stack.setItemMeta(meta);
         MenuItem item = new MenuItem(stack);
         setItem(13, item);
-        String clanName = MENU_ACCOUNT_DONT_HAVE_TEAM;
+        String clanName = l.tl(MENU_ACCOUNT_DONT_HAVE_TEAM);
         if (account.getTeam() != null)
             clanName = account.getTeam().getName();
         stack = ItemBuilder.create(Material.BLAZE_POWDER).name(ChatColor.GOLD + "" + ChatColor.BOLD + "Team").lore(l.tl(MENU_ACCOUNT_TEAM_NAME, clanName)).build();
