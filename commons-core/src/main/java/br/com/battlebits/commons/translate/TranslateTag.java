@@ -20,6 +20,15 @@ public class TranslateTag {
      */
     public final static String PARTY_PREFIX = "party.prefix";
 
+    /**
+     * Time
+     */
+
+    public final static String TIME_DAY = "time.day";
+    public final static String TIME_HOUR = "time.hour";
+    public final static String TIME_MINUTE = "time.minute";
+    public final static String TIME_SECOND = "time.second";
+
 
     /**
      * Menu

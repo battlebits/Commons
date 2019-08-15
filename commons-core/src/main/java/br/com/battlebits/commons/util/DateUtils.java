@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static br.com.battlebits.commons.translate.TranslateTag.*;
+
 public class DateUtils {
 
     public static String formatDifference(Language lang, long time) {
@@ -23,19 +25,22 @@ public class DateUtils {
         StringBuilder sb = new StringBuilder();
 
         if (day > 0) {
-            sb.append(day).append(" ").append(lang.tl("day") + (day > 1 ? "s" : "")).append(" ");
-        }
-
-        if (hours > 0) {
-            sb.append(hours).append(" ").append(lang.tl("hour") + (hours > 1 ? "s" : "")).append(" ");
-        }
-
-        if (minutes > 0) {
-            sb.append(minutes).append(" ").append(lang.tl("minute") + (minutes > 1 ? "s" : "")).append(" ");
-        }
-
-        if (seconds > 0) {
-            sb.append(seconds).append(" ").append(lang.tl("second") + (seconds > 1 ? "s" : ""));
+            sb.append(day).append(" ").append(lang.tl(TIME_DAY) + (day > 1 ? "s" : "")).append(" ");
+            if (hours > 0) {
+                sb.append(hours).append(" ").append(lang.tl(TIME_HOUR) + (hours > 1 ? "s" : "")).append(" ");
+            }
+        } else if (hours > 0) {
+            sb.append(hours).append(" ").append(lang.tl(TIME_HOUR) + (hours > 1 ? "s" : "")).append(" ");
+            if (minutes > 0) {
+                sb.append(minutes).append(" ").append(lang.tl(TIME_MINUTE) + (minutes > 1 ? "s" : "")).append(" ");
+            }
+        } else if (minutes > 0) {
+            sb.append(minutes).append(" ").append(lang.tl(TIME_MINUTE) + (minutes > 1 ? "s" : "")).append(" ");
+            if (seconds > 0) {
+                sb.append(seconds).append(" ").append(lang.tl(TIME_SECOND) + (seconds > 1 ? "s" : ""));
+            }
+        } else if (seconds > 0) {
+            sb.append(seconds).append(" ").append(lang.tl(TIME_SECOND) + (seconds > 1 ? "s" : ""));
         }
 
         return sb.toString();
