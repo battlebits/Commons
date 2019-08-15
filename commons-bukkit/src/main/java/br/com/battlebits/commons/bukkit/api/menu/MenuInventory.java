@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_14_R1.PacketPlayOutOpenWindow;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -42,7 +43,7 @@ public class MenuInventory {
 		this.title = title;
 		this.onePerPlayer = onePerPlayer;
 		if (!onePerPlayer) {
-			this.inv = Bukkit.createInventory(new MenuHolder(this), rows * 9, "");
+			this.inv = Bukkit.createInventory(new MenuHolder(this), rows * 9, this.title);
 		}
 	}
 
@@ -129,7 +130,7 @@ public class MenuInventory {
 			}
 			((MenuHolder) p.getOpenInventory().getTopInventory().getHolder()).setMenu(this);
 		}
-		updateTitle(p);
+		//updateTitle(p);
 		// Garbage Colector
 		p = null;
 	}
@@ -138,6 +139,7 @@ public class MenuInventory {
 		this.title = title;
 	}
 
+	@Deprecated
 	public void updateTitle(Player p) {
 		try {
 			PacketContainer packet = new PacketContainer(PacketType.Play.Server.OPEN_WINDOW);
@@ -164,7 +166,7 @@ public class MenuInventory {
 	}
 
 	public void createAndOpenInventory(Player p) {
-		Inventory playerInventory = Bukkit.createInventory(new MenuHolder(this), rows * 9, "");
+		Inventory playerInventory = Bukkit.createInventory(new MenuHolder(this), rows * 9, this.title);
 		for (Entry<Integer, MenuItem> entry : slotItem.entrySet()) {
 			playerInventory.setItem(entry.getKey(), entry.getValue().getStack());
 		}
