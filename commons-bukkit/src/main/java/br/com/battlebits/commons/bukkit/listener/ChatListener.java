@@ -45,8 +45,8 @@ public class ChatListener implements Listener {
                     break;
                 }
                 break;
-            case INFLUENCER:
-                if (battlePlayer.getServerGroup().ordinal() < Group.INFLUENCER.ordinal()) {
+            case CREATOR:
+                if (battlePlayer.getServerGroup().ordinal() < Group.CREATOR.ordinal()) {
                     event.setCancelled(true);
                     break;
                 }

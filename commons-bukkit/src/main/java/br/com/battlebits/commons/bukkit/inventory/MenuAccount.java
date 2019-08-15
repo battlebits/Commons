@@ -48,7 +48,7 @@ public class MenuAccount extends MenuInventory {
         setItem(19, stack);
         stack = ItemBuilder.create(Material.GOLD_INGOT).name(ChatColor.GOLD + "BattleMoney").lore(ChatColor.GRAY + "" + account.getBattleMoney()).build();
         setItem(21, stack);
-        stack = ItemBuilder.create(Material.EMERALD).name(ChatColor.GREEN+ "BattleCoins").lore(ChatColor.GRAY + "" + account.getBattleCoins()).build();
+        stack = ItemBuilder.create(Material.EMERALD).name(ChatColor.GREEN + "BattleCoins").lore(ChatColor.GRAY + "" + account.getBattleCoins()).build();
         setItem(22, stack);
         stack = ItemBuilder.create(Material.EXPERIENCE_BOTTLE).name(ChatColor.DARK_PURPLE + "XP").lore(ChatColor.GRAY + "" + account.getXp()).build();
         setItem(23, stack);
@@ -68,8 +68,8 @@ public class MenuAccount extends MenuInventory {
         }
         builder.lore(loreList);
         setItem(25, builder.build());
-
-        setItem(49, ItemBuilder.create(Material.ENDER_EYE).name(l.tl(MENU_ACCOUNT_ACTUAL_GROUP, Tag.valueOf(account.getServerGroup().toString()).getPrefix())).build());
+        Tag tag = Tag.valueOf(account.getServerGroup().toString());
+        setItem(49, ItemBuilder.create(Material.ENDER_EYE).name(l.tl(MENU_ACCOUNT_ACTUAL_GROUP, ChatColor.getByChar(tag.getColor()) + "" + ChatColor.BOLD + tag.getPrefix())).build());
 
         setItem(51, new MenuItem(ItemBuilder.create(Material.BARRIER).name(l.tl(MENU_ACCOUNT_BANS)).lore(l.tl(MENU_ACCOUNT_BANS_LORE)).build(), new MenuClickHandler() {
 
