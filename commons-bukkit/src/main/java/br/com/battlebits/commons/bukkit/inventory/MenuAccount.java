@@ -60,9 +60,10 @@ public class MenuAccount extends MenuInventory {
         loreList.add(l.tl(MENU_ACCOUNT_FIRST_LOGIN, df.format(date)));
         date = new Date(account.getLastLoggedIn());
         loreList.add(l.tl(MENU_ACCOUNT_LAST_LOGIN, df.format(date)));
-        loreList.add(l.tl(MENU_ACCOUNT_TOTAL_ONLINE, DateUtils.formatDifference(l, account.getOnlineTime() / 1000)) + "\n");
+        loreList.add(l.tl(MENU_ACCOUNT_TOTAL_ONLINE, DateUtils.formatDifference(l, account.getOnlineTime() / 1000)));
         if (account.isOnline()) {
             date = new Date(System.currentTimeMillis() - account.getJoinTime());
+            loreList.add("");
             loreList.add(l.tl(MENU_ACCOUNT_CURRENT_ONLINE, DateUtils.formatDifference(l, (System.currentTimeMillis() - account.getJoinTime()) / 1000)));
         }
         builder.lore(loreList);
