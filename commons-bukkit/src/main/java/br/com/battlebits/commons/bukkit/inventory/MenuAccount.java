@@ -54,7 +54,7 @@ public class MenuAccount extends MenuInventory {
         setItem(23, stack);
         builder = ItemBuilder.create(Material.CLOCK).name(l.tl(MENU_ACCOUNT_TIME_INFO));
         Date date = new Date(account.getFirstTimePlaying());
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:SS");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         List<String> loreList = new ArrayList<>();
         loreList.add("");
         loreList.add(l.tl(MENU_ACCOUNT_FIRST_LOGIN, df.format(date)));
