@@ -2,12 +2,14 @@ package br.com.battlebits.commons.bukkit.command.registry;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.bukkit.inventory.MenuAccount;
 import br.com.battlebits.commons.command.CommandClass;
 import br.com.battlebits.commons.command.CommandFramework.Command;
 import br.com.battlebits.commons.command.CommandSender;
 import br.com.battlebits.commons.translate.Language;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
@@ -40,6 +42,11 @@ public class AccountCommand implements CommandClass {
         }
 
         MenuAccount menu = new MenuAccount(account, l);
-        menu.open(cmdArgs.getPlayer());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                menu.open(cmdArgs.getPlayer());
+            }
+        }.runTask(BukkitMain.getInstance());
     }
 }
