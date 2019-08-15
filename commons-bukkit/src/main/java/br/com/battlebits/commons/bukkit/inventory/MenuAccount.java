@@ -30,7 +30,7 @@ public class MenuAccount extends MenuInventory {
     private Language l;
 
     public MenuAccount(BattleAccount account, Language l) {
-        super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6, true);
+        super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6);
         accountUuid = account.getUniqueId();
         this.l = l;
         ItemBuilder builder = ItemBuilder.create(Material.SKELETON_SKULL).durability(3).name(account.getName());
