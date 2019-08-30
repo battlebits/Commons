@@ -35,7 +35,6 @@ processResources {
     if (System.getenv('BUILD_NUMBER')) {
         fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
     }
-    version = fullVersion
     filesMatching('plugin.yml') {
         expand(["fullVersion":fullVersion])
     }
