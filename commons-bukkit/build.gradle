@@ -50,12 +50,16 @@ shadowJar {
     //${archiveBaseName}-${archiveAppendix}-${archiveVersion}-${archiveClassifier}.${archiveExtension}
 }
 
+
+
 publishing {
+    def nexusUser = "${nexusUser}"
+    def nexusPassword = "${nexusPassword}"
     publications {
         mavenJava(MavenPublication) {
             from components.java
             afterEvaluate {
-                artifactId = 'commons-bukkit-1.0-SNAPSHOT'
+                artifactId = 'commons-bukkit'
             }
         }
     }
@@ -64,8 +68,8 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? 'https://repo.battlebits.com.br/repository/maven-snapshots/':
                     'https://repo.battlebits.com.br/repository/maven-releases/'
             credentials {
-                username '$mavenUser'
-                password '$mavenPassword'
+                username nexusUser
+                password nexusPassword
             }
         }
     }
