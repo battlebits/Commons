@@ -1,6 +1,7 @@
 plugins {
     id "io.freefair.lombok" version "3.8.1"
     id 'java'
+    id 'maven-publish'
 }
 
 group 'br.com.battlebits'
@@ -25,4 +26,27 @@ sourceSets {
     main.resources.srcDir "src/main/resources"
     main.java.srcDir "src/test/java"
     main.resources.srcDir "src/test/resources"
+}
+
+publishing {
+    def nexusUser = "${nexusUser}"
+    def nexusPassword = "${nexusPassword}"
+    publications {
+        mavenCore(MavenPublication) {
+            from components.java
+            afterEvaluate {
+                artifactId = 'commons-core'
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = version.endsWith('SNAPSHOT') ? 'https://repo.battlebits.com.br/repository/maven-snapshots/':
+                    'https://repo.battlebits.com.br/repository/maven-releases/'
+            credentials {
+                username nexusUser
+                password nexusPassword
+            }
+        }
+    }
 }
