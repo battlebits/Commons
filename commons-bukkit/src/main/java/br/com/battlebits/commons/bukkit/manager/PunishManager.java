@@ -1,6 +1,7 @@
 package br.com.battlebits.commons.bukkit.manager;
 
 import br.com.battlebits.commons.Commons;
+import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.punishment.Ban;
@@ -38,14 +39,14 @@ public class PunishManager {
             if (battleAccount != null && battleAccount.hasGroupPermission(Group.ADMIN)) {
                 String banSuccess = "";
                 if (ban.isPermanent()) {
-                    banSuccess = tl(COMMAND_BAN_PREFIX) + tl(COMMAND_BAN_SUCCESS, player.getUniqueId().toString().toString().replace("-", ""), ban.getBannedBy(), ban.getDuration());
+                    banSuccess = tl(COMMAND_BAN_PREFIX) + tl(COMMAND_BAN_SUCCESS, player.getUniqueId().toString().replace("-", ""), ban.getBannedBy(), ban.getDuration());
                 } else {
-                    //TODO: with tempban
+                    banSuccess = tl(COMMAND_TEMPBAN_PREFIX) + tl(COMMAND_TEMPBAN_SUCCESS, player.getUniqueId().toString().replace("-", ""), ban.getBannedBy(), ban.getDuration());
                 }
                 online.sendMessage(banSuccess);
             }
             Commons.getDataAccount().saveAccount(player, "punishmentHistory");
-            Bukkit.getPlayer(player.getUniqueId()).kickPlayer("Voce foi banido!"); //remove this later
+            Bukkit.getPlayer(player.getUniqueId()).kickPlayer(tl(COMMAND_BAN_KICK, ban.getBannedBy(), ban.getReason(), ban.getDuration(), CommonsConst.FORUM_WEBSITE, CommonsConst.WEBSITE));
         }
     }
 

@@ -104,6 +104,7 @@ public class TranslateTag {
     public final static String COMMAND_BAN_CANT_YOURSELF = "command.ban.cant.yourself";
     public final static String COMMAND_BAN_ALREADY_BANNED = "command.ban.already.banned";
     public final static String COMMAND_BAN_CANT_STAFF = "command.ban.cant.staff";
+    public final static String COMMAND_BAN_KICK = "command.ban.kick";
 
     public final static String COMMAND_UNBAN_PREFIX = "command.unban.prefix";
     public final static String COMMAND_UNBAN_USAGE = "command.unban.usage";
@@ -114,7 +115,7 @@ public class TranslateTag {
     public final static String COMMAND_TEMPBAN_USAGE = "command.tempban.usage";
     public final static String COMMAND_TEMPBAN_INVALID_FORMAT = "command.tempban.invalid.format";
     public final static String COMMAND_TEMPBAN_SUCCESS = "command.tempban.success";
-
+    
     /**
      * Server
      */
