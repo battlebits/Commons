@@ -53,7 +53,7 @@ public class PunishCommand implements CommandClass {
             Group group = Group.ADMIN;
             if (cmdArgs.isPlayer()) {
                 group = Commons.getAccountCommon().getBattleAccount(uuid).getServerGroup();
-                if (group != Group.ADMIN && group != Group.DEVELOPER) {
+                if (group != Group.ADMIN) {
                     sender.sendMessage(banPrefix + tl(lang, COMMAND_BAN_CANT_STAFF));
                     return;
                 }
@@ -118,7 +118,7 @@ public class PunishCommand implements CommandClass {
             Group group = Group.ADMIN;
             if (cmdArgs.isPlayer()) {
                 group = Commons.getAccountCommon().getBattleAccount(uuid).getServerGroup();
-                if (group != Group.ADMIN && group != Group.DEVELOPER) {
+                if (group != Group.ADMIN) {
                     sender.sendMessage(tempbanPrefix + tl(lang, COMMAND_BAN_CANT_STAFF));
                     return;
                 }
