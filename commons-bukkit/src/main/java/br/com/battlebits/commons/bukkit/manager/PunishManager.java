@@ -5,6 +5,7 @@ import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.punishment.Ban;
+import br.com.battlebits.commons.account.punishment.Mute;
 import br.com.battlebits.commons.translate.TranslateTag;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -61,6 +62,39 @@ public class PunishManager {
             if (battleAccount.hasGroupPermission(Group.ADMIN)) {
                 String unbanSuccess = tl(COMMAND_UNBAN_PREFIX) + tl(COMMAND_UNBAN_SUCCESS, player.getUniqueId().toString().replace("-", ""), currentBan.getUnbannedBy());
                 online.sendMessage(unbanSuccess);
+            }
+        }
+        Commons.getDataAccount().saveAccount(player, "punishmentHistory");
+    }
+
+    public void mute(BattleAccount player, Mute mute) {
+        player.getPunishmentHistory().getMuteHistory().add(mute);
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            BattleAccount battleAccount = Commons.getAccount(online.getUniqueId());
+            if (battleAccount.hasGroupPermission(Group.ADMIN)) {
+                String muteSuccess = "";
+                if (mute.isPermanent()) {
+                    muteSuccess = tl(battleAccount.getLanguage(), COMMAND_MUTE_PREFIX) + tl(battleAccount.getLanguage(), COMMAND_MUTE_SUCCESS);
+                } else {
+                    muteSuccess = tl(battleAccount.getLanguage(), COMMAND_TEMPBAN_PREFIX) + tl(battleAccount.getLanguage(), COMMAND_TEMPMUTE_SUCCESS);
+                }
+                online.sendMessage(muteSuccess);
+            }
+            Commons.getDataAccount().saveAccount(player, "punishmentHistory");
+        }
+    }
+
+    public void unmute(BattleAccount mutedByPlayer, BattleAccount player, Mute currentMute) {
+        if (mutedByPlayer != null) {
+            currentMute.unmute(mutedByPlayer);
+        } else {
+            currentMute.unmute();
+        }
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(online.getUniqueId());
+            if (battleAccount.hasGroupPermission(Group.ADMIN)) {
+                String unmuteSuccess = tl(COMMAND_UNMUTE_PREFIX) + tl(COMMAND_UNMUTE_PREFIX, player.getUniqueId().toString().replace("-", ""), currentMute.getUnmutedBy());
+                online.sendMessage(unmuteSuccess);
             }
         }
         Commons.getDataAccount().saveAccount(player, "punishmentHistory");

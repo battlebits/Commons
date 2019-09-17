@@ -115,6 +115,24 @@ public class TranslateTag {
     public final static String COMMAND_TEMPBAN_USAGE = "command.tempban.usage";
     public final static String COMMAND_TEMPBAN_INVALID_FORMAT = "command.tempban.invalid.format";
     public final static String COMMAND_TEMPBAN_SUCCESS = "command.tempban.success";
+
+    public final static String COMMAND_MUTE_PREFIX = "command.mute.prefix";
+    public final static String COMMAND_MUTE_USAGE = "command.mute.usage";
+    public final static String COMMAND_MUTE_SUCCESS = "command.mute.success";
+    public final static String COMMAND_MUTE_CANT_YOURSELF = "command.mute.cant.yourself";
+    public final static String COMMAND_MUTE_ALREADY_MUTED = "command.mute.already.muted";
+    public final static String COMMAND_MUTE_CANT_STAFF = "command.mute.cant.staff";
+    public final static String COMMAND_MUTE_MESSAGE = "command.mute.message";
+
+    public final static String COMMAND_UNMUTE_PREFIX = "command.unmute.prefix";
+    public final static String COMMAND_UNMUTE_USAGE = "command.unmute.usage";
+    public final static String COMMAND_UNMUTE_NOT_MUTED = "command.unmute.not.muted";
+    public final static String COMMAND_UNMUTE_SUCCESS = "command.unmute.success";
+
+    public final static String COMMAND_TEMPMUTE_PREFIX = "command.tempmute.prefix";
+    public final static String COMMAND_TEMPMUTE_USAGE = "command.tempmute.usage";
+    public final static String COMMAND_TEMPMUTE_INVALID_FORMAT = "command.tempmute.invalid.format";
+    public final static String COMMAND_TEMPMUTE_SUCCESS = "command.tempmute.success";
     
     /**
      * Server
