@@ -191,8 +191,8 @@ public class PunishCommand implements CommandClass {
 
     @CommandFramework.Command(name = "mute", usage = "/<command> <player> <reason>", aliases = {"mutar"}, groupToUse = Group.ADMIN)
     public void mute(BukkitCommandArgs cmdArgs) {
-        final CommandSender sender = cmdArgs.getSender();
-        final String[] args = cmdArgs.getArgs();
+        CommandSender sender = cmdArgs.getSender();
+        String[] args = cmdArgs.getArgs();
         Language language = cmdArgs.getLanguage();
         final String mutePrefix = tl(language, COMMAND_MUTE_PREFIX);
         if (args.length != 2) {
@@ -254,8 +254,8 @@ public class PunishCommand implements CommandClass {
 
     @CommandFramework.Command(name = "tempmute", usage = "/<command> <time> <reason>", aliases = {"tempmutar"}, groupToUse = Group.ADMIN)
     public void tempmute(BukkitCommandArgs cmdArgs) {
-        final CommandSender sender = cmdArgs.getSender();
-        final String[] args = cmdArgs.getArgs();
+        CommandSender sender = cmdArgs.getSender();
+        String[] args = cmdArgs.getArgs();
         Language lang = cmdArgs.getSender().getLanguage();
         String tempmutePrefix = tl(lang, COMMAND_TEMPMUTE_PREFIX);
         if (args.length != 3) {
@@ -325,8 +325,8 @@ public class PunishCommand implements CommandClass {
 
     @CommandFramework.Command(name = "unmute", usage = "/<command> <player>", aliases = {"desmutar"}, groupToUse = Group.ADMIN)
     public void unmute(BukkitCommandArgs cmdArgs) {
-        final CommandSender sender = cmdArgs.getSender();
-        final String[] args = cmdArgs.getArgs();
+        CommandSender sender = cmdArgs.getSender();
+        String[] args = cmdArgs.getArgs();
         Language lang = cmdArgs.getSender().getLanguage();
         String unmutePrefix = tl(lang, COMMAND_UNMUTE_PREFIX);
         if (args.length != 1) {
