@@ -6,7 +6,6 @@ import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.punishment.Ban;
 import br.com.battlebits.commons.account.punishment.Mute;
-import br.com.battlebits.commons.translate.TranslateTag;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

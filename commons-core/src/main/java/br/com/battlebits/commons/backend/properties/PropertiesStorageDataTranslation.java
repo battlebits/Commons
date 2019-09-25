@@ -17,21 +17,23 @@ import java.util.Properties;
 public class PropertiesStorageDataTranslation implements DataTranslation {
 
     private File dirLocation;
+    private Class<? extends Enum> translateTags;
 
-    public PropertiesStorageDataTranslation(File dirLocation) {
+    public PropertiesStorageDataTranslation(File dirLocation, Class<? extends Enum> translateTags) {
         this.dirLocation = dirLocation;
+        this.translateTags = translateTags;
     }
 
     @Override
-    public Map<Language, Map<String, MessageFormat>> loadTranslations() {
-        Map<Language, Map<String, MessageFormat>> languageMaps = new EnumMap<>(Language.class);
+    public EnumMap<Language, Map<Enum<?>, MessageFormat>> loadTranslations() {
+        EnumMap<Language, Map<Enum<?>, MessageFormat>> languageMaps = new EnumMap<>(Language.class);
         for (Language language : Language.values()) {
-            try (InputStream inputStream = getClass().getResourceAsStream("/" + language.getFileName())) {
+            try (InputStream inputStream = new FileInputStream(new File(dirLocation, language.getFileName()))) {
                 Properties properties = new Properties();
                 properties.load(inputStream);
 
-                Map<String, MessageFormat> map = new HashMap<>();
-                properties.forEach((key, message) -> map.put((String) key, new MessageFormat((String) message)));
+                Map<Enum<?>, MessageFormat> map = new HashMap<>();
+                properties.forEach((key, message) -> map.put(Enum.valueOf(translateTags, String.valueOf(key)), new MessageFormat((String) message)));
 
                 languageMaps.put(language, map);
             } catch (IOException e) {

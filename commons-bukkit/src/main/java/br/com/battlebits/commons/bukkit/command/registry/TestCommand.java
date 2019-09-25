@@ -4,7 +4,6 @@ import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.command.CommandArgs;
 import br.com.battlebits.commons.command.CommandClass;
 import br.com.battlebits.commons.command.CommandFramework;
-import br.com.battlebits.commons.translate.TranslateTag;
 import net.md_5.bungee.api.ChatColor;
 
 public class TestCommand implements CommandClass {
