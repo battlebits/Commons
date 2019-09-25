@@ -9,4 +9,6 @@ import java.util.Map;
 public interface DataTranslation {
 
     EnumMap<Language, Map<Enum<?>, MessageFormat>> loadTranslations();
+
+    Class<? extends Enum> getEnum();
 }

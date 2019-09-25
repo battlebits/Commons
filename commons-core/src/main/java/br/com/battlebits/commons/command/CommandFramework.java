@@ -22,7 +22,7 @@ public interface CommandFramework {
 
         Group groupToUse() default Group.DEFAULT;
 
-        String noPermMessageId() default "command.no-permission";
+        TranslateTag noPermMessageId() default TranslateTag.COMMAND_NO_PERMISSION;
 
         String[] aliases() default {};
 
