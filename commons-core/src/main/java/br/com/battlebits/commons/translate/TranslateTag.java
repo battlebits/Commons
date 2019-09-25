@@ -20,12 +20,42 @@ public class TranslateTag {
      */
     public final static String PARTY_PREFIX = "party.prefix";
 
+    /**
+     * Time
+     */
 
+    public final static String TIME_DAY = "time.day";
+    public final static String TIME_HOUR = "time.hour";
+    public final static String TIME_MINUTE = "time.minute";
+    public final static String TIME_SECOND = "time.second";
+
+
+    /**
+     * Menu
+     */
+    public final static String MENU_ACCOUNT_TITLE = "menu.account.title";
+    public final static String MENU_ACCOUNT_DONT_HAVE_TEAM = "menu.account.dont-have-team";
+    public final static String MENU_ACCOUNT_TEAM_NAME = "menu.account.team-name";
+    public final static String MENU_ACCOUNT_TIME_INFO = "menu.account.time-info";
+    public final static String MENU_ACCOUNT_FIRST_LOGIN = "menu.account.first-login";
+    public final static String MENU_ACCOUNT_LAST_LOGIN = "menu.account.last-login";
+    public final static String MENU_ACCOUNT_CURRENT_ONLINE = "menu.account.current-online";
+    public final static String MENU_ACCOUNT_TOTAL_ONLINE = "menu.account.total-online";
+    public final static String MENU_ACCOUNT_ACTUAL_GROUP = "menu.account.actual-group";
+    public final static String MENU_ACCOUNT_BANS = "menu.account.bans";
+    public final static String MENU_ACCOUNT_BANS_LORE = "menu.account.bans-lore";
+    public final static String MENU_ACCOUNT_MUTES = "menu.account.mutes";
+    public final static String MENU_ACCOUNT_MUTES_LORE = "menu.account.mutes-lore";
+    public final static String MENU_ACCOUNT_SETTINGS = "menu.account.settings";
+    public final static String MENU_ACCOUNT_SETTINGS_LORE = "menu.account.settings-lore";
     /**
      * Command
      */
     public final static String COMMAND_NOT_FOUND = "command.not-found";
     public final static String COMMAND_NO_PERMISSION = "command.no-permission";
+
+    public final static String COMMAND_ACCOUNT_PREFIX = "command.account.prefix";
+
 
     public final static String COMMAND_ADMIN_PREFIX = "command.admin.prefix";
     public final static String COMMAND_ADMIN_ENABLED = "command.admin.enabled";
@@ -73,8 +103,37 @@ public class TranslateTag {
     public final static String COMMAND_BAN_SUCCESS = "command.ban.success";
     public final static String COMMAND_BAN_CANT_YOURSELF = "command.ban.cant.yourself";
     public final static String COMMAND_BAN_ALREADY_BANNED = "command.ban.already.banned";
+    public final static String COMMAND_BAN_CANT_STAFF = "command.ban.cant.staff";
+    public final static String COMMAND_BAN_KICK = "command.ban.kick";
 
+    public final static String COMMAND_UNBAN_PREFIX = "command.unban.prefix";
+    public final static String COMMAND_UNBAN_USAGE = "command.unban.usage";
+    public final static String COMMAND_UNBAN_NOT_BANNED = "command.unban.not.banned";
+    public final static String COMMAND_UNBAN_SUCCESS = "command.unban.success";
 
+    public final static String COMMAND_TEMPBAN_PREFIX = "command.tempban.prefix";
+    public final static String COMMAND_TEMPBAN_USAGE = "command.tempban.usage";
+    public final static String COMMAND_TEMPBAN_INVALID_FORMAT = "command.tempban.invalid.format";
+    public final static String COMMAND_TEMPBAN_SUCCESS = "command.tempban.success";
+
+    public final static String COMMAND_MUTE_PREFIX = "command.mute.prefix";
+    public final static String COMMAND_MUTE_USAGE = "command.mute.usage";
+    public final static String COMMAND_MUTE_SUCCESS = "command.mute.success";
+    public final static String COMMAND_MUTE_CANT_YOURSELF = "command.mute.cant.yourself";
+    public final static String COMMAND_MUTE_ALREADY_MUTED = "command.mute.already.muted";
+    public final static String COMMAND_MUTE_CANT_STAFF = "command.mute.cant.staff";
+    public final static String COMMAND_MUTE_MESSAGE = "command.mute.message";
+
+    public final static String COMMAND_UNMUTE_PREFIX = "command.unmute.prefix";
+    public final static String COMMAND_UNMUTE_USAGE = "command.unmute.usage";
+    public final static String COMMAND_UNMUTE_NOT_MUTED = "command.unmute.not.muted";
+    public final static String COMMAND_UNMUTE_SUCCESS = "command.unmute.success";
+
+    public final static String COMMAND_TEMPMUTE_PREFIX = "command.tempmute.prefix";
+    public final static String COMMAND_TEMPMUTE_USAGE = "command.tempmute.usage";
+    public final static String COMMAND_TEMPMUTE_INVALID_FORMAT = "command.tempmute.invalid.format";
+    public final static String COMMAND_TEMPMUTE_SUCCESS = "command.tempmute.success";
+    
     /**
      * Server
      */

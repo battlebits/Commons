@@ -1,9 +1,8 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 plugins {
     id "io.freefair.lombok" version "3.8.1"
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'java'
+    id 'maven-publish'
 }
 
 group 'br.com.battlebits'
@@ -46,4 +45,31 @@ shadowJar {
     }
     archiveClassifier = null
     //${archiveBaseName}-${archiveAppendix}-${archiveVersion}-${archiveClassifier}.${archiveExtension}
+}
+
+
+
+publishing {
+    if(!project.hasProperty("nexusUser") || !project.hasProperty("nexusPassword"))
+        return;
+    def nexusUser = "${nexusUser}"
+    def nexusPassword = "${nexusPassword}"
+    publications {
+        mavenBukkit(MavenPublication) {
+            from components.java
+            afterEvaluate {
+                artifactId = 'commons-bukkit'
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = version.endsWith('SNAPSHOT') ? 'https://repo.battlebits.com.br/repository/maven-snapshots/':
+                    'https://repo.battlebits.com.br/repository/maven-releases/'
+            credentials {
+                username nexusUser
+                password nexusPassword
+            }
+        }
+    }
 }

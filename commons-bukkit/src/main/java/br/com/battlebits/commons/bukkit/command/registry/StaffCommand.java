@@ -113,11 +113,11 @@ public class StaffCommand implements CommandClass {
                     ChatAPI.getInstance().setChatState(ChatAPI.ChatState.ENABLED);
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ENABLED));
                 } else if (cmdArgs.getArgs()[0].equalsIgnoreCase("off")) {
-                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.INFLUENCER) {
+                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.CREATOR) {
                         p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ALREADY_DISABLED));
                         return;
                     }
-                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.INFLUENCER);
+                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.CREATOR);
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_DISABLED));
                 } else {
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_USAGE));
@@ -126,7 +126,7 @@ public class StaffCommand implements CommandClass {
         }
     }
 
-    @CommandFramework.Command(name = "clearchat", aliases = {"limparchat", "cc"}, groupToUse = Group.ADMIN)
+    @CommandFramework.Command(name = "clearchat", groupToUse = Group.ADMIN)
     public void cleachat(BukkitCommandArgs cmdArgs) {
         Player p = cmdArgs.getPlayer();
         BattleAccount battlePlayer = Commons.getAccountCommon().getBattleAccount(p.getUniqueId());

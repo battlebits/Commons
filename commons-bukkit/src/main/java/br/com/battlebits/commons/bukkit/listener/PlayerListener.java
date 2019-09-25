@@ -4,10 +4,10 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.account.BattleAccount;
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.bukkit.BukkitMain;
+import br.com.battlebits.commons.bukkit.api.admin.AdminMode;
 import br.com.battlebits.commons.bukkit.api.vanish.VanishAPI;
 import br.com.battlebits.commons.bukkit.event.vanish.PlayerShowToPlayerEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,8 +15,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import static br.com.battlebits.commons.translate.TranslateTag.*;
+
+import static br.com.battlebits.commons.translate.TranslateTag.COMMAND_NO_PERMISSION;
+import static br.com.battlebits.commons.translate.TranslateTag.SERVER_WHITELIST;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class PlayerListener implements Listener {
@@ -53,7 +56,7 @@ public class PlayerListener implements Listener {
             BattleAccount battlePlayer = Commons.getAccount(event.getPlayer().getUniqueId());
             if (battlePlayer == null) {
                 event.disallow(PlayerLoginEvent.Result.KICK_OTHER, tl(SERVER_WHITELIST));
-            } else if (battlePlayer.hasGroupPermission(Group.DONATORPLUS)){
+            } else if (battlePlayer.hasGroupPermission(Group.BUILDER)) {
                 event.allow();
             }
         }
@@ -77,5 +80,11 @@ public class PlayerListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onQuit(PlayerQuitEvent event) {
+        AdminMode.getInstance().removeAdmin(event.getPlayer());
+        VanishAPI.getInstance().removeVanish(event.getPlayer());
     }
 }

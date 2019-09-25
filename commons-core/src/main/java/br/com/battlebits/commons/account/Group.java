@@ -2,7 +2,7 @@ package br.com.battlebits.commons.account;
 
 public enum Group {
      DEFAULT,
-     INFLUENCER,
+     CREATOR,
      DONATOR,
      DONATORPLUS,
      BUILDER,

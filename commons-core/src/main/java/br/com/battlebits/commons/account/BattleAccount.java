@@ -306,7 +306,7 @@ public abstract class BattleAccount implements CommandSender {
 
     public boolean setTag(Tag tag) {
         this.tag = tag;
-        if (hasGroupPermission(Group.INFLUENCER)) {
+        if (hasGroupPermission(Group.CREATOR)) {
             STORAGE.saveAccount(this, "tag");
         }
         return true;
