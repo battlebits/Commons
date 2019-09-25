@@ -50,6 +50,8 @@ shadowJar {
 
 
 publishing {
+    if(!project.hasProperty("nexusUser") || !project.hasProperty("nexusPassword"))
+        return;
     def nexusUser = "${nexusUser}"
     def nexusPassword = "${nexusPassword}"
     publications {
