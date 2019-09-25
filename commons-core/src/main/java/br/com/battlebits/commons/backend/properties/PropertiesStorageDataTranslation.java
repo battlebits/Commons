@@ -31,7 +31,8 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
                 properties.load(inputStream);
 
                 Map<Enum<?>, MessageFormat> map = new HashMap<>();
-                properties.forEach((key, message) -> map.put(Enum.valueOf(translateTags, String.valueOf(key)), new MessageFormat((String) message)));
+                properties.forEach((key, message) -> map.put(Enum.valueOf(translateTags, String.valueOf(key).toUpperCase()
+                        .replace("-", "_").replace(".", "_")), new MessageFormat((String) message)));
 
                 boolean needUpdate = false;
                 for (Enum enumConstant : translateTags.getEnumConstants()) {
