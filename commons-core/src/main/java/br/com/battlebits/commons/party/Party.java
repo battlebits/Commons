@@ -42,11 +42,11 @@ public abstract class Party {
         members.add(member);
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(Enum<?> message) {
         sendMessage(false, false, message);
     }
 
-    public void sendMessage(String tag, Object... objects) {
+    public void sendMessage(Enum<?> tag, Object... objects) {
         sendMessage(true, true, tag, objects);
     }
 
@@ -62,5 +62,5 @@ public abstract class Party {
 
     public abstract void onMemberLeave(UUID member);
 
-    public abstract void sendMessage(boolean prefix, boolean translate, String tag, Object... objects);
+    public abstract void sendMessage(boolean prefix, boolean translate, Enum<?> tag, Object... objects);
 }
