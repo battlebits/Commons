@@ -1,15 +1,11 @@
 package br.com.battlebits.commons.backend.properties;
 
-import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.DataTranslation;
 import br.com.battlebits.commons.translate.Language;
 
 import java.io.*;
 import java.text.MessageFormat;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class PropertiesStorageDataTranslation implements DataTranslation {
 
@@ -22,32 +18,32 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
     }
 
     @Override
-    public EnumMap<Language, Map<Enum<?>, MessageFormat>> loadTranslations() {
-        EnumMap<Language, Map<Enum<?>, MessageFormat>> languageMaps = new EnumMap<>(Language.class);
+    public Map<Language, Map<String, MessageFormat>> loadTranslations() {
+        Map<Language, Map<String, MessageFormat>> languageMaps = new HashMap<>();
         for (Language language : Language.values()) {
             File file = new File(dirLocation, language.getFileName());
             try (InputStream inputStream = new FileInputStream(file)) {
-                Properties properties = new Properties();
+                SortedProperties properties = new SortedProperties();
                 properties.load(inputStream);
 
-                Map<Enum<?>, MessageFormat> map = new HashMap<>();
-                properties.forEach((key, message) -> map.put(Enum.valueOf(translateTags, String.valueOf(key).toUpperCase()
-                        .replace("-", "_").replace(".", "_")), new MessageFormat((String) message)));
+                Map<String, MessageFormat> map = new HashMap<>();
+                properties.forEach((key, message) -> map.put(String.valueOf(key), new MessageFormat((String) message)));
 
                 boolean needUpdate = false;
                 for (Enum enumConstant : translateTags.getEnumConstants()) {
-                    if(!properties.containsKey(enumConstant.toString())) {
+                    if (!properties.containsKey(enumConstant.toString())) {
                         properties.setProperty(enumConstant.toString(), "");
                         needUpdate = true;
                     }
                 }
-                if(needUpdate) {
+                if (needUpdate) {
                     OutputStream outputStream = new FileOutputStream(file);
                     properties.store(outputStream, null);
                 }
                 languageMaps.put(language, map);
+                System.out.println("Successfully load " + language.name().toUpperCase());
             } catch (IOException e) {
-                Commons.getLogger().warning("Failed to load " + language.name().toUpperCase());
+//                Commons.getLogger().warning("Failed to load " + language.name().toUpperCase());
                 e.printStackTrace();
             }
         }
@@ -57,5 +53,18 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
     @Override
     public Class<? extends Enum> getEnum() {
         return translateTags;
+    }
+
+    class SortedProperties extends Properties {
+        public Enumeration keys() {
+            Enumeration keysEnum = super.keys();
+            Vector<String> keyList = new Vector<String>();
+            while (keysEnum.hasMoreElements()) {
+                keyList.add((String) keysEnum.nextElement());
+            }
+            Collections.sort(keyList);
+            return keyList.elements();
+        }
+
     }
 }
