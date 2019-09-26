@@ -7,12 +7,13 @@ import org.bukkit.ChatColor;
 
 public class BukkitTranslationCommon extends TranslationCommon {
 
-    public BukkitTranslationCommon(DataTranslation storage) {
-        super(storage);
+    public BukkitTranslationCommon(DataTranslation dataTranslation) {
+        super();
+        addTranslation(dataTranslation);
     }
 
     @Override
-    public String translate(Language language, String tag, Object... format) {
+    public String translate(Language language, Enum<?> tag, Object... format) {
         return ChatColor.translateAlternateColorCodes('&', super.translate(language, tag, format));
     }
 }

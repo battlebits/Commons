@@ -27,6 +27,7 @@ import br.com.battlebits.commons.bukkit.scoreboard.tagmanager.TagManager;
 import br.com.battlebits.commons.bukkit.translate.BukkitTranslationCommon;
 import br.com.battlebits.commons.command.CommandLoader;
 import br.com.battlebits.commons.server.ServerType;
+import br.com.battlebits.commons.translate.TranslateTag;
 import br.com.battlebits.commons.translate.TranslationCommon;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -91,7 +92,7 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
 
-        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile()));
+        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile(), TranslateTag.class));
         translationCommon.onEnable();
         tagManager = new TagManager(this);
         tagManager.onEnable();

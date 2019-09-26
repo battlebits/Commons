@@ -4,10 +4,7 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.DataTranslation;
 import br.com.battlebits.commons.translate.Language;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.MessageFormat;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -17,22 +14,37 @@ import java.util.Properties;
 public class PropertiesStorageDataTranslation implements DataTranslation {
 
     private File dirLocation;
+    private Class<? extends Enum> translateTags;
 
-    public PropertiesStorageDataTranslation(File dirLocation) {
+    public PropertiesStorageDataTranslation(File dirLocation, Class<? extends Enum> translateTags) {
         this.dirLocation = dirLocation;
+        this.translateTags = translateTags;
     }
 
     @Override
-    public Map<Language, Map<String, MessageFormat>> loadTranslations() {
-        Map<Language, Map<String, MessageFormat>> languageMaps = new EnumMap<>(Language.class);
+    public EnumMap<Language, Map<Enum<?>, MessageFormat>> loadTranslations() {
+        EnumMap<Language, Map<Enum<?>, MessageFormat>> languageMaps = new EnumMap<>(Language.class);
         for (Language language : Language.values()) {
-            try (InputStream inputStream = getClass().getResourceAsStream("/" + language.getFileName())) {
+            File file = new File(dirLocation, language.getFileName());
+            try (InputStream inputStream = new FileInputStream(file)) {
                 Properties properties = new Properties();
                 properties.load(inputStream);
 
-                Map<String, MessageFormat> map = new HashMap<>();
-                properties.forEach((key, message) -> map.put((String) key, new MessageFormat((String) message)));
+                Map<Enum<?>, MessageFormat> map = new HashMap<>();
+                properties.forEach((key, message) -> map.put(Enum.valueOf(translateTags, String.valueOf(key).toUpperCase()
+                        .replace("-", "_").replace(".", "_")), new MessageFormat((String) message)));
 
+                boolean needUpdate = false;
+                for (Enum enumConstant : translateTags.getEnumConstants()) {
+                    if(!properties.containsKey(enumConstant.toString())) {
+                        properties.setProperty(enumConstant.toString(), "");
+                        needUpdate = true;
+                    }
+                }
+                if(needUpdate) {
+                    OutputStream outputStream = new FileOutputStream(file);
+                    properties.store(outputStream, null);
+                }
                 languageMaps.put(language, map);
             } catch (IOException e) {
                 Commons.getLogger().warning("Failed to load " + language.name().toUpperCase());
@@ -40,5 +52,10 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
             }
         }
         return languageMaps;
+    }
+
+    @Override
+    public Class<? extends Enum> getEnum() {
+        return translateTags;
     }
 }
