@@ -8,4 +8,6 @@ import java.util.Map;
 public interface DataTranslation {
 
     Map<Language, Map<String, MessageFormat>> loadTranslations();
+
+    Class<? extends Enum> getEnum();
 }

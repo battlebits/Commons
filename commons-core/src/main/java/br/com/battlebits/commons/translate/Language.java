@@ -14,7 +14,7 @@ public enum Language {
         return fileName;
     }
 
-    public String tl(String tag, Object... format) {
+    public String tl(Enum<?> tag, Object... format) {
         return TranslationCommon.tl(this, tag, format);
     }
 }
