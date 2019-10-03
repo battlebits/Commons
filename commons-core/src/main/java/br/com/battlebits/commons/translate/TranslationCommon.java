@@ -30,7 +30,15 @@ public class TranslationCommon {
     }
 
     public void addTranslation(DataTranslation dataTranslation) {
-        this.languageTranslations.putAll(dataTranslation.loadTranslations());
+        final Map<Language, Map<String, MessageFormat>> map = dataTranslation.loadTranslations();
+        map.forEach((language, messagesMap) -> {
+            if(languageTranslations.containsKey(language)) {
+                final Map<String, MessageFormat> messages = languageTranslations.get(language);
+                messagesMap.forEach(messages::put);
+            } else {
+                languageTranslations.put(language, messagesMap);
+            }
+        });
         this.enums.add(dataTranslation.getEnum());
     }
 
