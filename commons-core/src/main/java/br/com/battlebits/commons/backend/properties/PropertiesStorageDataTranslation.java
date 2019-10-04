@@ -4,6 +4,7 @@ import br.com.battlebits.commons.backend.DataTranslation;
 import br.com.battlebits.commons.translate.Language;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.prefs.Preferences;
@@ -22,8 +23,7 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
         for (Language language : Language.values()) {
             try (InputStream inputStream = translateTags.getResourceAsStream("/"+ language.getFileName())) {
                 SortedProperties properties = new SortedProperties();
-                Preferences pref = Preferences.userRoot().node(language.getFileName());
-                properties.load(inputStream);
+                properties.load(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
 
                 Map<String, MessageFormat> map = new HashMap<>();
                 properties.forEach((key, message) -> map.put(String.valueOf(key), new MessageFormat((String) message)));
