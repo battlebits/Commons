@@ -20,7 +20,7 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
     public Map<Language, Map<String, MessageFormat>> loadTranslations() {
         Map<Language, Map<String, MessageFormat>> languageMaps = new HashMap<>();
         for (Language language : Language.values()) {
-            try (InputStream inputStream = getClass().getResourceAsStream("/"+ language.getFileName())) {
+            try (InputStream inputStream = translateTags.getResourceAsStream("/"+ language.getFileName())) {
                 SortedProperties properties = new SortedProperties();
                 Preferences pref = Preferences.userRoot().node(language.getFileName());
                 properties.load(inputStream);
