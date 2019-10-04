@@ -9,11 +9,9 @@ import java.util.*;
 
 public class PropertiesStorageDataTranslation implements DataTranslation {
 
-    private File dirLocation;
     private Class<? extends Enum> translateTags;
 
-    public PropertiesStorageDataTranslation(File dirLocation, Class<? extends Enum> translateTags) {
-        this.dirLocation = dirLocation;
+    public PropertiesStorageDataTranslation(Class<? extends Enum> translateTags) {
         this.translateTags = translateTags;
     }
 
@@ -21,8 +19,7 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
     public Map<Language, Map<String, MessageFormat>> loadTranslations() {
         Map<Language, Map<String, MessageFormat>> languageMaps = new HashMap<>();
         for (Language language : Language.values()) {
-            File file = new File(dirLocation, language.getFileName());
-            try (InputStream inputStream = new FileInputStream(file)) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/"+ language.getFileName())) {
                 SortedProperties properties = new SortedProperties();
                 properties.load(inputStream);
 
@@ -37,8 +34,9 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
                     }
                 }
                 if (needUpdate) {
-                    OutputStream outputStream = new FileOutputStream(file);
-                    properties.store(outputStream, null);
+                    PrintWriter writer =
+                            new PrintWriter(new File(getClass().getResource("/"+ language.getFileName()).getPath()));
+                    properties.store(writer, null);
                 }
                 languageMaps.put(language, map);
                 System.out.println("Successfully load " + language.name().toUpperCase());
