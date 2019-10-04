@@ -16,9 +16,6 @@ public class TranslationCommon {
     private Map<Language, Map<String, MessageFormat>> languageTranslations;
 
     public TranslationCommon() {
-    }
-
-    public void onEnable() {
         this.enums = new HashSet<>();
         this.languageTranslations = new HashMap<>();
         instance = this;
@@ -29,17 +26,17 @@ public class TranslationCommon {
         this.languageTranslations.clear();
     }
 
-    public void addTranslation(DataTranslation dataTranslation) {
+    public static void addTranslation(DataTranslation dataTranslation) {
         final Map<Language, Map<String, MessageFormat>> map = dataTranslation.loadTranslations();
         map.forEach((language, messagesMap) -> {
-            if(languageTranslations.containsKey(language)) {
-                final Map<String, MessageFormat> messages = languageTranslations.get(language);
+            if(instance.languageTranslations.containsKey(language)) {
+                final Map<String, MessageFormat> messages = instance.languageTranslations.get(language);
                 messagesMap.forEach(messages::put);
             } else {
-                languageTranslations.put(language, messagesMap);
+                instance.languageTranslations.put(language, messagesMap);
             }
         });
-        this.enums.add(dataTranslation.getEnum());
+        instance.enums.add(dataTranslation.getEnum());
     }
 
     public String translate(Language language, final Enum<?> tag, final Object... format) {

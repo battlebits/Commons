@@ -92,8 +92,7 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
 
-        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(getFile(), TranslateTag.class));
-        translationCommon.onEnable();
+        translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(TranslateTag.class));
         tagManager = new TagManager(this);
         tagManager.onEnable();
 
