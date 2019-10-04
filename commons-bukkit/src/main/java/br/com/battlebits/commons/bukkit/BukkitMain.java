@@ -93,7 +93,6 @@ public class BukkitMain extends JavaPlugin {
         }
 
         translationCommon = new BukkitTranslationCommon(new PropertiesStorageDataTranslation(TranslateTag.class));
-        translationCommon.onEnable();
         tagManager = new TagManager(this);
         tagManager.onEnable();
 

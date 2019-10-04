@@ -16,9 +16,6 @@ public class TranslationCommon {
     private Map<Language, Map<String, MessageFormat>> languageTranslations;
 
     public TranslationCommon() {
-    }
-
-    public void onEnable() {
         this.enums = new HashSet<>();
         this.languageTranslations = new HashMap<>();
         instance = this;
