@@ -6,6 +6,7 @@ import br.com.battlebits.commons.translate.Language;
 import java.io.*;
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.prefs.Preferences;
 
 public class PropertiesStorageDataTranslation implements DataTranslation {
 
@@ -21,6 +22,7 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
         for (Language language : Language.values()) {
             try (InputStream inputStream = getClass().getResourceAsStream("/"+ language.getFileName())) {
                 SortedProperties properties = new SortedProperties();
+                Preferences pref = Preferences.userRoot().node(language.getFileName());
                 properties.load(inputStream);
 
                 Map<String, MessageFormat> map = new HashMap<>();
@@ -34,9 +36,9 @@ public class PropertiesStorageDataTranslation implements DataTranslation {
                     }
                 }
                 if (needUpdate) {
-                    PrintWriter writer =
-                            new PrintWriter(new File(getClass().getResource("/"+ language.getFileName()).getPath()));
-                    properties.store(writer, null);
+//                    PrintWriter writer =
+//                            new PrintWriter(new File(getClass().getResource("/"+ language.getFileName()).getPath()));
+//                    properties.store(writer, null);
                 }
                 languageMaps.put(language, map);
                 System.out.println("Successfully load " + language.name().toUpperCase());
