@@ -58,7 +58,7 @@ publishing {
     publications {
         mavenBukkit(MavenPublication) {
             from components.java
-            artifactId "${baseName}.${extension}"
+            artifactId "${shadowJar.archiveName}"
             afterEvaluate {
                 artifactId = 'commons-bukkit'
             }

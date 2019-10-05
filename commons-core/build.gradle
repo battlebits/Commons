@@ -48,7 +48,7 @@ publishing {
     publications {
         mavenCore(MavenPublication) {
             from components.java
-            artifactId "${baseName}.${extension}"
+            artifactId "${jar.archiveName}"
             afterEvaluate {
                 artifactId = 'commons-core'
             }
