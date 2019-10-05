@@ -74,6 +74,10 @@ public class ItemBuilder {
         return changeMeta(itemMeta -> itemMeta.removeItemFlags(flags));
     }
 
+    public ItemBuilder hideEnchantments(boolean b) {
+        return changeMeta(itemMeta -> itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS));
+    }
+
     public ItemBuilder unbreakable(boolean b) {
         return changeMeta(itemMeta -> itemMeta.setUnbreakable(b));
     }
