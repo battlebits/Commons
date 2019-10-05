@@ -57,8 +57,8 @@ publishing {
     if (System.getenv('BUILD_NUMBER')) {
         version = version + '.' + System.getenv('BUILD_NUMBER')
     }
-    if (System.getenv('BRANCH_NAME')) {
-        version = version + '-' + System.getenv('BRANCH_NAME')
+    if (System.getenv('GIT_BRANCH')) {
+        version = version + '-' + System.getenv('GIT_BRANCH')
     }
     publications {
         mavenBukkit(MavenPublication) {
