@@ -32,7 +32,7 @@ processResources {
     if (System.getenv('BUILD_NUMBER')) {
         version = version + '.' + System.getenv('BUILD_NUMBER')
     }
-    if (System.getenv('GIT_BRANCH').contains('develop')) {
+    if (System.getenv('GIT_BRANCH') && System.getenv('GIT_BRANCH').contains('develop')) {
         version = version + '-SNAPSHOT'
     }
     filesMatching('plugin.yml') {
@@ -45,7 +45,7 @@ shadowJar {
         include(project(':commons-core'))
     }
     archiveClassifier = null
-    //${archiveBaseName}-${archiveAppendix}-${archiveVersion}-${archiveClassifier}.${archiveExtension}
+    archiveName = "${baseName}.${extension}"
 }
 
 

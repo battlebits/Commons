@@ -7,9 +7,15 @@ plugins {
 group 'br.com.battlebits'
 version '1.0'
 
+
+
 sourceCompatibility = 1.8
 
 apply plugin: 'java'
+
+jar {
+    archiveName = "${baseName}.${extension}"
+}
 
 dependencies {
     compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
