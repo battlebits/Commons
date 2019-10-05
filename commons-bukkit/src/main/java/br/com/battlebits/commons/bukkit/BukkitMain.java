@@ -16,6 +16,7 @@ import br.com.battlebits.commons.backend.nullable.VoidDataTeam;
 import br.com.battlebits.commons.backend.properties.PropertiesStorageDataTranslation;
 import br.com.battlebits.commons.bukkit.api.cooldown.CooldownAPI;
 import br.com.battlebits.commons.bukkit.api.item.ActionItemListener;
+import br.com.battlebits.commons.bukkit.api.item.glow.Glow;
 import br.com.battlebits.commons.bukkit.api.menu.MenuListener;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.bukkit.generator.VoidGenerator;
@@ -34,8 +35,10 @@ import com.comphenix.protocol.ProtocolManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -110,6 +113,10 @@ public class BukkitMain extends JavaPlugin {
         // getServer().getScheduler().runTaskLater(this, () -> unregisterCommands("pl", "plugins", "icanhasbukkit", "ver", "version", "?", "help", "me"), 2L);
         Commons.getDataServer().startServer(Bukkit.getMaxPlayers());
         Commons.getDataLog().log(DataLogType.SERVER_START);
+
+        // API
+        registerGlow();
+
         Commons.getLogger().info("Plugin has enabled successfully");
     }
 
@@ -173,6 +180,28 @@ public class BukkitMain extends JavaPlugin {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void registerGlow() {
+        try {
+            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            NamespacedKey key = new NamespacedKey(this, getDescription().getName());
+
+            Glow glow = new Glow(key);
+            Enchantment.registerEnchantment(glow);
+        }
+        catch (IllegalArgumentException e){
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }
