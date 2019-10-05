@@ -29,14 +29,15 @@ dependencies {
 }
 
 processResources {
-    def fullVersion = version
     if (System.getenv('BUILD_NUMBER')) {
-        fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
+        version = version + '.' + System.getenv('BUILD_NUMBER')
+    }
+    if (System.getenv('GIT_BRANCH').contains('develop')) {
+        version = version + '-SNAPSHOT'
     }
     filesMatching('plugin.yml') {
-        expand(["fullVersion":fullVersion])
+        expand(["fullVersion":version])
     }
-
 }
 
 shadowJar {
@@ -54,12 +55,6 @@ publishing {
         return;
     def nexusUser = "${nexusUser}"
     def nexusPassword = "${nexusPassword}"
-    if (System.getenv('BUILD_NUMBER')) {
-        version = version + '.' + System.getenv('BUILD_NUMBER')
-    }
-    if (System.getenv('GIT_BRANCH').contains('origin')) {
-        version = version + '-SNAPSHOT'
-    }
     publications {
         mavenBukkit(MavenPublication) {
             from components.java
