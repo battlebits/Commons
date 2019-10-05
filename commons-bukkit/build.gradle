@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'br.com.battlebits'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 sourceCompatibility = 1.8
 
@@ -29,14 +29,15 @@ dependencies {
 }
 
 processResources {
-    def fullVersion = version
     if (System.getenv('BUILD_NUMBER')) {
-        fullVersion = version + '-' + System.getenv('BUILD_NUMBER')
+        version = version + '.' + System.getenv('BUILD_NUMBER')
+    }
+    if (System.getenv('GIT_BRANCH').contains('develop')) {
+        version = version + '-SNAPSHOT'
     }
     filesMatching('plugin.yml') {
-        expand(["fullVersion":fullVersion])
+        expand(["fullVersion":version])
     }
-
 }
 
 shadowJar {

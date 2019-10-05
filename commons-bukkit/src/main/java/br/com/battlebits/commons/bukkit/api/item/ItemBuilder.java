@@ -1,11 +1,15 @@
 package br.com.battlebits.commons.bukkit.api.item;
 
+import br.com.battlebits.commons.bukkit.BukkitMain;
+import br.com.battlebits.commons.bukkit.api.item.glow.Glow;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,8 +78,9 @@ public class ItemBuilder {
         return changeMeta(itemMeta -> itemMeta.removeItemFlags(flags));
     }
 
-    public ItemBuilder hideEnchantments(boolean b) {
-        return changeMeta(itemMeta -> itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS));
+    public ItemBuilder glow() {
+        Plugin pl = BukkitMain.getInstance();
+        return enchantment(new Glow(new NamespacedKey(pl, pl.getName())), 1);
     }
 
     public ItemBuilder unbreakable(boolean b) {
