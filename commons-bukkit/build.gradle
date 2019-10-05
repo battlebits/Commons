@@ -57,7 +57,7 @@ publishing {
     if (System.getenv('BUILD_NUMBER')) {
         version = version + '.' + System.getenv('BUILD_NUMBER')
     }
-    if (System.getenv('GIT_BRANCH') == "develop") {
+    if (System.getenv('BRANCH_NAME') == "develop") {
         version = version + '-SNAPSHOT'
     }
     publications {
