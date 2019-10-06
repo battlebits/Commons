@@ -15,7 +15,7 @@ public class Glow extends Enchantment {
     @Override
     public boolean canEnchantItem(ItemStack arg0) {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override

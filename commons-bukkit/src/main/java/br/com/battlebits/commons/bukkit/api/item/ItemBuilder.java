@@ -80,7 +80,7 @@ public class ItemBuilder {
 
     public ItemBuilder glow() {
         Plugin pl = BukkitMain.getInstance();
-        return enchantment(new Glow(new NamespacedKey(pl, pl.getName())), 1);
+        return enchantment(new Glow(new NamespacedKey(pl, pl.getName())), 0);
     }
 
     public ItemBuilder unbreakable(boolean b) {
