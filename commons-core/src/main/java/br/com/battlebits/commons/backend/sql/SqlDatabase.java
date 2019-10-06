@@ -4,7 +4,6 @@ import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.Database;
 import lombok.RequiredArgsConstructor;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 
 @RequiredArgsConstructor
@@ -51,29 +50,19 @@ public class SqlDatabase implements Database {
     }
 
     public void update(String sqlString)
-            throws ClassNotFoundException, SQLException {
-        if (!isConnected()) {
-            recallConnection();
-        }
+            throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(sqlString);
         stmt.close();
         stmt = null;
     }
 
-    public PreparedStatement prepareStatment(String sql)
-            throws SQLException, ClassNotFoundException {
-        if (!isConnected()) {
-            recallConnection();
-        }
+    public PreparedStatement prepareStatement(String sql)
+            throws SQLException {
         return connection.prepareStatement(sql);
     }
 
-    private Connection getConnection()
-            throws ClassNotFoundException, SQLException {
-        if (!isConnected()) {
-            recallConnection();
-        }
+    public Connection getConnection() {
         return connection;
     }
 }

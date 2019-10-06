@@ -1,5 +1,12 @@
 package br.com.battlebits.commons.account;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Optional;
+
+@AllArgsConstructor
+@Getter
 public enum Tag {
 
     ADMIN("ADMIN", Group.ADMIN, '1', true), //
@@ -11,31 +18,17 @@ public enum Tag {
     DEFAULT("", Group.DEFAULT, '7', false);
 
     private String prefix;
-    private char color;
     private Group groupToUse;
+    private char color;
     private boolean isExclusive;
 
-    Tag(String prefix, Group toUse, char color, boolean exclusive) {
-        this.prefix = prefix;
-        this.color = color;
-        this.groupToUse = toUse;
-        this.isExclusive = exclusive;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public char getColor() {
-        return color;
-    }
-
-    public Group getGroupToUse() {
-        return groupToUse;
-    }
-
-    public boolean isExclusive() {
-        return isExclusive;
+    public static Optional<Tag> byId(int id) {
+        for (Tag tag : values()) {
+            if(tag.ordinal() == id) {
+                return Optional.of(tag);
+            }
+        }
+        return Optional.empty();
     }
 
 }
