@@ -57,7 +57,7 @@ public class BukkitParty extends Party {
     }
 
     @Override
-    public void sendMessage(boolean prefix, boolean translate, String tag, Object... objects) {
+    public void sendMessage(boolean prefix, boolean translate, Enum<?> tag, Object... objects) {
         for (UUID uuid : Stream.concat(Stream.of(getOwner()), getMembers().stream()).toArray((UUID[]::new))) {
             Player player = Bukkit.getPlayer(uuid);
             Language l = Commons.getLanguage(uuid);

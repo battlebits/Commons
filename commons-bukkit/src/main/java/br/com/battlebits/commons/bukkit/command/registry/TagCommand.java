@@ -48,8 +48,8 @@ public class TagCommand implements CommandClass {
                 }
                 p.spigot().sendMessage(message);
             } else {
-                Tag tag = Tag.valueOf(args[0].toUpperCase());
-                if (tag != null) {
+                try {
+                    Tag tag = Tag.valueOf(args[0].toUpperCase());
                     if (player.getTags().contains(tag)) {
                         if (player.getTag() != tag) {
                             if (player.setTag(tag)) {
@@ -63,7 +63,7 @@ public class TagCommand implements CommandClass {
                     } else {
                         p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_NO_ACCESS));
                     }
-                } else {
+                } catch (Exception e) {
                     p.sendMessage(tagPrefix + tl(player.getLanguage(), COMMAND_TAG_NOT_FOUND));
                 }
             }

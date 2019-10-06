@@ -1,24 +1,23 @@
 package br.com.battlebits.commons.translate;
 
-import br.com.battlebits.commons.CommonsConst;
 import br.com.battlebits.commons.backend.DataTranslation;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class TranslationCommon {
 
     private static TranslationCommon instance;
 
     private Set<Class<? extends Enum>> enums;
-    private EnumMap<Language, Map<Enum<?>, MessageFormat>> languageTranslations;
+    private Map<Language, Map<String, MessageFormat>> languageTranslations;
 
     public TranslationCommon() {
         this.enums = new HashSet<>();
-        this.languageTranslations = new EnumMap<>(Language.class);
-    }
-
-    public void onEnable() {
+        this.languageTranslations = new HashMap<>();
         instance = this;
     }
 
@@ -27,26 +26,47 @@ public class TranslationCommon {
         this.languageTranslations.clear();
     }
 
-    public void addTranslation(DataTranslation dataTranslation) {
-        this.languageTranslations.putAll(dataTranslation.loadTranslations());
-        this.enums.add(dataTranslation.getEnum());
+    public static void addTranslation(DataTranslation dataTranslation) {
+        final Map<Language, Map<String, MessageFormat>> map = dataTranslation.loadTranslations();
+        map.forEach((language, messagesMap) -> {
+            if(instance.languageTranslations.containsKey(language)) {
+                final Map<String, MessageFormat> messages = instance.languageTranslations.get(language);
+                messagesMap.forEach(messages::put);
+            } else {
+                instance.languageTranslations.put(language, messagesMap);
+            }
+        });
+        instance.enums.add(dataTranslation.getEnum());
     }
 
     public String translate(Language language, final Enum<?> tag, final Object... format) {
-        Map<Enum<?>, MessageFormat> map = languageTranslations.computeIfAbsent(language, v -> new HashMap<>());
-        MessageFormat messageFormat = map.computeIfAbsent(tag, v -> new MessageFormat(tag.toString()));
+        Map<String, MessageFormat> map = languageTranslations.computeIfAbsent(language, v -> new HashMap<>());
+        MessageFormat messageFormat = map.computeIfAbsent(tag.toString(), v -> new MessageFormat(tag.toString()));
         return messageFormat.format(format);
     }
 
     public static String tl(Enum<?> tag, Object... format) {
-        return tl(CommonsConst.DEFAULT_LANGUAGE, tag, format);
-    }
-
-    public static String tl(TranslateTag tag, Object... format) {
-        return tl(CommonsConst.DEFAULT_LANGUAGE, tag, format);
+        return tl(Language.PORTUGUESE, tag, format);
     }
 
     public static String tl(Language language, Enum<?> tag, final Object... format) {
+        if (instance == null) {
+            return "INSTANCE NOT ENABLED";
+        }
+        return instance.translate(language, tag, format);
+    }
+
+    public String translate(Language language, final String tag, final Object... format) {
+        Map<String, MessageFormat> map = languageTranslations.computeIfAbsent(language, v -> new HashMap<>());
+        MessageFormat messageFormat = map.computeIfAbsent(tag.toString(), v -> new MessageFormat(tag));
+        return messageFormat.format(format);
+    }
+
+    public static String tl(String tag, Object... format) {
+        return tl(Language.PORTUGUESE, tag, format);
+    }
+
+    public static String tl(Language language, String tag, final Object... format) {
         if (instance == null) {
             return "INSTANCE NOT ENABLED";
         }
