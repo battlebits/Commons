@@ -5,7 +5,9 @@ plugins {
 }
 
 group 'br.com.battlebits'
-version '1.0-SNAPSHOT'
+version '1.0'
+
+
 
 sourceCompatibility = 1.8
 
@@ -29,8 +31,16 @@ sourceSets {
 }
 
 publishing {
+    if(!project.hasProperty("nexusUser") || !project.hasProperty("nexusPassword"))
+        return;
     def nexusUser = "${nexusUser}"
     def nexusPassword = "${nexusPassword}"
+    if (System.getenv('BUILD_NUMBER')) {
+        version = version + '.' + System.getenv('BUILD_NUMBER')
+    }
+    if (System.getenv('GIT_BRANCH') && System.getenv('GIT_BRANCH').contains('develop')) {
+        version = version + '-SNAPSHOT'
+    }
     publications {
         mavenCore(MavenPublication) {
             from components.java

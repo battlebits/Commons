@@ -1,11 +1,16 @@
 package br.com.battlebits.commons.bukkit.api.item;
 
+import br.com.battlebits.commons.bukkit.BukkitMain;
+import br.com.battlebits.commons.bukkit.api.item.glow.Glow;
+import br.com.battlebits.commons.bukkit.util.string.StringLoreUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +20,7 @@ import java.util.function.Consumer;
 public class ItemBuilder {
 
     private ItemStack itemStack;
+    private boolean loreUtils = true;
 
     private ItemBuilder(ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -22,6 +28,10 @@ public class ItemBuilder {
 
     public static ItemBuilder create(Material material) {
         return new ItemBuilder(new ItemStack(material));
+    }
+
+    public void useLoreUtils(boolean value) {
+        this.loreUtils = value;
     }
 
     public ItemBuilder changeItem(Consumer<ItemStack> consumer) {
@@ -53,11 +63,18 @@ public class ItemBuilder {
     }
 
     public ItemBuilder lore(List<String> lore) {
+        if(this.loreUtils) {
+           List<String> loreFormat = new ArrayList<>();
+           for (String text : lore) {
+               loreFormat.addAll(StringLoreUtils.formatForLore(text));
+           }
+           return changeMeta(itemMeta -> itemMeta.setLore(loreFormat));
+        }
         return changeMeta(itemMeta -> itemMeta.setLore(lore));
     }
 
     public ItemBuilder lore(String... lore) {
-        return changeMeta(itemMeta -> itemMeta.setLore(Arrays.asList(lore)));
+        return lore(Arrays.asList(lore));
     }
 
     public ItemBuilder lore(Consumer<List<String>> consumer) {
@@ -72,6 +89,11 @@ public class ItemBuilder {
 
     public ItemBuilder removeFlag(ItemFlag... flags) {
         return changeMeta(itemMeta -> itemMeta.removeItemFlags(flags));
+    }
+
+    public ItemBuilder glow() {
+        Plugin pl = BukkitMain.getInstance();
+        return enchantment(new Glow(new NamespacedKey(pl, pl.getName())), 0);
     }
 
     public ItemBuilder unbreakable(boolean b) {
