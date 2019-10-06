@@ -179,7 +179,28 @@ public class SqlStorageDataAccount implements DataAccount {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        final ModelAccount newAccount = ModelAccount.builder()
+                .id(uuid)
+                .battleCoins(0)
+                .battleMoney(0)
+                .xp(0)
+                .level(0)
+                .doubleXpMultiplier(1)
+                .lastActivatedMultiplier(1)
+                .tag(Tag.DEFAULT)
+                .lastIpAddress(" ")
+                .onlineTime(0)
+                .lastLoggedIn(System.currentTimeMillis())
+                .firstTimePlaying(System.currentTimeMillis())
+                .group(Group.DEFAULT)
+                .language(Language.PORTUGUESE)
+                .build();
+        saveNewAccount(newAccount);
+        return newAccount;
+    }
+
+    private void saveNewAccount(ModelAccount account) {
+
     }
 
     @Override
