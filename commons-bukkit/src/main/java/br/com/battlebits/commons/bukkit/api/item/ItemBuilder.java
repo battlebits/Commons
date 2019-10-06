@@ -2,6 +2,7 @@ package br.com.battlebits.commons.bukkit.api.item;
 
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.api.item.glow.Glow;
+import br.com.battlebits.commons.bukkit.util.string.StringLoreUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -19,6 +20,7 @@ import java.util.function.Consumer;
 public class ItemBuilder {
 
     private ItemStack itemStack;
+    private boolean loreUtils = true;
 
     private ItemBuilder(ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -26,6 +28,10 @@ public class ItemBuilder {
 
     public static ItemBuilder create(Material material) {
         return new ItemBuilder(new ItemStack(material));
+    }
+
+    public void useLoreUtils(boolean value) {
+        this.loreUtils = value;
     }
 
     public ItemBuilder changeItem(Consumer<ItemStack> consumer) {
@@ -57,11 +63,18 @@ public class ItemBuilder {
     }
 
     public ItemBuilder lore(List<String> lore) {
+        if(this.loreUtils) {
+           List<String> loreFormat = new ArrayList<>();
+           for (String text : lore) {
+               loreFormat.addAll(StringLoreUtils.formatForLore(text));
+           }
+           return changeMeta(itemMeta -> itemMeta.setLore(loreFormat));
+        }
         return changeMeta(itemMeta -> itemMeta.setLore(lore));
     }
 
     public ItemBuilder lore(String... lore) {
-        return changeMeta(itemMeta -> itemMeta.setLore(Arrays.asList(lore)));
+        return lore(Arrays.asList(lore));
     }
 
     public ItemBuilder lore(Consumer<List<String>> consumer) {

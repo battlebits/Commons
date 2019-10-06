@@ -25,7 +25,7 @@ public class StringLoreUtils {
                 text = color;
             }
             String toAdd = split[i];
-            if (toAdd.contains("§"))
+            if (!ChatColor.getLastColors(toAdd).isEmpty())
                 color = ChatColor.getLastColors(toAdd.toLowerCase());
             if (toAdd.contains("\n")) {
                 toAdd = toAdd.substring(0, toAdd.indexOf("\n"));
