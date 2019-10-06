@@ -2,12 +2,12 @@ package br.com.battlebits.commons.account;
 
 public enum Tag {
 
-    ADMIN("ADMIN", Group.ADMIN, '1', true), //
-    DEVELOPER("DEV", Group.DEVELOPER, 'f', true), //
+    ADMIN("ADMIN", Group.ADMIN, '4', true), //
+    DEVELOPER("DEV", Group.DEVELOPER, '1', true), //
     BUILDER("BUILDER", Group.BUILDER, 'e', true), //
     DONATORPLUS("DONATOR+", Group.DONATORPLUS, '6', true), //
     DONATOR("DONATOR", Group.DONATOR, '9', true), //
-    CREATOR("CREATOR", Group.CREATOR, 'c', true), //
+    CREATOR("CREATOR", Group.CREATOR, '5', true), //
     DEFAULT("", Group.DEFAULT, '7', false);
 
     private String prefix;
