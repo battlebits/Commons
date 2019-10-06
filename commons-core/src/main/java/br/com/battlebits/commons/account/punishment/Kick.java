@@ -1,8 +1,12 @@
 package br.com.battlebits.commons.account.punishment;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
+@Builder
 public class Kick {
     private String server;
     private long kickTime;

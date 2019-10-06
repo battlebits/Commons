@@ -6,6 +6,8 @@ import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.account.Tag;
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.translate.Language;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +16,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ModelAccount {
     // INFORMACOES DA CONTA
 
