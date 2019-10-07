@@ -1,11 +1,13 @@
 package br.com.battlebits.commons.backend.redis;
 
 import br.com.battlebits.commons.backend.Database;
+import lombok.Getter;
 import lombok.NonNull;
 import redis.clients.jedis.JedisPool;
 
 public class RedisDatabase implements Database {
 
+    @Getter
     private JedisPool jedisPool;
     @NonNull
     private final String hostName;
@@ -31,7 +33,4 @@ public class RedisDatabase implements Database {
         return !this.jedisPool.isClosed();
     }
 
-    public JedisPool getJedisPool() {
-        return jedisPool;
-    }
 }
