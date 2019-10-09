@@ -2,12 +2,14 @@ package br.com.battlebits.commons.account.punishment;
 
 import br.com.battlebits.commons.account.BattleAccount;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
+@Builder
 public class Mute {
 
     private String mutedBy;
