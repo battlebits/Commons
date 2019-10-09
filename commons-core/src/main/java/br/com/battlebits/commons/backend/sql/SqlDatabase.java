@@ -2,6 +2,8 @@ package br.com.battlebits.commons.backend.sql;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.backend.Database;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
@@ -9,60 +11,67 @@ import java.sql.*;
 @RequiredArgsConstructor
 public class SqlDatabase implements Database {
 
-    private Connection connection = null;
+    private HikariDataSource hikariDataSource;
     private final String hostname, database, username, password;
-    private final boolean autoReconnect;
     private final int port;
 
     public SqlDatabase() {
-        this("localhost", "commons", "root", "", true, 3306);
+        this("localhost", "commons", "root", "", 3306);
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws SQLException {
         Commons.getLogger().info("Conectando ao MySQL");
-        Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
-        connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database + "autoReconnect="
-                + autoReconnect, username, password);
+
+        HikariConfig hikariConfig = buildHikariConfig();
+
+        this.hikariDataSource = new HikariDataSource(hikariConfig);
     }
 
     @Override
     public void disconnect() throws Exception {
         if (isConnected())
-            connection.close();
+            this.hikariDataSource.close();
     }
 
     @Override
     public boolean isConnected() throws SQLException {
-        if (connection == null)
+        if (this.hikariDataSource == null)
             return false;
-        return !connection.isClosed();
-    }
-
-    private void recallConnection()
-            throws SQLException, ClassNotFoundException {
-        if (!isConnected()) {
-            Commons.getLogger().info("Reconectando ao MySQL");
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username,
-                    password);
-        }
+        return this.hikariDataSource.isRunning();
     }
 
     public void update(String sqlString)
             throws SQLException {
-        Statement stmt = connection.createStatement();
+        Statement stmt = getConnection().createStatement();
         stmt.executeUpdate(sqlString);
         stmt.close();
-        stmt = null;
     }
 
     public PreparedStatement prepareStatement(String sql)
             throws SQLException {
-        return connection.prepareStatement(sql);
+        return getConnection().prepareStatement(sql);
     }
 
-    public Connection getConnection() {
-        return connection;
+    public Connection getConnection() throws SQLException {
+        if(!isConnected()){
+            this.connect();
+        }
+
+        return this.hikariDataSource.getConnection();
     }
+
+    private HikariConfig buildHikariConfig() {
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl("jdbc:mysql://" + hostname + ":" + port + "/" + database);
+        config.setUsername(username);
+        config.setPassword(password);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        return config;
+    }
+
 }
