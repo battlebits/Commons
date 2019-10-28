@@ -46,11 +46,11 @@ public class VanishAPI {
             Group group = vanishedToGroup.get(online.getUniqueId());
             if (group != null) {
                 if (bP.getServerGroup().ordinal() < group.ordinal()) {
-                    callHideToPlayerEvent(online, player);
+                    callHideToPlayerEvent(player, online);
                     continue;
                 }
             }
-            callShowToPlayerEvent(online, player);
+            callShowToPlayerEvent(player, online);
         }
     }
 
