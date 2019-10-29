@@ -1,22 +1,20 @@
 package br.com.battlebits.commons.bukkit.api.input.anvil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.UUID;
-
+import br.com.battlebits.commons.bukkit.BukkitMain;
+import br.com.battlebits.commons.bukkit.api.input.InputHandler;
+import br.com.battlebits.commons.bukkit.util.reflection.Reflection;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.utility.MinecraftReflection;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.utility.MinecraftReflection;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-
-import br.com.battlebits.commons.bukkit.api.input.InputHandler;
-import br.com.battlebits.commons.bukkit.BukkitMain;
-import br.com.battlebits.commons.bukkit.util.reflection.Reflection;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class AnvilInputGui {
 	private UUID playerUUID;

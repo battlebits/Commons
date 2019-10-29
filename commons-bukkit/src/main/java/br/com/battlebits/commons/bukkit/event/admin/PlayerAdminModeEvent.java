@@ -1,11 +1,10 @@
 package br.com.battlebits.commons.bukkit.event.admin;
 
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-
 import br.com.battlebits.commons.bukkit.event.PlayerCancellableEvent;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 
 @Getter
 public class PlayerAdminModeEvent extends PlayerCancellableEvent {

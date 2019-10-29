@@ -1,22 +1,20 @@
 package br.com.battlebits.commons.bukkit.api.input.anvil;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
-
+import br.com.battlebits.commons.bukkit.util.reflection.Reflection;
 import com.comphenix.protocol.reflect.accessors.Accessors;
 import com.comphenix.protocol.reflect.accessors.ConstructorAccessor;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.AbstractWrapper;
 import com.comphenix.protocol.wrappers.BlockPosition;
-
-import br.com.battlebits.commons.bukkit.util.reflection.Reflection;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class WrappedContainerAnvil extends AbstractWrapper {
 

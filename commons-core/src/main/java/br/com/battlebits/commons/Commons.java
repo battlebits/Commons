@@ -18,9 +18,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import static br.com.battlebits.commons.translate.TranslateTag.PLAYER_NOT_EXIST;
-import static br.com.battlebits.commons.translate.TranslationCommon.tl;
-
 public class Commons {
 
     @Getter

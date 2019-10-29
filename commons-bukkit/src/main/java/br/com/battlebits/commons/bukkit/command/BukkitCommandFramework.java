@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static br.com.battlebits.commons.translate.TranslateTag.COMMAND_NO_PERMISSION;
 import static br.com.battlebits.commons.translate.TranslationCommon.tl;
 
 public class BukkitCommandFramework implements CommandFramework {

@@ -1,7 +1,5 @@
 package br.com.battlebits.commons.backend.logging;
 
-import br.com.battlebits.commons.server.ServerType;
-
 import java.util.UUID;
 
 public interface DataLog {

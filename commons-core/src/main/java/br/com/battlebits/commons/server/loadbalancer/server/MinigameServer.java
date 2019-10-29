@@ -1,11 +1,11 @@
 package br.com.battlebits.commons.server.loadbalancer.server;
 
-import java.util.Set;
-import java.util.UUID;
-
 import br.com.battlebits.commons.server.ServerType;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter

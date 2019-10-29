@@ -1,18 +1,16 @@
 package br.com.battlebits.commons.bukkit.api.item;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-
+import com.comphenix.protocol.utility.MinecraftReflection;
+import com.comphenix.protocol.wrappers.nbt.NbtCompound;
+import com.comphenix.protocol.wrappers.nbt.NbtFactory;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
-import com.comphenix.protocol.utility.MinecraftReflection;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.comphenix.protocol.wrappers.nbt.NbtFactory;
-
-import lombok.Getter;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
 
 public class ActionItemStack {
 

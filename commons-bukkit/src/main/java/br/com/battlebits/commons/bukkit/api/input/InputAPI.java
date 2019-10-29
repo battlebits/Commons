@@ -1,10 +1,9 @@
 package br.com.battlebits.commons.bukkit.api.input;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import br.com.battlebits.commons.bukkit.api.input.anvil.AnvilInputGui;
 import br.com.battlebits.commons.bukkit.api.input.anvil.AnvilInputManager;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class InputAPI {
 	private static AnvilInputManager anvilInputManager = new AnvilInputManager();

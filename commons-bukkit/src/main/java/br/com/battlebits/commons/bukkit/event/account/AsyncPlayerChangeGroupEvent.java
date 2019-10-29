@@ -2,9 +2,9 @@ package br.com.battlebits.commons.bukkit.event.account;
 
 import br.com.battlebits.commons.account.Group;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-import org.bukkit.entity.Player;
 import br.com.battlebits.commons.bukkit.event.PlayerCancellableEvent;
 import lombok.Getter;
+import org.bukkit.entity.Player;
 
 @Getter
 public class AsyncPlayerChangeGroupEvent extends PlayerCancellableEvent {

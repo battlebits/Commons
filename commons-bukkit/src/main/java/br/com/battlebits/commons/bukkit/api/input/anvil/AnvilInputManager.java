@@ -1,14 +1,13 @@
 package br.com.battlebits.commons.bukkit.api.input.anvil;
 
-import java.util.HashMap;
-import java.util.UUID;
-
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 
-import br.com.battlebits.commons.bukkit.BukkitMain;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class AnvilInputManager {
 

@@ -6,7 +6,6 @@ import br.com.battlebits.commons.backend.logging.DataLogType;
 import br.com.battlebits.commons.backend.model.ModelAccount;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
-import br.com.battlebits.commons.bukkit.event.account.AsyncPlayerChangeGroupEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerUpdateFieldEvent;
 import br.com.battlebits.commons.bukkit.event.account.PlayerUpdatedFieldEvent;
 import br.com.battlebits.commons.party.Party;

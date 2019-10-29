@@ -1,11 +1,10 @@
 package br.com.battlebits.commons.bukkit.event.account;
 
-import org.bukkit.entity.Player;
-
 import br.com.battlebits.commons.bukkit.account.BukkitAccount;
 import br.com.battlebits.commons.bukkit.event.PlayerCancellableEvent;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.entity.Player;
 
 @Getter
 public class PlayerUpdateFieldEvent extends PlayerCancellableEvent {

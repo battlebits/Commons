@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Glow extends Enchantment {
 
-    public Glow(NamespacedKey i) {
-        super(i);
+    public Glow(int id) {
+        super(id);
         // TODO Auto-generated constructor stub
     }
 

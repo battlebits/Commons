@@ -1,15 +1,13 @@
 package br.com.battlebits.commons.bukkit.api.tablist;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-import br.com.battlebits.commons.bukkit.BukkitMain;
+import java.lang.reflect.InvocationTargetException;
 
 public class TabListAPI {
 	/**

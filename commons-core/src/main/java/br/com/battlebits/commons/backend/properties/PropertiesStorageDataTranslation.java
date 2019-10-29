@@ -3,11 +3,12 @@ package br.com.battlebits.commons.backend.properties;
 import br.com.battlebits.commons.backend.DataTranslation;
 import br.com.battlebits.commons.translate.Language;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.prefs.Preferences;
 
 public class PropertiesStorageDataTranslation implements DataTranslation {
 

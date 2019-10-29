@@ -1,10 +1,9 @@
 package br.com.battlebits.commons.bukkit.api.player;
 
-import java.lang.reflect.InvocationTargetException;
-
+import com.comphenix.protocol.utility.MinecraftReflection;
 import org.bukkit.entity.Player;
 
-import com.comphenix.protocol.utility.MinecraftReflection;
+import java.lang.reflect.InvocationTargetException;
 
 public class PingAPI {
 

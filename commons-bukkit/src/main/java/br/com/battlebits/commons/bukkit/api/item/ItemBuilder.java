@@ -8,7 +8,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
@@ -55,7 +54,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder durability(int amount) {
-        return changeMeta(meta -> ((Damageable) meta).setDamage(amount));
+        return changeItem(item -> item.setDurability((short) amount));
     }
 
     public ItemBuilder enchantment(Enchantment enchantment, int level) {
@@ -93,7 +92,7 @@ public class ItemBuilder {
 
     public ItemBuilder glow() {
         Plugin pl = BukkitMain.getInstance();
-        return enchantment(new Glow(new NamespacedKey(pl, pl.getName())), 0);
+        return enchantment(new Glow(70), 0);
     }
 
     public ItemBuilder unbreakable(boolean b) {

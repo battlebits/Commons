@@ -35,7 +35,7 @@ public class MenuAccount extends MenuInventory {
         super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6);
         accountUuid = account.getUniqueId();
         this.l = l;
-        ItemBuilder builder = ItemBuilder.create(Material.PLAYER_HEAD).name(ChatColor.GOLD + account.getName());
+        ItemBuilder builder = ItemBuilder.create(Material.SKULL).name(ChatColor.GOLD + account.getName());
         ItemStack stack = builder.build();
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(account.getUniqueId()));
@@ -50,9 +50,9 @@ public class MenuAccount extends MenuInventory {
         setItem(21, stack);
         stack = ItemBuilder.create(Material.EMERALD).name(ChatColor.GREEN + "BattleCoins").lore(ChatColor.GRAY + "" + account.getBattleCoins()).build();
         setItem(22, stack);
-        stack = ItemBuilder.create(Material.EXPERIENCE_BOTTLE).name(ChatColor.DARK_PURPLE + "XP").lore(ChatColor.GRAY + "" + account.getXp()).build();
+        stack = ItemBuilder.create(Material.EXP_BOTTLE).name(ChatColor.DARK_PURPLE + "XP").lore(ChatColor.GRAY + "" + account.getXp()).build();
         setItem(23, stack);
-        builder = ItemBuilder.create(Material.CLOCK).name(l.tl(MENU_ACCOUNT_TIME_INFO));
+        builder = ItemBuilder.create(Material.WATCH).name(l.tl(MENU_ACCOUNT_TIME_INFO));
         Date date = new Date(account.getFirstTimePlaying());
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         List<String> loreList = new ArrayList<>();
@@ -69,7 +69,7 @@ public class MenuAccount extends MenuInventory {
         builder.lore(loreList);
         setItem(25, builder.build());
         Tag tag = Tag.valueOf(account.getServerGroup().toString());
-        setItem(49, ItemBuilder.create(Material.ENDER_EYE).name(l.tl(MENU_ACCOUNT_ACTUAL_GROUP, ChatColor.getByChar(tag.getColor()) + "" + ChatColor.BOLD + tag.getPrefix())).build());
+        setItem(49, ItemBuilder.create(Material.EYE_OF_ENDER).name(l.tl(MENU_ACCOUNT_ACTUAL_GROUP, ChatColor.getByChar(tag.getColor()) + "" + ChatColor.BOLD + tag.getPrefix())).build());
 
         setItem(51, new MenuItem(ItemBuilder.create(Material.BARRIER).name(l.tl(MENU_ACCOUNT_BANS)).lore(l.tl(MENU_ACCOUNT_BANS_LORE)).build(), new MenuClickHandler() {
 
@@ -79,14 +79,14 @@ public class MenuAccount extends MenuInventory {
             }
         }));
 
-        setItem(52, new MenuItem(ItemBuilder.create(Material.WRITABLE_BOOK).name(l.tl(MENU_ACCOUNT_MUTES)).lore(l.tl(MENU_ACCOUNT_MUTES_LORE)).build(), new MenuClickHandler() {
+        setItem(52, new MenuItem(ItemBuilder.create(Material.BOOK_AND_QUILL).name(l.tl(MENU_ACCOUNT_MUTES)).lore(l.tl(MENU_ACCOUNT_MUTES_LORE)).build(), new MenuClickHandler() {
 
             @Override
             public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
                 // TODO Open Mute Menu
             }
         }));
-        ItemStack nullItem = ItemBuilder.create(Material.GLASS_PANE).durability(15).name(" ").build();
+        ItemStack nullItem = ItemBuilder.create(Material.STAINED_GLASS_PANE).durability(15).name(" ").build();
         for (int i = 0; i < getInventory().getSize(); i++) {
             if (getItem(i) == null)
                 setItem(i, nullItem);
@@ -96,14 +96,14 @@ public class MenuAccount extends MenuInventory {
     @Override
     public void open(Player p) {
         if (p.getUniqueId().equals(accountUuid))
-            setItem(47, new MenuItem(ItemBuilder.create(Material.COMPARATOR).name(l.tl(MENU_ACCOUNT_SETTINGS)).lore(l.tl(MENU_ACCOUNT_SETTINGS_LORE)).build(), new MenuClickHandler() {
+            setItem(47, new MenuItem(ItemBuilder.create(Material.REDSTONE_COMPARATOR).name(l.tl(MENU_ACCOUNT_SETTINGS)).lore(l.tl(MENU_ACCOUNT_SETTINGS_LORE)).build(), new MenuClickHandler() {
                 @Override
                 public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
                     // TODO Open Preferences menu
                 }
             }));
         else
-            setItem(47, ItemBuilder.create(Material.GLASS_PANE).durability(15).name(" ").build());
+            setItem(47, ItemBuilder.create(Material.STAINED_GLASS_PANE).durability(15).name(" ").build());
         super.open(p);
     }
 }

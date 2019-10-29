@@ -36,7 +36,7 @@ public class BattleScoreboard {
         this.previousLines = new HashSet<>();
         try {
             this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-            this.objective = this.scoreboard.registerNewObjective("buffered", "dummy", displayName);
+            this.objective = this.scoreboard.registerNewObjective(displayName, "dummy");
             this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         } catch (NullPointerException e) {
             Commons.getLogger().warning("No world was loaded");

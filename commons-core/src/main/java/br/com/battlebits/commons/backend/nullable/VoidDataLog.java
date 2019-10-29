@@ -2,7 +2,6 @@ package br.com.battlebits.commons.backend.nullable;
 
 import br.com.battlebits.commons.backend.logging.DataLog;
 import br.com.battlebits.commons.backend.logging.DataLogType;
-import br.com.battlebits.commons.server.ServerType;
 
 import java.util.UUID;
 

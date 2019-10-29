@@ -1,5 +1,6 @@
 package br.com.battlebits.commons.bukkit.api.input.anvil;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,8 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import net.md_5.bungee.api.ChatColor;
 
 class AnvilInputListener implements Listener {
 

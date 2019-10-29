@@ -1,7 +1,10 @@
 package br.com.battlebits.commons.bukkit.api.item;
 
-import java.lang.reflect.Constructor;
-
+import br.com.battlebits.commons.bukkit.BukkitMain;
+import br.com.battlebits.commons.bukkit.api.item.ActionItemStack.InteractHandler;
+import com.comphenix.protocol.utility.MinecraftReflection;
+import com.comphenix.protocol.wrappers.nbt.NbtCompound;
+import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -14,12 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.comphenix.protocol.utility.MinecraftReflection;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.comphenix.protocol.wrappers.nbt.NbtFactory;
-
-import br.com.battlebits.commons.bukkit.api.item.ActionItemStack.InteractHandler;
-import br.com.battlebits.commons.bukkit.BukkitMain;
+import java.lang.reflect.Constructor;
 
 public class ActionItemListener implements Listener {
 

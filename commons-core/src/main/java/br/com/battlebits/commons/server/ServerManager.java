@@ -2,10 +2,10 @@ package br.com.battlebits.commons.server;
 
 import br.com.battlebits.commons.Commons;
 import br.com.battlebits.commons.server.loadbalancer.BaseBalancer;
-import br.com.battlebits.commons.server.loadbalancer.server.*;
-
+import br.com.battlebits.commons.server.loadbalancer.server.BattleServer;
+import br.com.battlebits.commons.server.loadbalancer.server.MinigameServer;
+import br.com.battlebits.commons.server.loadbalancer.server.MinigameState;
 import br.com.battlebits.commons.server.loadbalancer.type.LeastConnection;
-import br.com.battlebits.commons.server.loadbalancer.type.MostConnection;
 
 import java.util.*;
 

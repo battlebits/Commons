@@ -1,12 +1,12 @@
 package br.com.battlebits.commons.server.loadbalancer.server;
 
-import java.util.Set;
-import java.util.UUID;
-
 import br.com.battlebits.commons.server.ServerType;
 import br.com.battlebits.commons.server.loadbalancer.element.LoadBalancerObject;
 import br.com.battlebits.commons.server.loadbalancer.element.NumberConnection;
 import lombok.Getter;
+
+import java.util.Set;
+import java.util.UUID;
 
 public class BattleServer implements LoadBalancerObject, NumberConnection {
 

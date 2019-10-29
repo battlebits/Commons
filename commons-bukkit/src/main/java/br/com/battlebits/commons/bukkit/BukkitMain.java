@@ -194,12 +194,9 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
         try {
-            NamespacedKey key = new NamespacedKey(this, getDescription().getName());
-
-            Glow glow = new Glow(key);
+            Glow glow = new Glow(70);
             Enchantment.registerEnchantment(glow);
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e){
         }
         catch(Exception e){
             e.printStackTrace();
