@@ -49,10 +49,10 @@ shadowJar {
 }
 
 publishing {
-    if(!project.hasProperty("nexusUser") || !project.hasProperty("nexusPassword"))
+    if(!System.getenv('NEXUS_USER') || !System.getenv('NEXUS_PASS'))
         return;
-    def nexusUser = "${nexusUser}"
-    def nexusPassword = "${nexusPassword}"
+    def nexusUser = System.getenv('NEXUS_USER')
+    def nexusPassword = System.getenv('NEXUS_PASS')
     publications {
         mavenBukkit(MavenPublication) {
             from components.java

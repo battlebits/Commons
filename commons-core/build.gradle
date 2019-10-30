@@ -32,10 +32,10 @@ sourceSets {
 }
 
 publishing {
-    if(!project.hasProperty("nexusUser") || !project.hasProperty("nexusPassword"))
+    if(!System.getenv('NEXUS_USER') || !System.getenv('NEXUS_PASS'))
         return;
-    def nexusUser = "${nexusUser}"
-    def nexusPassword = "${nexusPassword}"
+    def nexusUser = System.getenv('NEXUS_USER')
+    def nexusPassword = System.getenv('NEXUS_PASS')
     if (System.getenv('BUILD_NUMBER')) {
         version = version + '.' + System.getenv('BUILD_NUMBER')
     }
