@@ -13,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -22,20 +23,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CooldownAPI implements Listener {
 
     private static final char CHAR = '\u258C';
-    private static final Map<UUID, List<Cooldown>> map = new ConcurrentHashMap<>();
+    private static final Map<Player, List<Cooldown>> map = new ConcurrentHashMap<>();
 
     public static void addCooldown(Player player, Cooldown cooldown) {
         CooldownStartEvent event = new CooldownStartEvent(player, cooldown);
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            List<Cooldown> list = map.computeIfAbsent(player.getUniqueId(), v -> new ArrayList<>());
+            List<Cooldown> list = map.computeIfAbsent(player, v -> new ArrayList<>());
             list.add(cooldown);
         }
     }
 
     public static boolean removeCooldown(Player player, String name) {
-        if (map.containsKey(player.getUniqueId())) {
-            List<Cooldown> list = map.get(player.getUniqueId());
+        if (map.containsKey(player)) {
+            List<Cooldown> list = map.get(player);
             Iterator<Cooldown> it = list.iterator();
             while (it.hasNext()) {
                 Cooldown cooldown = it.next();
@@ -49,11 +50,9 @@ public class CooldownAPI implements Listener {
     }
 
     public static boolean hasCooldown(Player player, String name) {
-        if (map.containsKey(player.getUniqueId())) {
-            List<Cooldown> list = map.get(player.getUniqueId());
-            for (Cooldown cooldown : list)
-                if (cooldown.getName().equals(name))
-                    return true;
+        if (map.containsKey(player)) {
+            List<Cooldown> list = map.get(player);
+            return list.stream().anyMatch(cooldown -> cooldown.getName().equals(name));
         }
         return false;
     }
@@ -65,56 +64,58 @@ public class CooldownAPI implements Listener {
         if (event.getCurrentTick() % 2 > 0)
             return;
 
-        for (UUID uuid : map.keySet()) {
-            Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                List<Cooldown> list = map.get(uuid);
-                Iterator<Cooldown> it = list.iterator();
+        for (Player player : map.keySet()) {
+            List<Cooldown> list = map.get(player);
+            Iterator<Cooldown> it = list.iterator();
 
-                /* Found Cooldown */
-                Cooldown found = null;
-                while (it.hasNext()) {
-                    Cooldown cooldown = it.next();
-                    if (!cooldown.expired()) {
-                        if (cooldown instanceof ItemCooldown) {
-                            ItemStack hand = player.getEquipment().getItemInMainHand();
-                            if (hand != null && hand.getType() != Material.AIR) {
-                                ItemCooldown item = (ItemCooldown) cooldown;
-                                if (hand.equals(item.getItem())) {
-                                    item.setSelected(true);
-                                    found = item;
-                                    break;
-                                }
+            /* Found Cooldown */
+            Cooldown found = null;
+            while (it.hasNext()) {
+                Cooldown cooldown = it.next();
+                if (!cooldown.expired()) {
+                    if (cooldown instanceof ItemCooldown) {
+                        ItemStack hand = player.getEquipment().getItemInMainHand();
+                        if (hand != null && hand.getType() != Material.AIR) {
+                            ItemCooldown item = (ItemCooldown) cooldown;
+                            if (hand.equals(item.getItem())) {
+                                item.setSelected(true);
+                                found = item;
+                                break;
                             }
-                            continue;
                         }
-                        found = cooldown;
                         continue;
                     }
-                    it.remove();
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
-                    CooldownFinshEvent e = new CooldownFinshEvent(player, cooldown);
-                    Bukkit.getServer().getPluginManager().callEvent(e);
+                    found = cooldown;
+                    continue;
                 }
+                it.remove();
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
+                CooldownFinshEvent e = new CooldownFinshEvent(player, cooldown);
+                Bukkit.getServer().getPluginManager().callEvent(e);
+            }
 
-                /* Display Cooldown */
-                if (found != null) {
-                    display(player, found);
-                } else if (list.isEmpty()) {
-                    ActionBarAPI.send(player, " ");
-                    map.remove(uuid);
-                } else {
-                    Cooldown cooldown = list.get(0);
-                    if (cooldown instanceof ItemCooldown) {
-                        ItemCooldown item = (ItemCooldown) cooldown;
-                        if (item.isSelected()) {
-                            item.setSelected(false);
-                            ActionBarAPI.send(player, " ");
-                        }
+            /* Display Cooldown */
+            if (found != null) {
+                display(player, found);
+            } else if (list.isEmpty()) {
+                ActionBarAPI.send(player, " ");
+                map.remove(player);
+            } else {
+                Cooldown cooldown = list.get(0);
+                if (cooldown instanceof ItemCooldown) {
+                    ItemCooldown item = (ItemCooldown) cooldown;
+                    if (item.isSelected()) {
+                        item.setSelected(false);
+                        ActionBarAPI.send(player, " ");
                     }
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        map.remove(event.getPlayer());
     }
 
     private void display(Player player, Cooldown cooldown) {

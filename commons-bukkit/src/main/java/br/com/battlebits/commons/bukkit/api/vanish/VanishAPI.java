@@ -13,21 +13,16 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class VanishAPI {
-    private HashMap<UUID, Group> vanishedToGroup;
+    private static HashMap<Player, Group> vanishedToGroup;
 
-    private final static VanishAPI instance = new VanishAPI();
 
-    public VanishAPI() {
-        vanishedToGroup = new HashMap<>();
-    }
-
-    public void setPlayerVanishToGroup(Player player, Group group) {
+    public static void setPlayerVanishToGroup(Player player, Group group) {
         if (group == null)
-            vanishedToGroup.remove(player.getUniqueId());
+            vanishedToGroup.remove(player);
         else
-            vanishedToGroup.put(player.getUniqueId(), group);
+            vanishedToGroup.put(player, group);
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.getUniqueId().equals(player.getUniqueId()))
+            if (online.equals(player))
                 continue;
             BattleAccount onlineP = Commons.getAccount(online.getUniqueId());
             if (group != null && onlineP.getServerGroup().ordinal() < group.ordinal()) {
@@ -38,12 +33,12 @@ public class VanishAPI {
         }
     }
 
-    public void updateVanishToPlayer(Player player) {
+    public static void updateVanishToPlayer(Player player) {
         BattleAccount bP = Commons.getAccount(player.getUniqueId());
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.getUniqueId().equals(player.getUniqueId()))
+            if (online.equals(player))
                 continue;
-            Group group = vanishedToGroup.get(online.getUniqueId());
+            Group group = vanishedToGroup.get(online);
             if (group != null) {
                 if (bP.getServerGroup().ordinal() < group.ordinal()) {
                     callHideToPlayerEvent(player, online);
@@ -54,7 +49,7 @@ public class VanishAPI {
         }
     }
 
-    private void callShowToPlayerEvent(Player player, Player toShow) {
+    private static void callShowToPlayerEvent(Player player, Player toShow) {
         PlayerShowToPlayerEvent event = new PlayerShowToPlayerEvent(player, toShow);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
@@ -64,7 +59,7 @@ public class VanishAPI {
             player.showPlayer(BukkitMain.getInstance(), toShow);
     }
 
-    private void callHideToPlayerEvent(Player player, Player toHide) {
+    private static void callHideToPlayerEvent(Player player, Player toHide) {
         PlayerHideToPlayerEvent event = new PlayerHideToPlayerEvent(player, toHide);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
@@ -74,30 +69,27 @@ public class VanishAPI {
             player.hidePlayer(BukkitMain.getInstance(), toHide);
     }
 
-    public Group hidePlayer(Player player) {
+    public static Group hidePlayer(Player player) {
         BattleAccount bA = Commons.getAccount(player.getUniqueId());
         setPlayerVanishToGroup(player, bA.getServerGroup());
         return bA.getServerGroup().ordinal() - 1 >= 0 ? Group.values()[bA.getServerGroup().ordinal() - 1]
                 : Group.DEFAULT;
     }
 
-    public void showPlayer(Player player) {
+    public static void showPlayer(Player player) {
         setPlayerVanishToGroup(player, null);
     }
 
-    public void updateVanish(Player player) {
-        setPlayerVanishToGroup(player, getVanishedToGroup(player.getUniqueId()));
+    public static void updateVanish(Player player) {
+        setPlayerVanishToGroup(player, getVanishedToGroup(player));
     }
 
-    public Group getVanishedToGroup(UUID uuid) {
-        return vanishedToGroup.get(uuid);
+    public static Group getVanishedToGroup(Player player) {
+        return vanishedToGroup.get(player);
     }
 
-    public void removeVanish(Player p) {
-        vanishedToGroup.remove(p.getUniqueId());
+    public static void removeVanish(Player p) {
+        vanishedToGroup.remove(p);
     }
 
-    public static VanishAPI getInstance() {
-        return instance;
-    }
 }

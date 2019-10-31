@@ -21,10 +21,10 @@ public class StaffCommand implements CommandClass {
     public void admin(BukkitCommandArgs cmdArgs) {
         if (cmdArgs.isPlayer()) {
             Player p = cmdArgs.getPlayer();
-            if (AdminMode.getInstance().isAdmin(p)) {
-                AdminMode.getInstance().setPlayer(p);
+            if (AdminMode.isAdmin(p)) {
+                AdminMode.setPlayer(p);
             } else {
-                AdminMode.getInstance().setAdmin(p);
+                AdminMode.setAdmin(p);
             }
         }
     }
@@ -33,7 +33,7 @@ public class StaffCommand implements CommandClass {
     public void updateVanish(BukkitCommandArgs cmdArgs) {
         if (cmdArgs.isPlayer()) {
             Player p = cmdArgs.getPlayer();
-            VanishAPI.getInstance().updateVanishToPlayer(p);
+            VanishAPI.updateVanishToPlayer(p);
         }
     }
 
@@ -41,7 +41,7 @@ public class StaffCommand implements CommandClass {
     public void visible(BukkitCommandArgs cmdArgs) {
         if (cmdArgs.isPlayer()) {
             Player p = cmdArgs.getPlayer();
-            VanishAPI.getInstance().showPlayer(p);
+            VanishAPI.showPlayer(p);
             Language l = cmdArgs.getSender().getLanguage();
             p.sendMessage(l.tl(COMMAND_VANISH_PREFIX)  + l.tl(COMMAND_VANISH_VISIBLE_ALL));
         }
@@ -66,8 +66,8 @@ public class StaffCommand implements CommandClass {
                     return;
                 }
             } else {
-                group = VanishAPI.getInstance().hidePlayer(p);
-                VanishAPI.getInstance().setPlayerVanishToGroup(p, group);
+                group = VanishAPI.hidePlayer(p);
+                VanishAPI.setPlayerVanishToGroup(p, group);
                 p.sendMessage(l.tl(COMMAND_VANISH_PREFIX) + l.tl(COMMAND_VANISH_INVISIBLE, group.toString()));
                 return;
             }
@@ -106,18 +106,18 @@ public class StaffCommand implements CommandClass {
             }
             if (cmdArgs.getArgs().length == 1) {
                 if (cmdArgs.getArgs()[0].equalsIgnoreCase("on")) {
-                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.ENABLED) {
+                    if (ChatAPI.getChatState() == ChatAPI.ChatState.ENABLED) {
                         p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ALREADY_ENABLED));
                         return;
                     }
-                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.ENABLED);
+                    ChatAPI.setChatState(ChatAPI.ChatState.ENABLED);
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ENABLED));
                 } else if (cmdArgs.getArgs()[0].equalsIgnoreCase("off")) {
-                    if (ChatAPI.getInstance().getChatState() == ChatAPI.ChatState.CREATOR) {
+                    if (ChatAPI.getChatState() == ChatAPI.ChatState.CREATOR) {
                         p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_ALREADY_DISABLED));
                         return;
                     }
-                    ChatAPI.getInstance().setChatState(ChatAPI.ChatState.CREATOR);
+                    ChatAPI.setChatState(ChatAPI.ChatState.CREATOR);
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_DISABLED));
                 } else {
                     p.sendMessage(l.tl(COMMAND_CHAT_PREFIX) + l.tl(COMMAND_CHAT_USAGE));

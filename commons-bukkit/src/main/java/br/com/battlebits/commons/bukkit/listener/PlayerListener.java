@@ -65,7 +65,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoinMonitor(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        VanishAPI.getInstance().updateVanishToPlayer(player);
+        VanishAPI.updateVanishToPlayer(player);
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.getUniqueId().equals(player.getUniqueId())) {
                 continue;
@@ -84,7 +84,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onQuit(PlayerQuitEvent event) {
-        AdminMode.getInstance().removeAdmin(event.getPlayer());
-        VanishAPI.getInstance().removeVanish(event.getPlayer());
+        AdminMode.removeAdmin(event.getPlayer());
+        VanishAPI.removeVanish(event.getPlayer());
     }
 }

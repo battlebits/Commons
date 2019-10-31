@@ -7,9 +7,7 @@ public class ChatAPI {
 
 	@Getter
 	@Setter
-	private ChatState chatState = ChatState.ENABLED;
-	@Getter
-	private static final ChatAPI instance = new ChatAPI();
+	private static ChatState chatState = ChatState.ENABLED;
 
 	public enum ChatState {
 		ENABLED, STAFF, CREATOR, DISABLED;

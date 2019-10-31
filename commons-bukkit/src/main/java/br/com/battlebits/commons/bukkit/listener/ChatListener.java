@@ -35,7 +35,7 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
             return;
         }
-        switch (ChatAPI.getInstance().getChatState()) {
+        switch (ChatAPI.getChatState()) {
             case DISABLED:
                 event.setCancelled(true);
                 break;

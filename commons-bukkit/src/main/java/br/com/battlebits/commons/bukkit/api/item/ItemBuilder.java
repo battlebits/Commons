@@ -4,7 +4,6 @@ import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.api.item.glow.Glow;
 import br.com.battlebits.commons.bukkit.util.string.StringLoreUtils;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -18,22 +17,22 @@ import java.util.function.Consumer;
 
 public class ItemBuilder {
 
-    private ItemStack itemStack;
+    private ActionItemStack itemStack;
     private boolean loreUtils = true;
 
-    private ItemBuilder(ItemStack itemStack) {
+    private ItemBuilder(ActionItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
     public static ItemBuilder create(Material material) {
-        return new ItemBuilder(new ItemStack(material));
+        return new ItemBuilder(new ActionItemStack(material));
     }
 
     public void useLoreUtils(boolean value) {
         this.loreUtils = value;
     }
 
-    public ItemBuilder changeItem(Consumer<ItemStack> consumer) {
+    public ItemBuilder changeItem(Consumer<ActionItemStack> consumer) {
         consumer.accept(this.itemStack);
         return this;
     }
@@ -97,6 +96,10 @@ public class ItemBuilder {
 
     public ItemBuilder unbreakable(boolean b) {
         return changeMeta(itemMeta -> itemMeta.setUnbreakable(b));
+    }
+
+    public ItemBuilder interact(ActionItemStack.InteractHandler interactHandler) {
+        return changeItem(itemMeta -> itemMeta.setInteractHandler(interactHandler));
     }
 
     public ItemBuilder with(Consumer<ItemBuilder> consumer) {
