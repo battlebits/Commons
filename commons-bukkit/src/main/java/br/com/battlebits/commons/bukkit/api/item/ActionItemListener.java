@@ -35,7 +35,7 @@ public class ActionItemListener implements Listener {
 			if (!compound.containsKey("interactHandler")) {
 				return;
 			}
-			InteractHandler handler = (InteractHandler) compound.getObject("interactHandler");
+            InteractHandler handler = ActionItemStack.getHandler(compound.getInteger("interactHandler"));
 			if (handler == null) {
 				throw new NullPointerException("NbtCompound with null interactHandler");
 			}
