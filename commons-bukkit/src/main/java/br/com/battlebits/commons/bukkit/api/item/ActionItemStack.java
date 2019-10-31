@@ -28,6 +28,7 @@ public class ActionItemStack extends ItemStack {
 
 	public interface InteractHandler {
 
-		boolean onInteract(Player player, Player target, ItemStack item, Action action);
+		boolean onInteract(Player player, Player target, ItemStack item, ItemAction action);
 	}
+
 }
