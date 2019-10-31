@@ -10,10 +10,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Map;
 
 public class VanishAPI {
-    private static HashMap<Player, Group> vanishedToGroup;
+    private static Map<Player, Group> vanishedToGroup = new HashMap<>();
 
 
     public static void setPlayerVanishToGroup(Player player, Group group) {

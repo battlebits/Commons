@@ -6,6 +6,7 @@ import br.com.battlebits.commons.bukkit.util.string.StringLoreUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
@@ -16,22 +17,22 @@ import java.util.function.Consumer;
 
 public class ItemBuilder {
 
-    private ActionItemStack itemStack;
+    private ItemStack itemStack;
     private boolean loreUtils = true;
 
-    private ItemBuilder(ActionItemStack itemStack) {
+    private ItemBuilder(ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
     public static ItemBuilder create(Material material) {
-        return new ItemBuilder(new ActionItemStack(material));
+        return new ItemBuilder(new ItemStack(material));
     }
 
     public void useLoreUtils(boolean value) {
         this.loreUtils = value;
     }
 
-    public ItemBuilder changeItem(Consumer<ActionItemStack> consumer) {
+    public ItemBuilder changeItem(Consumer<ItemStack> consumer) {
         consumer.accept(this.itemStack);
         return this;
     }
@@ -98,7 +99,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder interact(ActionItemStack.InteractHandler interactHandler) {
-        return changeItem(itemMeta -> itemMeta.setInteractHandler(interactHandler));
+        return changeItem(itemMeta -> ActionItemStack.setInteractHandler(itemMeta, interactHandler));
     }
 
     public ItemBuilder with(Consumer<ItemBuilder> consumer) {
@@ -106,7 +107,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ActionItemStack build() {
+    public ItemStack build() {
         return this.itemStack;
     }
 }
