@@ -21,10 +21,10 @@ public class ActionItemStack {
 
     private static int HANDLER_ID = 0;
 
-	public static void setInteractHandler(ItemStack stack, InteractHandler handler) {
+	public static ItemStack setInteractHandler(ItemStack stack, InteractHandler handler) {
         if (!handlers.containsValue(handler)) {
             Commons.getLogger().warning("Handler not registered: " + handler);
-            return;
+            return stack;
         }
         int id = handlers.inverse().get(handler);
 		try {
@@ -36,9 +36,11 @@ public class ActionItemStack {
 			ItemStack item = (ItemStack) caller.newInstance(stack);
 			NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(item);
 			compound.put("interactHandler", id);
+			return item;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        return stack;
 	}
 
     public static int register(InteractHandler handler) {

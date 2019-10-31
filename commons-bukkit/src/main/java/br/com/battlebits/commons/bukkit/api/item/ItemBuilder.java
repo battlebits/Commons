@@ -99,7 +99,8 @@ public class ItemBuilder {
     }
 
     public ItemBuilder interact(ActionItemStack.InteractHandler interactHandler) {
-        return changeItem(itemMeta -> ActionItemStack.setInteractHandler(itemMeta, interactHandler));
+        this.itemStack = ActionItemStack.setInteractHandler(this.itemStack, interactHandler);
+        return this;
     }
 
     public ItemBuilder with(Consumer<ItemBuilder> consumer) {
