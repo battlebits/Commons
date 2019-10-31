@@ -45,10 +45,13 @@ public class ActionItemStack {
 
     public static int register(InteractHandler handler) {
         if (handlers.containsValue(handler)) {
+            Commons.getLogger().warning("Handler already registered: " + handler);
             return handlers.inverse().get(handler);
         }
-        handlers.put(++HANDLER_ID, handler);
-        return HANDLER_ID - 1;
+        int id = ++HANDLER_ID;
+        handlers.put(id, handler);
+        Commons.getLogger().warning("Handler registered: " + id);
+        return id;
     }
 
     public static void unregister(int id) {

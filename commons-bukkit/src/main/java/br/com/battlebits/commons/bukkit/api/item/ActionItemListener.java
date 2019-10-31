@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -22,9 +23,11 @@ public class ActionItemListener implements Listener {
 	public void onInteract(PlayerInteractEvent event) {
 		if (event.getItem() == null)
 			return;
+		if(event.getAction() == Action.PHYSICAL)
+			return;
 		ItemStack stack = event.getItem();
 		try {
-			if (stack == null || stack.getType() == Material.AIR)
+			if (stack.getType() == Material.AIR)
 				throw new Exception();
 			Constructor<?> caller = MinecraftReflection.getCraftItemStackClass()
 					.getDeclaredConstructor(ItemStack.class);
@@ -39,12 +42,8 @@ public class ActionItemListener implements Listener {
 				throw new NullPointerException("NbtCompound with null interactHandler");
 			}
 			Player player = event.getPlayer();
-			try {
-				ItemAction action = ItemAction.valueOf(event.getAction().name());
-				event.setCancelled(!handler.onInteract(player, null, stack, action));
-			} catch (Exception ignored) {
-
-			}
+			ItemAction action = ItemAction.valueOf(event.getAction().name());
+			event.setCancelled(!handler.onInteract(player, null, stack, action));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,9 +66,9 @@ public class ActionItemListener implements Listener {
 			default:
 				stack = null;
 		}
+		if (stack == null || stack.getType() == Material.AIR)
+			return;
 		try {
-			if (stack == null || stack.getType() == Material.AIR)
-				throw new Exception();
 			Constructor<?> caller = MinecraftReflection.getCraftItemStackClass()
 					.getDeclaredConstructor(ItemStack.class);
 			caller.setAccessible(true);
