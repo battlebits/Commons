@@ -6,7 +6,6 @@ import br.com.battlebits.commons.bukkit.util.string.StringLoreUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
@@ -107,7 +106,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemStack build() {
+    public ActionItemStack build() {
         return this.itemStack;
     }
 }
