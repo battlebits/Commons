@@ -81,7 +81,7 @@ public class ActionItemListener implements Listener {
 			if (handler == null) {
 				throw new NullPointerException("NbtCompound with null interactHandler");
 			}
-			event.setCancelled(!handler.onInteract(player, null, stack, ItemAction.RIGHT_CLICK_PLAYER));
+			event.setCancelled(!handler.onInteract(player, (Player) event.getRightClicked(), stack, ItemAction.RIGHT_CLICK_PLAYER));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,9 +95,9 @@ public class ActionItemListener implements Listener {
 			return;
 		Player player = (Player) event.getDamager();
 		ItemStack stack = player.getInventory().getItemInMainHand();
+		if (stack == null || stack.getType() == Material.AIR)
+			return;
 		try {
-			if (stack == null || stack.getType() == Material.AIR)
-				throw new Exception();
 			Constructor<?> caller = MinecraftReflection.getCraftItemStackClass()
 					.getDeclaredConstructor(ItemStack.class);
 			caller.setAccessible(true);
@@ -110,7 +110,7 @@ public class ActionItemListener implements Listener {
 			if (handler == null) {
 				throw new NullPointerException("NbtCompound with null interactHandler");
 			}
-			event.setCancelled(!handler.onInteract(player, null, stack, ItemAction.LEFT_CLICK_PLAYER));
+			event.setCancelled(!handler.onInteract(player, (Player) event.getEntity(), stack, ItemAction.LEFT_CLICK_PLAYER));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

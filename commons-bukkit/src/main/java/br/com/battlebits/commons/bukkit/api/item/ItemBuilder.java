@@ -91,7 +91,7 @@ public class ItemBuilder {
 
     public ItemBuilder glow() {
         Plugin pl = BukkitMain.getInstance();
-        return enchantment(new Glow(70), 0);
+        return enchantment(new Glow(BukkitMain.GLOW_ID), 0);
     }
 
     public ItemBuilder unbreakable(boolean b) {

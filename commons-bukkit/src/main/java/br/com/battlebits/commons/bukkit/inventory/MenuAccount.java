@@ -12,6 +12,7 @@ import br.com.battlebits.commons.util.DateUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public class MenuAccount extends MenuInventory {
         super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6);
         accountUuid = account.getUniqueId();
         this.l = l;
-        ItemBuilder builder = ItemBuilder.create(Material.SKULL).name(ChatColor.GOLD + account.getName());
+        ItemBuilder builder = ItemBuilder.create(Material.SKULL).name(ChatColor.GOLD + account.getName()).durability(SkullType.PLAYER.ordinal());
         ItemStack stack = builder.build();
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(account.getUniqueId()));

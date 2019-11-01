@@ -51,6 +51,8 @@ import java.util.List;
 @Getter
 public class BukkitMain extends JavaPlugin {
 
+    public static final int GLOW_ID = 1000;
+
     @Getter
     private static BukkitMain instance;
     @Getter
@@ -194,7 +196,7 @@ public class BukkitMain extends JavaPlugin {
             e.printStackTrace();
         }
         try {
-            Glow glow = new Glow(70);
+            Glow glow = new Glow(GLOW_ID);
             Enchantment.registerEnchantment(glow);
         } catch (IllegalArgumentException e){
         }
