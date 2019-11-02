@@ -36,7 +36,7 @@ public class MenuAccount extends MenuInventory {
         super(l.tl(MENU_ACCOUNT_TITLE, account.getName()), 6);
         accountUuid = account.getUniqueId();
         this.l = l;
-        ItemBuilder builder = ItemBuilder.create(Material.SKULL).name(ChatColor.GOLD + account.getName()).durability(SkullType.PLAYER.ordinal());
+        ItemBuilder builder = ItemBuilder.create(Material.SKULL_ITEM).name(ChatColor.GOLD + account.getName()).durability(SkullType.PLAYER.ordinal());
         ItemStack stack = builder.build();
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(account.getUniqueId()));
