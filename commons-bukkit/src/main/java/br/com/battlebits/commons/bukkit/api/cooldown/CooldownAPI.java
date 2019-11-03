@@ -57,6 +57,10 @@ public class CooldownAPI implements Listener {
         return false;
     }
 
+    public static void removeAllCooldowns(Player player) {
+        map.remove(player);
+    }
+
     @EventHandler
     public void onUpdate(UpdateEvent event) {
         if (event.getType() != UpdateType.TICK)
@@ -115,7 +119,7 @@ public class CooldownAPI implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        map.remove(event.getPlayer());
+        removeAllCooldowns(event.getPlayer());
     }
 
     private void display(Player player, Cooldown cooldown) {
