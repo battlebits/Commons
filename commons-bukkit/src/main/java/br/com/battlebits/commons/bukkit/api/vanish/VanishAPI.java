@@ -80,10 +80,6 @@ public class VanishAPI {
         setPlayerVanishToGroup(player, null);
     }
 
-    public static void updateVanish(Player player) {
-        setPlayerVanishToGroup(player, getVanishedToGroup(player));
-    }
-
     public static Group getVanishedToGroup(Player player) {
         return vanishedToGroup.get(player);
     }
