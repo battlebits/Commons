@@ -68,7 +68,7 @@ public class BukkitMain extends JavaPlugin {
     private TranslationCommon translationCommon;
 
     private TagManager tagManager;
-    private PunishManager punishManager;
+    private PunishManager punishManager = new PunishManager();;
 
     @Override
     public void onLoad() {

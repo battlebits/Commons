@@ -37,10 +37,6 @@ public class PunishCommand implements CommandClass {
             return;
         }
         BattleAccount player = Commons.getOfflineAccount(uuid);
-        if (player == null) {
-            sender.sendMessage(banPrefix + tl(lang, PLAYER_NOT_EXIST));
-            return;
-        }
         if (player.getUniqueId() == sender.getUniqueId()) {
             sender.sendMessage(banPrefix + tl(lang, COMMAND_BAN_CANT_YOURSELF));
             return;
@@ -102,10 +98,6 @@ public class PunishCommand implements CommandClass {
             return;
         }
         BattleAccount player = Commons.getOfflineAccount(uuid);
-        if (player == null) {
-            sender.sendMessage(tempbanPrefix + tl(lang, PLAYER_NOT_EXIST));
-            return;
-        }
         if (player.getUniqueId() == sender.getUniqueId()) {
             sender.sendMessage(tempbanPrefix + tl(lang, COMMAND_BAN_CANT_YOURSELF));
             return;
@@ -233,7 +225,7 @@ public class PunishCommand implements CommandClass {
             String espaco = " ";
             if (i >= args.length - 1)
                 espaco = "";
-            builder.append(args[i] + espaco);
+            builder.append(args[i]).append(espaco);
         }
         Mute mute = null;
         String playerIp = "";
@@ -252,13 +244,13 @@ public class PunishCommand implements CommandClass {
         BukkitMain.getInstance().getPunishManager().mute(player, mute);
     }
 
-    @CommandFramework.Command(name = "tempmute", usage = "/<command> <time> <reason>", aliases = {"tempmutar"}, groupToUse = Group.ADMIN)
+    @CommandFramework.Command(name = "tempmute", usage = "/<command> <player> <time> <reason>", aliases = {"tempmutar"}, groupToUse = Group.ADMIN)
     public void tempmute(BukkitCommandArgs cmdArgs) {
         CommandSender sender = cmdArgs.getSender();
         String[] args = cmdArgs.getArgs();
         Language lang = cmdArgs.getSender().getLanguage();
         String tempmutePrefix = tl(lang, COMMAND_TEMPMUTE_PREFIX);
-        if (args.length != 3) {
+        if (args.length < 3) {
             sender.sendMessage(tempmutePrefix + tl(lang, COMMAND_TEMPMUTE_USAGE));
             return;
         }
@@ -268,10 +260,6 @@ public class PunishCommand implements CommandClass {
             return;
         }
         BattleAccount player = Commons.getOfflineAccount(uuid);
-        if (player == null) {
-            sender.sendMessage(tempmutePrefix + tl(lang, PLAYER_NOT_EXIST));
-            return;
-        }
         if (player.getUniqueId() == sender.getUniqueId()) {
             sender.sendMessage(tempmutePrefix + tl(lang, COMMAND_MUTE_CANT_YOURSELF));
             return;
@@ -298,7 +286,7 @@ public class PunishCommand implements CommandClass {
                 return;
             }
             StringBuilder builder = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
+            for (int i = 2; i < args.length; i++) {
                 String space = " ";
                 if (i >= args.length - 1) {
                     space = "";
@@ -339,10 +327,6 @@ public class PunishCommand implements CommandClass {
             return;
         }
         BattleAccount player = Commons.getOfflineAccount(uuid);
-        if (player == null) {
-            sender.sendMessage(unmutePrefix + tl(lang, PLAYER_NOT_EXIST));
-            return;
-        }
         Mute currentMute = player.getPunishmentHistory().getCurrentMute();
         if (currentMute == null) {
             sender.sendMessage(unmutePrefix + tl(lang, COMMAND_UNMUTE_NOT_MUTED));
