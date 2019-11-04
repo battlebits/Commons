@@ -27,7 +27,7 @@ public class PunishCommand implements CommandClass {
         final String[] args = cmdArgs.getArgs();
         Language lang = cmdArgs.getSender().getLanguage();
         String banPrefix = tl(lang, COMMAND_BAN_PREFIX);
-        if (args.length != 2) {
+        if (args.length < 2) {
             sender.sendMessage(banPrefix + tl(lang, COMMAND_BAN_USAGE));
             return;
         }
@@ -47,39 +47,37 @@ public class PunishCommand implements CommandClass {
             return;
         }
         if (player.isStaff()) {
-            Group group = Group.ADMIN;
             if (cmdArgs.isPlayer()) {
-                group = Commons.getAccountCommon().getBattleAccount(uuid).getServerGroup();
+                Group group = Commons.getAccountCommon().getBattleAccount(uuid).getServerGroup();
                 if (group != Group.ADMIN) {
                     sender.sendMessage(banPrefix + tl(lang, COMMAND_BAN_CANT_STAFF));
                     return;
                 }
             }
-            StringBuilder builder = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                String space = " ";
-                if (i >= args.length - 1) {
-                    space = "";
-                }
-                builder.append(args[i] + space);
-            }
-            Ban ban = null;
-            String playerIp = "";
-            try {
-                playerIp = player.getIpAddress();
-            } catch (Exception ex) {
-                playerIp = "OFFLINE";
-            }
-            if (cmdArgs.isPlayer()) {
-                Player bannedBy = cmdArgs.getPlayer();
-                ban = new Ban(bannedBy.getName(), bannedBy.getUniqueId(), playerIp, player.getServerConnected(), builder.toString());
-                bannedBy = null;
-            } else {
-                ban = new Ban("CONSOLE", playerIp, player.getServerConnected(), builder.toString());
-            }
-            BukkitMain.getInstance().getPunishManager().ban(player, ban);
-
         }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i < args.length; i++) {
+            String space = " ";
+            if (i >= args.length - 1) {
+                space = "";
+            }
+            builder.append(args[i]).append(space);
+        }
+        Ban ban = null;
+        String playerIp = "";
+        try {
+            playerIp = player.getIpAddress();
+        } catch (Exception ex) {
+            playerIp = "OFFLINE";
+        }
+        if (cmdArgs.isPlayer()) {
+            Player bannedBy = cmdArgs.getPlayer();
+            ban = new Ban(bannedBy.getName(), bannedBy.getUniqueId(), playerIp, player.getServerConnected(), builder.toString());
+            bannedBy = null;
+        } else {
+            ban = new Ban("CONSOLE", playerIp, player.getServerConnected(), builder.toString());
+        }
+        BukkitMain.getInstance().getPunishManager().ban(player, ban);
     }
 
     @CommandFramework.Command(name = "tempban", usage = "/<command> <time> <reason>", aliases = {"tempbanir, ahktempban"}, groupToUse = Group.ADMIN)

@@ -67,7 +67,11 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
             return;
         }
+        boolean isMuted = account.getPunishmentHistory().getCurrentMute() != null;
         for (Player r : event.getRecipients()) {
+            if(isMuted && !r.getUniqueId().equals(account.getUniqueId())) {
+                continue;
+            }
             try {
                 BukkitAccount receiver = BukkitAccount.getAccount(r.getUniqueId());
                 if (receiver == null) {
@@ -127,7 +131,8 @@ public class ChatListener implements Listener {
                 e.printStackTrace();
             }
         }
-        BukkitMain.getInstance().getLogger().info("<" + account.getName() + "> " + event.getMessage());
+        if(!isMuted)
+            BukkitMain.getInstance().getLogger().info("<" + account.getName() + "> " + event.getMessage());
     }
 
 }

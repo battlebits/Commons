@@ -37,7 +37,7 @@ public class PunishManager {
         player.getPunishmentHistory().getBanHistory().add(ban);
         for (Player online : Bukkit.getOnlinePlayers()) {
             BattleAccount battleAccount = Commons.getAccountCommon().getBattleAccount(online.getUniqueId());
-            if (battleAccount != null && battleAccount.hasGroupPermission(Group.ADMIN)) {
+            if (battleAccount != null && battleAccount.isStaff()) {
                 String banSuccess = "";
                 if (ban.isPermanent()) {
                     banSuccess = tl(COMMAND_BAN_PREFIX) + tl(COMMAND_BAN_SUCCESS, player.getUniqueId().toString().replace("-", ""), ban.getBannedBy(), ban.getDuration());
@@ -46,9 +46,9 @@ public class PunishManager {
                 }
                 online.sendMessage(banSuccess);
             }
-            Commons.getDataAccount().saveAccount(player, "punishmentHistory");
-            Bukkit.getPlayer(player.getUniqueId()).kickPlayer(tl(COMMAND_BAN_KICK, ban.getBannedBy(), ban.getReason(), ban.getDuration(), CommonsConst.FORUM_WEBSITE, CommonsConst.WEBSITE));
         }
+        Commons.getDataAccount().saveAccount(player, "punishmentHistory");
+        Bukkit.getPlayer(player.getUniqueId()).kickPlayer(tl(COMMAND_BAN_KICK, ban.getBannedBy(), ban.getReason(), ban.getDuration(), CommonsConst.FORUM_WEBSITE, CommonsConst.WEBSITE));
     }
 
     public void unban(BattleAccount bannedByPlayer, BattleAccount player, Ban currentBan) {
@@ -71,7 +71,7 @@ public class PunishManager {
         player.getPunishmentHistory().getMuteHistory().add(mute);
         for (Player online : Bukkit.getOnlinePlayers()) {
             BattleAccount battleAccount = Commons.getAccount(online.getUniqueId());
-            if (battleAccount.hasGroupPermission(Group.ADMIN)) {
+            if (battleAccount.isStaff()) {
                 String muteSuccess = "";
                 if (mute.isPermanent()) {
                     muteSuccess = tl(battleAccount.getLanguage(), COMMAND_MUTE_PREFIX) + tl(battleAccount.getLanguage(), COMMAND_MUTE_SUCCESS);
@@ -80,13 +80,13 @@ public class PunishManager {
                 }
                 online.sendMessage(muteSuccess);
             }
-            Commons.getDataAccount().saveAccount(player, "punishmentHistory");
         }
+        Commons.getDataAccount().saveAccount(player, "punishmentHistory");
     }
 
-    public void unmute(BattleAccount mutedByPlayer, BattleAccount player, Mute currentMute) {
-        if (mutedByPlayer != null) {
-            currentMute.unmute(mutedByPlayer);
+    public void unmute(BattleAccount unmutedByPlayer, BattleAccount player, Mute currentMute) {
+        if (unmutedByPlayer != null) {
+            currentMute.unmute(unmutedByPlayer);
         } else {
             currentMute.unmute();
         }
