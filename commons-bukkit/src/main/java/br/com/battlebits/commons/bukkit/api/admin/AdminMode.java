@@ -6,6 +6,7 @@ import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.api.vanish.VanishAPI;
 import br.com.battlebits.commons.bukkit.event.admin.PlayerAdminModeEvent;
 import br.com.battlebits.commons.translate.Language;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -32,7 +33,7 @@ public class AdminMode {
     }
 
     public static void setPlayer(Player p) {
-        PlayerAdminModeEvent event = new PlayerAdminModeEvent(p, PlayerAdminModeEvent.AdminMode.PLAYER, GameMode.SURVIVAL);
+        PlayerAdminModeEvent event = new PlayerAdminModeEvent(p, PlayerAdminModeEvent.AdminMode.PLAYER, Bukkit.getDefaultGameMode());
         BukkitMain.getInstance().getServer().getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
