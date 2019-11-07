@@ -20,11 +20,11 @@ public class AdminMode {
     private static Set<Player> admin = new HashSet<>();
 
     public static void setAdmin(Player p) {
-        admin.add(p);
         PlayerAdminModeEvent event = new PlayerAdminModeEvent(p, PlayerAdminModeEvent.AdminMode.ADMIN, GameMode.CREATIVE);
         BukkitMain.getInstance().getServer().getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
+        admin.add(p);
         p.setGameMode(event.getGameMode());
         Group group = VanishAPI.hidePlayer(p);
         Language l = Commons.getLanguage(p.getUniqueId());
