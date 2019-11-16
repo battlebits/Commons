@@ -98,7 +98,7 @@ public class TagListener implements Listener {
     private void joinTeam(Scoreboard board, Tag tag, String name) {
         String id = getTeamName(tag);
         ChatColor color = ChatColor.getByChar(tag.getColor());
-        String prefix = color + "" + ChatColor.BOLD + tag.getPrefix();
+        String prefix = color + "" + ChatColor.BOLD + tag.getPrefix() + color;
 
         Team team = board.getTeam(id);
         if (team == null) {
