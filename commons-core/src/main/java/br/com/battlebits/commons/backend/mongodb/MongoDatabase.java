@@ -1,18 +1,12 @@
 package br.com.battlebits.commons.backend.mongodb;
 
 import br.com.battlebits.commons.backend.Database;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+import com.mongodb.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-
-import java.util.Arrays;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -37,21 +31,14 @@ public class MongoDatabase implements Database {
 
         MongoCredential credential = MongoCredential.createCredential(username, database, password.toCharArray());
 
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .credential(credential)
-                .applyToSslSettings(builder -> builder.enabled(false))
-                .applyToClusterSettings(builder ->
-                        builder.hosts(Arrays.asList(new ServerAddress(hostname, port))))
-                .build();
-
-        client = MongoClients.create(settings);
+        ServerAddress address = new ServerAddress(hostname, port);
+        MongoClientOptions options = MongoClientOptions.builder().sslEnabled(false).build();
+        client = new MongoClient(address, credential, options);
 
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
-        db = client.getDatabase(database);
-
-        db = db.withCodecRegistry(pojoCodecRegistry);
+        db = client.getDatabase(database).withCodecRegistry(pojoCodecRegistry);
     }
 
     @Override
