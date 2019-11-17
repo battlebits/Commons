@@ -5,6 +5,7 @@ import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.scoreboard.modules.Line;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -90,10 +91,15 @@ public class BattleScoreboard {
                                 MAX_SUFFIX_LENGTH) : line.getSuffix());
                     }
                     adding.add(name);
-                    if (!team.hasEntry(name)) {
-                        team.addEntry(name);
+                    int score = size - count++;
+                    StringBuilder id = new StringBuilder();
+                    for (int i = 0; i < (score + "").length(); i++)
+                        id.append(ChatColor.COLOR_CHAR).append((score + "").charAt(i));
+
+                    if (!team.hasEntry(id.toString())) {
+                        team.addEntry(id.toString());
                     }
-                    objective.getScore(name).setScore(size - count++);
+                    objective.getScore(id.toString()).setScore(size - count++);
                 });
                 previousLines.removeIf(adding::contains);
                 Iterator<String> iterator = previousLines.iterator();
