@@ -15,7 +15,7 @@ import org.bukkit.scoreboard.Team;
 
 public class ScoreboardListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuitListener(PlayerQuitEvent e) {
         Scoreboard board = e.getPlayer().getScoreboard();
         if (board != null) {

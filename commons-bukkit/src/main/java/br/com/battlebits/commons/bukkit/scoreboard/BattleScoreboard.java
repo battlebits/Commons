@@ -114,7 +114,7 @@ public class BattleScoreboard {
     }
 
     public Line getLineById(String id) {
-        return this.lines.stream().filter(line -> line.getName().equals(id)).findFirst().orElse(null);
+        return this.lines.stream().filter(line -> line.getName().equals(id)).findFirst().orElse(new Line(id, ""));
     }
 
     public BattleScoreboard setLineConsumer(Consumer<List<Line>> consumer) {
