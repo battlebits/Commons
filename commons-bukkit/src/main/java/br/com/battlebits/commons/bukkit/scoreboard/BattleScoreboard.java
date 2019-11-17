@@ -99,7 +99,7 @@ public class BattleScoreboard {
                     if (!team.hasEntry(id.toString())) {
                         team.addEntry(id.toString());
                     }
-                    objective.getScore(id.toString()).setScore(size - count++);
+                    objective.getScore(id.toString()).setScore(score);
                 });
                 previousLines.removeIf(adding::contains);
                 Iterator<String> iterator = previousLines.iterator();
