@@ -1,8 +1,11 @@
 package br.com.battlebits.commons.bukkit.scoreboard.modules;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 
+@Getter
 public class Line {
+    private String id;
 
     private String prefix;
     private String name;
@@ -11,11 +14,18 @@ public class Line {
     public Line(String id, String text) {
         this.name = id;
         setText(text);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < id.length(); i++)
+            builder.append(ChatColor.COLOR_CHAR).append(id.charAt(i));
+        this.id = builder.toString();
+        if (this.id.length() > 16)
+            this.id = this.id.substring(0, 16);
     }
 
     public Line(String name, String prefix, String suffix) {
         this.prefix = prefix;
         this.name = name;
+        this.id = name;
         this.suffix = suffix;
     }
 
@@ -34,18 +44,6 @@ public class Line {
 
         this.prefix = part1;
         this.suffix = part2;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSuffix() {
-        return suffix;
     }
 
 }

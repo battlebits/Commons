@@ -1,19 +1,20 @@
 package br.com.battlebits.commons.bukkit.scoreboard;
 
 import br.com.battlebits.commons.Commons;
-import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.scoreboard.modules.Line;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class BattleScoreboard {
@@ -29,7 +30,7 @@ public class BattleScoreboard {
     private Objective objective;
     private Consumer<List<Line>> lineConsumer;
 
-    private Set<String> previousLines;
+    private Set<Line> previousLines;
 
     public BattleScoreboard(Player player, String displayName) {
         this.player = player;
@@ -66,55 +67,45 @@ public class BattleScoreboard {
     }
 
     public void update() {
-        new BukkitRunnable() {
-            int size = Math.min(MAX_LINES, lines.size());
-            int count = 0;
-            @Override
-            public void run() {
-                if (lineConsumer != null) {
-                    lineConsumer.accept(lines);
-                }
-                Set<String> adding = new HashSet<>();
-                lines.forEach(line -> {
-                    String name = line.getName();
-                    if (name.length() > MAX_NAME_LENGTH) {
-                        name = name.substring(0, MAX_NAME_LENGTH);
-                    }
-                    Team team = scoreboard.getTeam(name);
-                    if (team == null) team = scoreboard.registerNewTeam(name);
-                    if (line.getPrefix() != null) {
-                        team.setPrefix(line.getPrefix().length() > MAX_PREFIX_LENGTH ? line.getPrefix().substring(0,
-                                MAX_PREFIX_LENGTH) : line.getPrefix());
-                    }
-                    if (line.getSuffix() != null) {
-                        team.setSuffix(line.getSuffix().length() > MAX_SUFFIX_LENGTH ? line.getSuffix().substring(0,
-                                MAX_SUFFIX_LENGTH) : line.getSuffix());
-                    }
-                    adding.add(name);
-                    int score = size - count++;
-                    StringBuilder id = new StringBuilder();
-                    for (int i = 0; i < (score + "").length(); i++)
-                        id.append(ChatColor.COLOR_CHAR).append((score + "").charAt(i));
-
-                    if (!team.hasEntry(id.toString())) {
-                        team.addEntry(id.toString());
-                    }
-                    objective.getScore(id.toString()).setScore(score);
-                });
-                previousLines.removeIf(adding::contains);
-                Iterator<String> iterator = previousLines.iterator();
-                while (iterator.hasNext()) {
-                    String last = iterator.next();
-                    Team team = scoreboard.getTeam(last);
-                    if (team != null) {
-                        team.removeEntry(last);
-                    }
-                    scoreboard.resetScores(last);
-                    iterator.remove();
-                }
-                previousLines = adding;
+        int size = Math.min(MAX_LINES, lines.size());
+        AtomicInteger count = new AtomicInteger();
+        if (lineConsumer != null) {
+            lineConsumer.accept(lines);
+        }
+        Set<Line> adding = new HashSet<>();
+        lines.forEach(line -> {
+            String name = line.getName();
+            if (name.length() > MAX_NAME_LENGTH) {
+                name = name.substring(0, MAX_NAME_LENGTH);
             }
-        }.runTaskAsynchronously(BukkitMain.getInstance());
+            Team team = scoreboard.getTeam(name);
+            if (team == null) team = scoreboard.registerNewTeam(name);
+            if (line.getPrefix() != null) {
+                team.setPrefix(line.getPrefix().length() > MAX_PREFIX_LENGTH ?
+                        line.getPrefix().substring(0,
+                                MAX_PREFIX_LENGTH) : line.getPrefix());
+            }
+            if (line.getSuffix() != null) {
+                team.setSuffix(line.getSuffix().length() > MAX_SUFFIX_LENGTH ?
+                        line.getSuffix().substring(0,
+                                MAX_SUFFIX_LENGTH) : line.getSuffix());
+            }
+            if (!team.hasEntry(line.getId())) {
+                team.addEntry(line.getId());
+            }
+            objective.getScore(line.getId()).setScore(size - count.getAndIncrement());
+            adding.add(line);
+        });
+        previousLines.removeIf(adding::contains);
+        for (Line last : previousLines) {
+            scoreboard.resetScores(last.getId());
+            Team team = scoreboard.getTeam(last.getName());
+            if (team != null) {
+                team.removeEntry(last.getId());
+                team.unregister();
+            }
+        }
+        previousLines = adding;
     }
 
     public void update(Consumer<BattleScoreboard> consumer) {
