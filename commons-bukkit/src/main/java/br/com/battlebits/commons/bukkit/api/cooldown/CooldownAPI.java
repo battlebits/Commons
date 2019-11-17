@@ -8,6 +8,7 @@ import br.com.battlebits.commons.bukkit.api.cooldown.types.ItemCooldown;
 import br.com.battlebits.commons.bukkit.event.update.UpdateEvent;
 import br.com.battlebits.commons.bukkit.event.update.UpdateEvent.UpdateType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -128,11 +129,13 @@ public class CooldownAPI implements Listener {
         double remaining = cooldown.getRemaining();
         double count = 20 - Math.max(percentage > 0D ? 1 : 0, percentage / 5);
         for (int a = 0; a < count; a++)
-            bar.append("§a" + CHAR);
+            bar.append(ChatColor.GREEN.toString()).append(CHAR);
         for (int a = 0; a < 20 - count; a++)
-            bar.append("§c" + CHAR);
+            bar.append(ChatColor.RED.toString()).append(CHAR);
         String name = cooldown.getName();
-        ActionBarAPI.send(player, name + " " + bar.toString() + "§f " + String.format(Locale.US, "%.1fs", remaining));
+        ActionBarAPI.send(player,
+                name + " " + bar.toString() + ChatColor.WHITE + " " + String.format(Locale.US,
+                "%.1fs", remaining));
     }
 
 }
