@@ -111,12 +111,12 @@ public class BattleScoreboard {
         }.runTaskAsynchronously(BukkitMain.getInstance());
     }
 
-    public BattleScoreboard with(Consumer<BattleScoreboard> consumer) {
+    public void update(Consumer<BattleScoreboard> consumer) {
         consumer.accept(this);
-        return this;
+        this.update();
     }
 
-    private Line getLineById(String id) {
+    public Line getLineById(String id) {
         return this.lines.stream().filter(line -> line.getName().equals(id)).findFirst().orElse(null);
     }
 
