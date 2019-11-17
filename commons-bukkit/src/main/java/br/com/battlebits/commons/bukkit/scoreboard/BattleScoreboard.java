@@ -60,8 +60,8 @@ public class BattleScoreboard {
         this.lines.add(line);
     }
 
-    public void addLine(String prefix, String name, String suffix) {
-        this.lines.add(new Line(prefix, name, suffix));
+    public void addLine(String id, String text) {
+        this.lines.add(new Line(id, text));
     }
 
     public void update() {
@@ -114,6 +114,10 @@ public class BattleScoreboard {
     public BattleScoreboard with(Consumer<BattleScoreboard> consumer) {
         consumer.accept(this);
         return this;
+    }
+
+    private Line getLineById(String id) {
+        return this.lines.stream().filter(line -> line.getName().equals(id)).findFirst().orElse(null);
     }
 
     public BattleScoreboard setLineConsumer(Consumer<List<Line>> consumer) {
